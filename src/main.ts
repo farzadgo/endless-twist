@@ -1,6 +1,6 @@
 
 import * as THREE from 'three';
-import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 // import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
 // import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
 
@@ -213,7 +213,7 @@ manager.onLoad = () => {
 }
 
 manager.onProgress = (_url, itemsLoaded, itemsTotal) => {
-  // console.log(`loaded: ${itemsLoaded}/${itemsTotal}`);
+  console.log(`loaded: ${itemsLoaded}/${itemsTotal}`);
   let ratio = itemsLoaded / itemsTotal;
   let width = window.innerWidth;
   if (loadBar) loadBar.style.width = `${(ratio * width) - 80 }px`;
@@ -235,37 +235,85 @@ manager.onError = (url) => console.log('error loading ' + url);
 // const allModels = modelsData.map(data => modelFormatter(data));
 // allModels.forEach(elem => scene.add(elem));
 
-const modelFormatter = (dataArr: GLTF[]) => {          
-  let allModel = new Array;
-  dataArr.forEach(data => allModel.push(data.scene));
-  let filtered = dataArr.filter(e => e.scene.children[0].name === 'ice-cream');
-  const copyOne = filtered[0].scene.clone();
-  const copyTwo = filtered[0].scene.clone();
-  copyOne.position.set(398, 0, -484);
-  copyTwo.position.set(796, 0, -968);
-  allModel.push(copyOne, copyTwo);
-  // ???
-  // geometries.receiveShadow = true;
-  allModel.forEach(elem => scene.add(elem));
-}
+// --- THIS WORKS but ESNEXT issue !!!
+
+// const modelFormatter = (dataArr: GLTF[]) => {          
+//   let allModel = new Array;
+//   dataArr.forEach(data => allModel.push(data.scene));
+//   let filtered = dataArr.filter(e => e.scene.children[0].name === 'ice-cream');
+//   const copyOne = filtered[0].scene.clone();
+//   const copyTwo = filtered[0].scene.clone();
+//   copyOne.position.set(398, 0, -484);
+//   copyTwo.position.set(796, 0, -968);
+//   allModel.push(copyOne, copyTwo);
+//   // ???
+//   // geometries.receiveShadow = true;
+//   allModel.forEach(elem => scene.add(elem));
+// }
 
 const loader = new GLTFLoader(manager);
 
-let modelsData = [];
+// let modelsData = [];
 
-[...modelsData] = await Promise.all([
-  loader.loadAsync(modelUrls[0]),
-  loader.loadAsync(modelUrls[1]),
-  loader.loadAsync(modelUrls[2]),
-  loader.loadAsync(modelUrls[3]),
-  loader.loadAsync(modelUrls[4]),
-  loader.loadAsync(modelUrls[5]),
-  loader.loadAsync(modelUrls[6]),
-  loader.loadAsync(modelUrls[7]),
-  loader.loadAsync(modelUrls[8])
-]);
+// [...modelsData] = await Promise.all([
+//   loader.loadAsync(modelUrls[0]),
+//   loader.loadAsync(modelUrls[1]),
+//   loader.loadAsync(modelUrls[2]),
+//   loader.loadAsync(modelUrls[3]),
+//   loader.loadAsync(modelUrls[4]),
+//   loader.loadAsync(modelUrls[5]),
+//   loader.loadAsync(modelUrls[6]),
+//   loader.loadAsync(modelUrls[7]),
+//   loader.loadAsync(modelUrls[8])
+// ]);
 
-modelFormatter(modelsData);
+// const modelData1 = await loader.loadAsync(modelUrls[0]);
+// const modelData2 = await loader.loadAsync(modelUrls[1]);
+// const modelData3 = await loader.loadAsync(modelUrls[2]);
+// const modelData4 = await loader.loadAsync(modelUrls[3]);
+// const modelData5 = await loader.loadAsync(modelUrls[4]);
+// const modelData6 = await loader.loadAsync(modelUrls[5]);
+// const modelData7 = await loader.loadAsync(modelUrls[6]);
+// const modelData8 = await loader.loadAsync(modelUrls[7]);
+// const modelData9 = await loader.loadAsync(modelUrls[8]);
+
+// modelsData.push(
+//   modelData1,
+//   modelData2,
+//   modelData3,
+//   modelData4,
+//   modelData5,
+//   modelData6,
+//   modelData7,
+//   modelData8,
+//   modelData9
+// );
+
+// modelFormatter(modelsData);
+
+
+loader.load(modelUrls[0], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[1], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[2], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[3], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[4], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[5], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[6], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[7], gltf => scene.add(gltf.scene));
+loader.load(
+  modelUrls[8],
+  gltf => {
+    let gltfScene = gltf.scene;
+    scene.add(gltfScene)
+    const copyOne = gltfScene.clone();
+    const copyTwo = gltfScene.clone();
+    copyOne.position.set(398, 0, -484);
+    copyTwo.position.set(796, 0, -968);
+    scene.add(copyOne, copyTwo)
+  },
+  xhr => console.log((xhr.loaded / xhr.total * 100) + '% loaded'),
+  _error => console.log('model load error')
+);
 
 
 
