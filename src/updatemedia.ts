@@ -57,13 +57,9 @@ import conversation_gabi from './images/conversation-03.png';
 
 
 // --- Video imports
-// s: 512
 const topViewConstructing = 'https://cloud.disorient.xyz/s/KfpKkN4BRexJcP8/download/overthesee_1.mp4';
-// s: 
 const laterlMove = 'https://cloud.disorient.xyz/s/ZpRkGx679QNmdJ6/download/overthesee_2.mov';
-// s: 
 const skyMove = 'https://cloud.disorient.xyz/s/EjKBoRctyZZgg2T/download/overthesee_3.mov';
-// s: 891
 const walkingVideo = 'https://cloud.disorient.xyz/s/FpTEH6gHHpeN2Yf/download/they_are_short_720.mov';
 
 
@@ -74,9 +70,12 @@ const randomIntFromInterval = (min: number, max: number) => {
 
 
 const getPosDims = () => {
-  const width = randomIntFromInterval(650, 800);
-  const widthRange: number = window.innerWidth - (width * 1.2);
-  const heightRange: number = window.innerHeight - 600;
+  // const width = randomIntFromInterval(650, 800);
+  let wWidth = window.innerWidth;
+  let wHeight = window.innerHeight;
+  const width = randomIntFromInterval(wWidth * 0.26, wWidth * 0.36);
+  const widthRange: number = wWidth - (width * 1.2);
+  const heightRange: number = wHeight - 500;
   const xPos = (Math.random() * widthRange) + (width * 0.1);
   const yPos = Math.random() * heightRange;
 
@@ -220,7 +219,7 @@ const videoHandler = (id: number, elapsed: number, t1: number, uri: string, runn
 
 // --------- IMAGES ---------
 
-export const handleImages = (elapsed: number) => {  
+export const handleImages = (elapsed: number) => {
   imageHandler(elapsed, 17, 42, conversation_farzi_1);
 
   // --- ARCHITECTURE

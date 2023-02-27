@@ -22,5 +22,4 @@
   "include": ["src"]
 }
 
-    // "isolatedModules": true,
-    // "skipLibCheck": true
+// "isolatedModules": true,
