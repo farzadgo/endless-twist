@@ -11,7 +11,7 @@ const modelUrls = [
 ]
 
 
-import { LoadingManager, Group} from 'three';
+import { LoadingManager } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { scene } from '../core/renderer';
 import { showOverlay } from './gui';
@@ -29,7 +29,7 @@ manager.onLoad = () => {
   console.log("Loading complete!");
   // console.log(modelsData);
 
-  modelsData.forEach(group => scene.add(group));
+  // modelsData.forEach(group => scene.add(group));
 
   // // TO_DO: deal with loading bar UI ---
   progress?.remove();
@@ -57,15 +57,7 @@ manager.onProgress = (_url, itemsLoaded, _itemsTotal) => {
 
 // --------- LOAD MODELS AND INIT UI ---------
 
-// let loadmodel: GLTF | null = null;
-
-// const modelFormatter = (data: GLTF) => {          
-//   // let model = data.scene.children[0];
-//   let model = data.scene;
-//   return model
-// }
-// const allModels = modelsData.map(data => modelFormatter(data));
-// allModels.forEach(elem => scene.add(elem));
+const loader = new GLTFLoader(manager);
 
 // --- THIS WORKS but ESNEXT issue !!!
 
@@ -82,9 +74,6 @@ manager.onProgress = (_url, itemsLoaded, _itemsTotal) => {
 //   // geometries.receiveShadow = true;
 //   allModel.forEach(elem => scene.add(elem));
 // }
-
-
-const loader = new GLTFLoader(manager);
 
 // let modelsData = [];
 
@@ -105,36 +94,34 @@ const loader = new GLTFLoader(manager);
 // modelFormatter(modelsData);
 
 
-// --- This works as well
-let modelsData: Group[] = [];
+loader.load(modelUrls[0], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[1], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[2], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[3], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[4], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[5], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[6], gltf => scene.add(gltf.scene));
+loader.load(modelUrls[7], gltf => scene.add(gltf.scene));
+loader.load(
+  modelUrls[8],
+  gltf => {
+    scene.add(gltf.scene)
+    const copyOne = gltf.scene.clone();
+    const copyTwo = gltf.scene.clone();
+    copyOne.position.set(398, 0, -484);
+    copyTwo.position.set(796, 0, -968);
+    scene.add(copyOne, copyTwo)
+  },
+  // xhr => console.log((xhr.loaded / xhr.total * 100) + '% loaded'),
+  // _error => console.log('model load error')
+);
 
-modelUrls.forEach(e => {
-  loader.load(e, gltf => {
-    modelsData.push(gltf.scene)
-  })
-});
-// --- until here and loader complete
 
-
-// loader.load(modelUrls[0], gltf => scene.add(gltf.scene));
-// loader.load(modelUrls[1], gltf => scene.add(gltf.scene));
-// loader.load(modelUrls[2], gltf => scene.add(gltf.scene));
-// loader.load(modelUrls[3], gltf => scene.add(gltf.scene));
-// loader.load(modelUrls[4], gltf => scene.add(gltf.scene));
-// loader.load(modelUrls[5], gltf => scene.add(gltf.scene));
-// loader.load(modelUrls[6], gltf => scene.add(gltf.scene));
-// loader.load(modelUrls[7], gltf => scene.add(gltf.scene));
-// loader.load(
-//   modelUrls[8],
-//   gltf => {
-//     let gltfScene = gltf.scene;
-//     scene.add(gltfScene)
-//     const copyOne = gltfScene.clone();
-//     const copyTwo = gltfScene.clone();
-//     copyOne.position.set(398, 0, -484);
-//     copyTwo.position.set(796, 0, -968);
-//     scene.add(copyOne, copyTwo)
-//   },
-//   xhr => console.log((xhr.loaded / xhr.total * 100) + '% loaded'),
-//   _error => console.log('model load error')
-// );
+// --- This works as well ---
+// let modelsData: THREE.Group[] = [];
+// modelUrls.forEach(e => {
+//   loader.load(e, gltf => {
+//     modelsData.push(gltf.scene)
+//   })
+// });
+// --- until here ---

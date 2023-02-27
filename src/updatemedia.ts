@@ -73,9 +73,9 @@ const getPosDims = () => {
   // const width = randomIntFromInterval(650, 800);
   let wWidth = window.innerWidth;
   let wHeight = window.innerHeight;
-  const width = randomIntFromInterval(wWidth * 0.26, wWidth * 0.36);
+  const width = randomIntFromInterval(wWidth * 0.3, wWidth * 0.38);
   const widthRange: number = wWidth - (width * 1.2);
-  const heightRange: number = wHeight - 500;
+  const heightRange: number = wHeight - 600;
   const xPos = (Math.random() * widthRange) + (width * 0.1);
   const yPos = Math.random() * heightRange;
 
