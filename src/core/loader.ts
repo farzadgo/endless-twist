@@ -17,8 +17,8 @@ import { scene } from '../core/renderer';
 import { showOverlay } from './gui';
 
 
-const spinner = document.querySelector('.spinner');
-const progress = document.querySelector('.progress');
+const loaderDiv = document.querySelector<HTMLDivElement>('.loader');
+const progressDiv = document.querySelector<HTMLDivElement>('.progress');
 
 
 // -------- Loading Manager --------
@@ -27,20 +27,17 @@ export const manager = new LoadingManager();
 
 manager.onLoad = () => {
   console.log("Loading complete!");
-  // console.log(modelsData);
-
   // modelsData.forEach(group => scene.add(group));
 
-  // // TO_DO: deal with loading bar UI ---
-  progress?.remove();
-  spinner?.remove();
+  // --- handle loading elements
+  loaderDiv?.remove();
 
-  // // TO_DO: init 3D related UI <start-continue-restart Button> ---
+  // --- handle GUI or show start btn
   showOverlay();
-  // if (startBtn) startBtn.addEventListener('click', startAnim);
-  // container?.appendChild(startBtn);
 
-  // // TO_DO: start the loop/animate/renderer.render BUT wait for the button to start the camera meove etc.
+  // // TO_DO: start the loop/animate/renderer.render
+  // // BUT wait for the button to start the camera meove etc.
+  // // you need to change startAnim() and loop() a bit
   // renderer.render(scene, camera);
   
 }
@@ -48,7 +45,7 @@ manager.onLoad = () => {
 manager.onProgress = (_url, itemsLoaded, _itemsTotal) => {
   // console.log(`loaded: ${itemsLoaded}/${itemsTotal}`);
   // if (progress) progress.style.width = `${(ratio * 300) - 80 }px`;
-  progress!.innerHTML = `${itemsLoaded} / 459`;
+  progressDiv!.innerHTML = `${itemsLoaded} / 459`;
 }
 
 // manager.onError = (url) => console.log('error loading ' + url);

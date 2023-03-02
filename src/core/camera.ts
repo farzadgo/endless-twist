@@ -38,7 +38,6 @@ camera.rotation.set(0, 0, 0);
 // camera.rotation.set( 0, - Math.PI / 2, 2 );
 // camera.lookAt( 100, 10, 50 );
 
-
 window.addEventListener('resize', () => {
   sizes.width = window.innerWidth
   sizes.height = window.innerHeight
@@ -46,11 +45,7 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix()
 })
 
-
 scene.add(camera);
-
-// export default camera
-
 
 export const updateCamera = (dt: number) => {
   fraction += dt / 1100;
@@ -69,7 +64,6 @@ export const updateCamera = (dt: number) => {
   // const tangent = splineCurve.getTangent(fraction);
   camera.position.copy(newPosition);
 }
-
 
 
 // --------- CAMERA SPLINE PATH ---------

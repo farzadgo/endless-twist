@@ -11,7 +11,10 @@ import { showOverlay, hideOverlay, updateUI } from './core/gui';
 import { throttle } from 'throttle-debounce';
 import './style.css';
 
-
+const isMobile = () => {
+  return (( window.innerWidth <= 800 ) || ( window.innerHeight <= 600 ));
+}
+// console.log(isMobile());
 
 export const container = document.getElementById('webgl-container');
 
@@ -31,13 +34,19 @@ manager.onError = (url) => console.log('error loading ' + url);
 
 export const startAnim = () => {
   if (!ended) {
-    document.body.requestPointerLock();
-    loop();
-    running = true;
+    if (!isMobile()) {
+      document.body.requestPointerLock();
+      // document.body.requestFullscreen();
+      loop();
+      running = true;
 
-    if (ended) {
-      ended = false;
-      clock.start();
+      if (ended) {
+        ended = false;
+        clock.start();
+      }
+    } else {
+      window.alert("please check the work on desktop device!");
+      return
     }
 
     // in case of PointerLockControls
@@ -53,6 +62,7 @@ export const startAnim = () => {
 
 export const stopAnim = () => {
   cancelAnimationFrame(animID);
+  // document.exitFullscreen();
   running = false;
 
   // _totalTime += _elapsed;
