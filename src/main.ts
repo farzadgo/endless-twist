@@ -14,14 +14,13 @@ import './style.css';
 const isMobile = () => {
   return (( window.innerWidth <= 800 ) || ( window.innerHeight <= 600 ));
 }
-// console.log(isMobile());
 
 export const container = document.getElementById('webgl-container');
 
 let animID: number;
 export let elapsed = 0;
 let running = false;
-export let ended = false;
+let ended = false;
 // let _totalTime = 0;
 
 const STEPS_PER_FRAME = 5;
@@ -33,38 +32,32 @@ manager.onError = (url) => console.log('error loading ' + url);
 // --------- CONTROLS ---------
 
 export const startAnim = () => {
-  if (!ended) {
-    if (!isMobile()) {
-      document.body.requestPointerLock();
-      // document.body.requestFullscreen();
-      loop();
-      running = true;
+  if (ended) {
+    ended = false;
+    // clock.start();
+  }
 
-      if (ended) {
-        ended = false;
-        clock.start();
-      }
-    } else {
-      window.alert("please check the work on desktop device!");
-      return
-    }
-
-    // in case of PointerLockControls
-    // controls.lock();
+  if (!isMobile()) {
+    document.body.requestPointerLock();
+    // document.body.requestFullscreen();
+    loop();
+    running = true;
     
     camera.rotation.set(cameraRotations.x, cameraRotations.y, 0);
     hideOverlay();
   } else {
-    location.reload();
+    window.alert("please check the work on desktop device!");
+    return
   }
+  // // in case of PointerLockControls
+  // controls.lock();
 }
 
 
-export const stopAnim = () => {
+export const stopAnim = () => {  
   cancelAnimationFrame(animID);
   // document.exitFullscreen();
   running = false;
-
   // _totalTime += _elapsed;
   showOverlay();
 }
@@ -145,7 +138,8 @@ const clock = new THREE.Clock();
 
 export const reset = () => {
   ended = true;
-  clock.stop();
+  elapsed = 0;
+  // clock.stop();
   document.exitPointerLock();
 }
 

@@ -116,6 +116,7 @@ audioElement?.addEventListener('ended', () => {
 
 
 export const handleAudios = (elapsed: number, running: boolean) => {
+  // console.log(elapsed);
   container?.appendChild(audioElement);
   if (running) {
     if (audioStarted && !audioEnded) {
@@ -132,6 +133,9 @@ export const handleAudios = (elapsed: number, running: boolean) => {
     audioElement.remove();
     // audioElement.removeAttribute('src');
     // audioElement.load();
+  }
+  if (elapsed === 0) {
+    audioElement.currentTime = 0;
   }
 }
 
@@ -279,16 +283,15 @@ export const handleImages = (elapsed: number) => {
 
 
 const imageHandler = (elapsed: number, t1: number, t2: number, uri: string) => {
-
-  const selectedContainer = document.querySelector('.modal');
-
+  
   const imageContainer = document.createElement('div');
   imageContainer.classList.value = 'modal';
+  // let uuid:string = Math.random().toString(36).slice(-6);
+  // imageContainer.setAttribute('id', uuid);
   imageContainer.style.left = `${getPosDims().xPos}px`;
   imageContainer.style.top = `${getPosDims().yPos}px`;
   imageContainer.style.width = `${getPosDims().width}px`;
-  // imageContainer.style.transition = 'opacity 2s';
-  // imageContainer.style.opacity = '0';
+  imageContainer.style.opacity = '0';
 
   const imageElement = document.createElement('img');
   // const imageElement = new Image(800, 600);
@@ -299,19 +302,23 @@ const imageHandler = (elapsed: number, t1: number, t2: number, uri: string) => {
 
   imageContainer.appendChild(imageElement);
 
+  // const selectedContainer = document.querySelector<HTMLDivElement>('.modal');
+
   if (elapsed === t1) {
     imageElement.src = uri;
     container?.appendChild(imageContainer);
     imageElement.onload = () => {
-      setTimeout(() => {
-        imageContainer.style.opacity = '1';
-      }, 500);
+      imageContainer.style.opacity = '1';
+      // setTimeout(() => {
+      //   imageContainer.style.opacity = '1';
+      // }, 500);
     }
   }
 
   if (elapsed === t2) {
-    // not working !!!
-    imageContainer.style.opacity = '0';
+    const selectedContainer = document.querySelector<HTMLDivElement>('.modal');
+    // const selected = document.getElementById(uuid);
+    selectedContainer!.style.opacity = '0';
     setTimeout(() => {
       selectedContainer?.remove();
       return

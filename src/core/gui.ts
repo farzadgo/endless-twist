@@ -23,7 +23,8 @@ const aboutTexts = {
 }
 
 
-import { ended, startAnim } from "../main";
+import { startAnim } from "../main";
+import { fraction } from "./camera";
 
 
 // let importedImageModule = 'blabla/images/01-render-cJustus-1.jpg'
@@ -91,8 +92,8 @@ aboutBtn.addEventListener('click', showAbout);
 
 export const updateUI = () => {  
   // let startBtnContent = _totalTime ? 'continue' : 'start';
-  if (ended) {
-    startBtn.textContent = 'reload';
+  if (fraction > 0.99 && fraction < 1.0) {
+    startBtn.textContent = 'restart';
   } else {
     startBtn.textContent = 'continue';
   }

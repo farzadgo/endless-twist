@@ -45,7 +45,7 @@ html, body {
   height: 100%;
   overflow: hidden;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
   color: white;
   z-index: 20;
   transition: all 1s;
@@ -115,15 +115,12 @@ html, body {
 /* --------- media elements --------- */
 .modal {
   position: absolute;
-  opacity: 0;
-  transition: opacity 2s;
+  transition: all 1s;
 }
 #video-player {
   position: absolute;
   left: 250px;
   top: 60px;
-  -webkit-box-shadow: 0px 0px 45px -5px #1f1f1f; 
-  box-shadow: 0px 0px 45px -5px #1f1f1f;
   z-index: 10;
   opacity: 0;
   transition: opacity 2s;
