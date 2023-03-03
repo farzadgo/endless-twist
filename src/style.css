@@ -8,8 +8,7 @@
   border: 4px solid rgba(0, 0, 0, 0);
 }
 ::selection {
-  /* color: var(--code-green); */
-  background: rgb(133, 76, 51);
+  background: rgb(133, 56, 51);
 }
 :root {
   --text-font-size: 20px;
@@ -51,47 +50,51 @@ html, body {
   z-index: 20;
   transition: all 1s;
 }
-
-.project-title {
-  font-size: var(--header-font-size);
-  position: absolute;
-  left: 40px;
-  top: 30px;
-  font-weight: 200;
-}
-
+#overlay > h1,
 #overlay > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
+  font-size: var(--header-font-size);
+  font-weight: 200; 
+}
+#overlay > button {
   cursor: pointer;
   color: #fff;
-  font-size: var(--header-font-size);
   font-family: 'IBM Plex Mono', Consolas, Courier, monospace;
-  font-weight: 200;
   background: none;
   user-select: none;
+}
+.project-title {
+  left: 40px;
+  top: 30px;
+  height: 50px;
 }
 .start-btn {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border: 2px solid #fff;
+  border: 1px solid #fff;
   padding: 8px 18px 12px;
   opacity: 1;
 }
 .about-btn {
-  right: 40px;
-  bottom: 30px;
   border: none;
   width: 1.6em;
   -webkit-text-stroke: 1px #000;
+  right: 40px;
+  bottom: 30px;
+  height: 50px;
+  z-index: 25;
 }
 
 .about {
   position: relative;
-  width: 80vw;
-  height: 80vh;
-  left: 10vw;
-  top: 10vh;
+  width: 70vw;
+  height: calc(100vh - 220px);
+  left: 15vw;
+  top: 110px;
   border: 1px solid #fff;
   padding: var(--padding);
   overflow-y: scroll;
@@ -106,6 +109,7 @@ html, body {
   font-size: var(--text-font-size);
   margin-bottom: 20px;
   line-height: 1.8em;
+  font-weight: 200;
 }
 
 /* --------- media elements --------- */
@@ -155,8 +159,20 @@ html, body {
 
 @media (max-width: 800px) {
   :root {
-    --text-font-size: 15px;
+    --text-font-size: 14px;
     --header-font-size: 1.6em;
-    --padding: 15px;
+    --padding: 20px;
+  }
+  .project-title {
+    top: var(--padding);
+  }
+  .about-btn {
+    bottom: var(--padding);
+  }
+  .about {
+    width: calc(100vw - (var(--padding) * 2));
+    height: calc(100vh - 100px - var(--padding) * 4);
+    left: var(--padding);
+    top: calc(50px + var(--padding) * 2);
   }
 }
