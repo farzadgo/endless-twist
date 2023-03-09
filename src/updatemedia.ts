@@ -139,6 +139,16 @@ export const handleAudios = (elapsed: number, running: boolean) => {
   }
 }
 
+document.addEventListener('keyup', event => {
+  // console.log(event.code);
+  if (event.code === 'KeyM') {
+    if (!audioElement.muted) {
+      audioElement.muted = true;
+    } else {
+      audioElement.muted = false;
+    }
+  }
+});
 
 
 // --------- VIDEO ELEMENTS ---------

@@ -11,9 +11,9 @@
   background: rgb(133, 56, 51);
 }
 :root {
-  --text-font-size: 20px;
-  --header-font-size: 2em;
-  --padding: 40px;
+  --text-font-size: 1.2em;
+  --header-font-size: 1.8em;
+  --padding: 36px;
 }
 html, body {
   padding: 0;
@@ -52,9 +52,6 @@ html, body {
 }
 #overlay > h1,
 #overlay > button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: absolute;
   font-size: var(--header-font-size);
   font-weight: 200; 
@@ -67,8 +64,8 @@ html, body {
   user-select: none;
 }
 .project-title {
-  left: 40px;
-  top: 30px;
+  left: var(--padding);
+  top: var(--padding);
   height: 50px;
 }
 .start-btn {
@@ -83,8 +80,8 @@ html, body {
   border: none;
   width: 1.6em;
   -webkit-text-stroke: 1px #000;
-  right: 40px;
-  bottom: 30px;
+  right: var(--padding);
+  bottom: var(--padding);
   height: 50px;
   z-index: 25;
 }
@@ -110,6 +107,28 @@ html, body {
   margin-bottom: 20px;
   line-height: 1.8em;
   font-weight: 200;
+}
+
+.guides, .duration {
+  font-size: 0.85em;
+  position: absolute;
+  z-index: 20;
+  color: green;
+  line-height: 1.6em;
+  user-select: none;
+}
+.guides {
+  bottom: var(--padding);
+  left: var(--padding);
+}
+.duration {
+  top: var(--padding);
+  right: var(--padding);
+}
+.guides span {
+  border: 1px solid green;
+  border-radius: 5px;
+  padding: 0 5px;
 }
 
 /* --------- media elements --------- */
@@ -156,15 +175,17 @@ html, body {
 
 @media (max-width: 800px) {
   :root {
-    --text-font-size: 14px;
-    --header-font-size: 1.6em;
+    --text-font-size: 1em;
+    --header-font-size: 1.5em;
     --padding: 20px;
   }
   .project-title {
     top: var(--padding);
+    left: var(--padding);
   }
   .about-btn {
-    bottom: var(--padding);
+    top: var(--padding);
+    right: var(--padding)
   }
   .about {
     width: calc(100vw - (var(--padding) * 2));

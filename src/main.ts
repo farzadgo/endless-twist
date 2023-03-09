@@ -6,7 +6,7 @@ import { manager } from './core/loader';
 import { renderer, scene } from './core/renderer';
 import { camera, updateCamera, cameraRotations } from './core/camera';
 import { handleImages, handleAudios, handleVideos } from './updatemedia';
-import { showOverlay, hideOverlay, updateUI } from './core/gui';
+import { showOverlay, hideOverlay, updateUI, updateDurationUI } from './core/gui';
 
 import { throttle } from 'throttle-debounce';
 import './style.css';
@@ -21,8 +21,7 @@ let animID: number;
 export let elapsed = 0;
 let running = false;
 let ended = false;
-// let _totalTime = 0;
-
+export const animDuration = 1100;
 const STEPS_PER_FRAME = 5;
 
 manager.onError = (url) => console.log('error loading ' + url);
@@ -42,7 +41,6 @@ export const startAnim = () => {
     // document.body.requestFullscreen();
     loop();
     running = true;
-    
     camera.rotation.set(cameraRotations.x, cameraRotations.y, 0);
     hideOverlay();
   } else {
@@ -53,15 +51,14 @@ export const startAnim = () => {
   // controls.lock();
 }
 
-
-export const stopAnim = () => {  
-  cancelAnimationFrame(animID);
+export const stopAnim = () => {
+  document.exitPointerLock();
   // document.exitFullscreen();
+
+  cancelAnimationFrame(animID);
   running = false;
-  // _totalTime += _elapsed;
   showOverlay();
 }
-
 
 const onPointerLockChange = () => {
   if (document.pointerLockElement !== document.body) {
@@ -76,8 +73,20 @@ const onDocumentMouseMove = (event: {
   camera.rotation.x -= event.movementY * 0.0002;
 }
 
+
 document.body.addEventListener('mousemove', onDocumentMouseMove);
 document.addEventListener('pointerlockchange', onPointerLockChange);
+// document.addEventListener("fullscreenchange", onFullscreenchange);
+document.addEventListener('keyup', event => {
+  if (event.code === 'Space') {
+    if (running) {
+      stopAnim();
+    } else {
+      startAnim();
+    }
+  }
+});
+
 
 // const controls = new PointerLockControls(camera, renderer.domElement);
 // // --- START
@@ -139,8 +148,8 @@ const clock = new THREE.Clock();
 export const reset = () => {
   ended = true;
   elapsed = 0;
+  stopAnim();
   // clock.stop();
-  document.exitPointerLock();
 }
 
 
@@ -166,6 +175,7 @@ const loop = () => {
 
 const controlTime = throttle(1000, () => {
   // console.log(elapsed);
+  // console.log(document.fullscreenElement, document.pointerLockElement);
   
   if (running) {
     elapsed += 1;
@@ -175,8 +185,5 @@ const controlTime = throttle(1000, () => {
   handleAudios(elapsed, running);
   handleVideos(elapsed, running);
 
-  // // in case of Clock START/STOP
-  // _elapsed = Math.round(clock.elapsedTime);
-  // let totalElapsed = _elapsed + time;
-  // if (running) handleImages(totalElapsed);
+  updateDurationUI(elapsed);
 });

@@ -23,9 +23,8 @@ const aboutTexts = {
 }
 
 
-import { startAnim } from "../main";
+import { startAnim, container, animDuration } from "../main";
 import { fraction } from "./camera";
-
 
 // let importedImageModule = 'blabla/images/01-render-cJustus-1.jpg'
 
@@ -41,7 +40,24 @@ const getAnIcon = (arr:string[]) => {
   return selectedIcon
 }
 
-// --- created and append ---
+const timeFormatter = (duration: number) => {
+  const hrs = Math.floor(duration / 3600);
+  const mins = Math.floor((duration % 3600) / 60);
+  const secs = Math.floor(duration % 60);
+
+  let ret = "";
+
+  if (hrs > 0) {
+    ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+  }
+  ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+  ret += "" + secs;
+
+  // Output like "1:01" or "4:03:59" or "123:03:59"
+  return ret;
+}
+
+// --- created & listeners? ---
 const startBtn = document.createElement('button');
 startBtn.className = 'start-btn';
 startBtn.textContent = 'start';
@@ -55,7 +71,14 @@ infoDiv.className = 'about'
 
 const projectTitle = document.createElement('h1');
 projectTitle.className = 'project-title';
-projectTitle.textContent = 'endless twist'
+projectTitle.textContent = 'endless twist';
+
+const guides = document.createElement('div');
+guides.className = 'guides';
+
+const duration = document.createElement('div');
+duration.className = 'duration';
+
 
 const showAbout = () => {
   aboutBtn.textContent = !aboutIsShown ? '✕' : getAnIcon(iconsStrings);
@@ -89,14 +112,20 @@ const showAbout = () => {
 aboutBtn.addEventListener('click', showAbout);
 
 
-
 export const updateUI = () => {  
   // let startBtnContent = _totalTime ? 'continue' : 'start';
-  if (fraction > 0.99 && fraction < 1.0) {
+  if (fraction > 0.98 && fraction < 1.0) {
     startBtn.textContent = 'restart';
   } else {
     startBtn.textContent = 'continue';
   }
+}
+
+export const updateDurationUI = (elapsed: number) => {
+  duration.innerHTML = `
+    <span>${timeFormatter(elapsed)}</span>
+    / <span>${timeFormatter(animDuration)}</span>
+  `;
 }
 
 
@@ -123,7 +152,15 @@ export const showOverlay = () => {
     startBtn.style.pointerEvents = 'auto';
   }, 1000);
 
-
+  guides.innerHTML = `
+    <ul>
+      <li><i>pause</i> <span>space</span></li>
+      <li><i>look around</i> Mouse_Trackpad</li>
+      <li><i>fullscreen</i> <span>F11</span></li>
+      <li><i>mute</i> <span>M</span></li>
+    </ul>
+  `;
+  overlay?.appendChild(guides);
 }
 
 export const hideOverlay = () => {
@@ -133,4 +170,11 @@ export const hideOverlay = () => {
   }, 1000);
 
   startBtn.style.display = 'none';
+}
+
+export const showGuides = () => {
+  duration.innerHTML = `
+    <span>durationn ${timeFormatter(animDuration)}</span>
+  `;
+  container?.appendChild(duration);
 }

@@ -14,7 +14,7 @@ const modelUrls = [
 import { LoadingManager } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { scene } from '../core/renderer';
-import { showOverlay } from './gui';
+import { showOverlay, showGuides } from './gui';
 
 
 const loaderDiv = document.querySelector<HTMLDivElement>('.loader');
@@ -34,6 +34,7 @@ manager.onLoad = () => {
 
   // --- handle GUI or show start btn
   showOverlay();
+  showGuides();
 
   // // TO_DO: start the loop/animate/renderer.render
   // // BUT wait for the button to start the camera meove etc.

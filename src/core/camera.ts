@@ -7,7 +7,7 @@ import {
   Line
 } from 'three';
 import { scene, sizes } from './renderer';
-import { reset, elapsed } from '../main';
+import { reset, elapsed, animDuration } from '../main';
 // import { throttle } from 'throttle-debounce';
 
 
@@ -48,14 +48,14 @@ window.addEventListener('resize', () => {
 scene.add(camera);
 
 export const updateCamera = (dt: number) => {
-  fraction += dt / 1100;
+  fraction += dt / animDuration;
   // console.log(fraction);
 
   // --- maybe redundant !?!?
   cameraRotations.x = camera.rotation.x;
   cameraRotations.y = camera.rotation.y;
 
-  if (fraction > 0.99 || elapsed > 1099) {
+  if (fraction > 0.99 || elapsed > (animDuration - 1)) {
     fraction = 0;
     reset();
   }
