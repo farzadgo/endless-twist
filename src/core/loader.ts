@@ -7,8 +7,8 @@ const modelUrls = [
   'https://res.cloudinary.com/dd3tumnu6/image/upload/v1676461881/tender-models/5_kellogs_uggrea.glb',
   'https://res.cloudinary.com/dd3tumnu6/image/upload/v1676461880/tender-models/5_coffee_zwfzq8.glb',
   'https://res.cloudinary.com/dd3tumnu6/image/upload/v1676461878/tender-models/6_sand_trcsgp.glb',
-  'https://res.cloudinary.com/dd3tumnu6/image/upload/v1676461879/tender-models/7_cream_g2rnvt.glb'
-]
+];
+const doublingUrl = 'https://res.cloudinary.com/dd3tumnu6/image/upload/v1676461879/tender-models/7_cream_g2rnvt.glb';
 
 
 import { LoadingManager } from 'three';
@@ -92,6 +92,8 @@ const loader = new GLTFLoader(manager);
 // modelFormatter(modelsData);
 
 
+// --------- standard loaders ---------
+
 loader.load(modelUrls[0], gltf => scene.add(gltf.scene));
 loader.load(modelUrls[1], gltf => scene.add(gltf.scene));
 loader.load(modelUrls[2], gltf => scene.add(gltf.scene));
@@ -100,26 +102,57 @@ loader.load(modelUrls[4], gltf => scene.add(gltf.scene));
 loader.load(modelUrls[5], gltf => scene.add(gltf.scene));
 loader.load(modelUrls[6], gltf => scene.add(gltf.scene));
 loader.load(modelUrls[7], gltf => scene.add(gltf.scene));
+
 loader.load(
-  modelUrls[8],
+  doublingUrl,
   gltf => {
-    scene.add(gltf.scene)
-    const copyOne = gltf.scene.clone();
-    const copyTwo = gltf.scene.clone();
+    const object = gltf.scene;
+    scene.add(object);
+    const copyOne = object.clone();
+    const copyTwo = object.clone();
     copyOne.position.set(398, 0, -484);
     copyTwo.position.set(796, 0, -968);
     scene.add(copyOne, copyTwo)
-  },
-  // xhr => console.log((xhr.loaded / xhr.total * 100) + '% loaded'),
-  // _error => console.log('model load error')
+  }
 );
 
 
-// --- This works as well ---
-// let modelsData: THREE.Group[] = [];
+// --------- collective wireframe models ---------
+
+// const wireMaterial = new MeshBasicMaterial({ color: 0xFF4500, wireframe: true });
+
+// // let modelsData: THREE.Group[] = [];
 // modelUrls.forEach(e => {
 //   loader.load(e, gltf => {
-//     modelsData.push(gltf.scene)
+//     // modelsData.push(gltf.scene)
+//     const object = gltf.scene;
+//     object.traverse((node) => {
+//       if (!(<THREE.Mesh> node).isMesh) return;
+//       (<THREE.Mesh> node).material = wireMaterial;
+//     });
+//     scene.add(object)
 //   })
 // });
-// --- until here ---
+
+// loader.load(
+//   doublingUrl,
+//   gltf => {
+//     const object = gltf.scene;
+//     // scene.add(object);
+//     // let object = gltf.scene.children[0];
+//     object.traverse((node) => {
+//       if (!(<THREE.Mesh> node).isMesh) return;
+//       // console.log((<THREE.Mesh> node));
+//       // (<THREE.Mesh> node).material.wireframe = true;
+//       (<THREE.Mesh> node).material = wireMaterial;
+//       scene.add(object);
+//     });
+//     const copyOne = object.clone();
+//     const copyTwo = object.clone();
+//     copyOne.position.set(398, 0, -484);
+//     copyTwo.position.set(796, 0, -968);
+//     scene.add(copyOne, copyTwo)
+//   },
+//   // xhr => console.log((xhr.loaded / xhr.total * 100) + '% loaded'),
+//   // _error => console.log('model load error')
+// );

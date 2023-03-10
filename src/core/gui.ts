@@ -19,11 +19,11 @@
 
 const aboutTexts = {
   aboutOne: 'While “local” is related to corporeal proximity, intimacy, slowness, and relational multi-sensorial connections, “global” is craving for speed, precision, convenience, interest rate, and marketing. Conglomerates such as Google use local resources in its way for their own sake. They use notions such as maps and mapping to establish local dependencies, and eventually financial dominance. The same is with local construction companies and urban development industries as a part global free-market constitution, appropriating water and land for marketing the spaces they construct. In this feedback loop of spatial appropriation, Google Maps services incorporate the absence of bodies and places while accumulating data regarding our cities and their existence. It is just a matter of perspective, how to extract that data, and how to read and narrate it. Is it possible to use it against its constitution?',
-  aboutTwo: '',
+  aboutTwo: 'Endless Twist is a guided walk through a 3D space that is constructed by urban fragments and personal memories. It is an audiovisual performance presenting Hacer Sitio’s critical perspective regarding the agency of the human and non-human, and by extension of architects, planners, and owners. While reflecting on the role of architecture as an apparatus that produces power dynamics, Farzad Golghasemi and Gabriela Valdespino examine the corporeality associated with physical and digital spaces, through a techno-poetical interpretation of the contemporary state of political economy.',
 }
 
 
-import { startAnim, container, animDuration } from "../main";
+import { startAnim, container, animDuration, isMobile } from "../main";
 import { fraction } from "./camera";
 
 // let importedImageModule = 'blabla/images/01-render-cJustus-1.jpg'
@@ -79,6 +79,7 @@ guides.className = 'guides';
 const duration = document.createElement('div');
 duration.className = 'duration';
 
+// TODO: when about is shown, hide Guides and Start Btn with state...
 
 const showAbout = () => {
   aboutBtn.textContent = !aboutIsShown ? '✕' : getAnIcon(iconsStrings);
@@ -91,14 +92,29 @@ const showAbout = () => {
     infoDiv!.innerHTML = `
       <section>
         <p>${aboutTexts.aboutOne}</p>
+        <p>${aboutTexts.aboutTwo}</p>
       </section>
       <section>
-        <h3> thanks to </h3>
-        <p> coming soon... </p>
+        <h3> Credits </h3>
+        <p> Concept, Text, 3D, Programming: <b>Farzad Golghasemi</b></p>
+        <p> Sound, Dramaturgy, Artistic Collaboration: <b>Gabriela Valdespino</b></p>
+        <p> Audio technical support: <b>Alparslan Teke</b></p>
       </section>
       <section>
-        <h3> references </h3>
-        <p> coming soon... </p>
+        <h3> Biography </h3>
+        <p> Farzad Golghasemi <a href="https://instagram.com/dis___orient/" target="blank">@dis___orient</a> and Gabriela Valdespino <a href="https://instagram.com/lowfisd/" target="blank">@lowfisd</a> (hacer sitio) work together involving corporeal
+        and digital spaces in conjunction with text, image, sound, video, web, and installation. Their body of work is initiated
+        by inspections of social phenomena and associated spatial [re]productions. In this context, they question the
+        relationship between social and somatic, and how the body, mind, and social settings are intricately linked. Rather
+        than mere aesthetics, they are interested in lived experience which motivates them to work with performative
+        methodologies such as walking to explore phenomenological and multi-sensory aspects of the built environment.</p>
+      </section>
+      <section>
+        <p>This project was made possible by participation in the project <b>Tender Absence</b> (ta.peira.space) by the collective <b>Peira</b> (www.peira.space) in cooperation with <b>Schwankhalle Bremen</b> and friendly support of <b>Senator für Kultur Bremen</b> and <b>University of the Arts Bremen</b>.</p>
+      </section>
+      <section>
+        <h3> Special thanks to </h3>
+        <p> Lucas Kalmus · Abd Tammaa · Prof. Dr. Andrea Sick · Kilian Schwoon · Neus Ledesma Vidal · Saba Innab · Thealit F.K.L. · Jukka Boehm · Prof. Dennis Paul</p>
       </section>
     `
     overlay?.appendChild(infoDiv);
@@ -154,13 +170,13 @@ export const showOverlay = () => {
 
   guides.innerHTML = `
     <ul>
-      <li><i>pause</i> <span>space</span></li>
-      <li><i>look around</i> Mouse_Trackpad</li>
+      <li><i>pause</i> <span>space bar</span></li>
+      <li><i>look around</i> <span>mouse_trackpad</span></li>
       <li><i>fullscreen</i> <span>F11</span></li>
       <li><i>mute</i> <span>M</span></li>
     </ul>
   `;
-  overlay?.appendChild(guides);
+  if (!isMobile()) overlay?.appendChild(guides);
 }
 
 export const hideOverlay = () => {
@@ -174,7 +190,7 @@ export const hideOverlay = () => {
 
 export const showGuides = () => {
   duration.innerHTML = `
-    <span>durationn ${timeFormatter(animDuration)}</span>
+    <span>duration ${timeFormatter(animDuration)}</span>
   `;
-  container?.appendChild(duration);
+  if (!isMobile()) container?.appendChild(duration);
 }

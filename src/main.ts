@@ -11,7 +11,7 @@ import { showOverlay, hideOverlay, updateUI, updateDurationUI } from './core/gui
 import { throttle } from 'throttle-debounce';
 import './style.css';
 
-const isMobile = () => {
+export const isMobile = () => {
   return (( window.innerWidth <= 800 ) || ( window.innerHeight <= 600 ));
 }
 
@@ -25,7 +25,6 @@ export const animDuration = 1100;
 const STEPS_PER_FRAME = 5;
 
 manager.onError = (url) => console.log('error loading ' + url);
-
 
 
 // --------- CONTROLS ---------
@@ -66,11 +65,29 @@ const onPointerLockChange = () => {
   }
 }
 
+let inertia: number;
+let movementX: number;
+let movementY: number;
+
 const onDocumentMouseMove = (event: {
   movementY: number; movementX: number; 
 }) => {
-  camera.rotation.y -= event.movementX * 0.0002;
-  camera.rotation.x -= event.movementY * 0.0002;
+  // // 0.05 and (inertia / 50) also good
+  inertia = 0.2;
+  movementX = event.movementX;
+  movementY = event.movementY;
+  // camera.rotation.y -= event.movementX * 0.0002;
+  // camera.rotation.x -= event.movementY * 0.0002;
+}
+
+
+const updateControls = (dt: number) => {
+  inertia -= dt;
+  if (inertia < 0) {
+    inertia = 0;
+  }
+  camera.rotation.y -= movementX * (inertia / 1000);
+  camera.rotation.x -= movementY * (inertia / 1000);
 }
 
 
@@ -159,6 +176,7 @@ const loop = () => {
   updateUI();
 
   const deltaTime: number = Math.min( 0.05, clock.getDelta()) / STEPS_PER_FRAME;
+  updateControls(deltaTime);
 
   // controls.update();
   for (let i = 0; i < STEPS_PER_FRAME; i ++) {

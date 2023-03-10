@@ -285,8 +285,8 @@ export const handleImages = (elapsed: number) => {
 
   // 31 seconds
   imageHandler(elapsed, 761, 796, postcard_render_3);
-  imageHandler(elapsed, 767, 794, postcard_beach);
-  imageHandler(elapsed, 773, 792, postcard_render_2);
+  imageHandler(elapsed, 767, 793, postcard_beach);
+  imageHandler(elapsed, 773, 790, postcard_render_2);
 
   imageHandler(elapsed, 885, 910, conversation_gabi);
 }
