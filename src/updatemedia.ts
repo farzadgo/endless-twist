@@ -367,6 +367,7 @@ const imageHandler = (elapsed: number, t1: number, t2: number, uri: string) => {
   // }
 
   if (elapsed === t1) {
+    console.log(`${t1} show image`);
     // let uuid = Math.random().toString(36).slice(-6);
     // imageContainer.setAttribute('id', uuid);
     imageElement.src = uri;
@@ -381,11 +382,12 @@ const imageHandler = (elapsed: number, t1: number, t2: number, uri: string) => {
   }
 
   if (elapsed === t2) {
+    console.log(`${t2} gone image`);
     const selectedContainer = document.querySelector<HTMLDivElement>('.modal');
     selectedContainer!.style.opacity = '0';
     setTimeout(() => {
       selectedContainer?.remove();
-      // return
+      return
     }, 1000);
   }
 }
@@ -403,10 +405,10 @@ const bringAllImages = (elapsed: number) => {
 
   allImages.forEach((e, i) => {
     imageHandler(elapsed, i + 920, i + 923, e);
-    // imageHandler(elapsed, (i * 0.5) + 5, (i * 0.5) + 7, e);
   });
 
   // allImages.forEach((e, i) => {
+  // imageHandler(elapsed, (i * 0.5) + 5, (i * 0.5) + 7, e);
   // imageHandler(elapsed, i + 5, (36 + (i * 0.2)), e);
   // });
 }

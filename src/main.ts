@@ -1,8 +1,8 @@
 
 // import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
 // import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
-import { manager } from './core/loader';
 import { Clock, DirectionalLight, AmbientLight} from 'three';
+import { manager } from './core/loader';
 import { renderer, scene } from './core/renderer';
 import { camera, updateCamera, cameraRotations } from './core/camera';
 import { handleImages, updateAudio, handleVideos, pauseAudio, playAudio } from './updatemedia';

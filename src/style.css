@@ -15,8 +15,6 @@
   --text-font-size: 1.2em;
   --header-font-size: 1.7em;
   --padding: 36px;
-  --img-w1: 380px;
-  --img-w2: 120px;
 }
 html, body {
   padding: 0;
@@ -27,14 +25,12 @@ html, body {
   width: 100%;
   height: 100%;
 }
-
 * {  
   box-sizing: border-box;
   list-style: none;
   margin: 0;
   padding: 0;
 }
-
 #webgl-container {
   position: absolute;
   width: 100%;
@@ -47,6 +43,7 @@ a {
   text-decoration: none;
   font-weight: 400;
 }
+
 /* --------- overlay / info --------- */
 #overlay {
   position: absolute;
@@ -131,10 +128,13 @@ a {
   justify-content: center;
 }
 .image-container img {
-  width: var(--img-w1);
+  width: 240px;
+}
+.image-container:nth-child(2) img {
+  margin-bottom: 20px;
 }
 .image-container:first-child img {
-  width: var(--img-w2);
+  width: 90px;
 }
 
 .guides, .duration {
@@ -206,8 +206,6 @@ a {
     --text-font-size: 0.9em;
     --header-font-size: 1.4em;
     --padding: 20px;
-    --img-w1: 220px;
-    --img-w2: 90px;
   }
   .project-title {
     top: var(--padding);
