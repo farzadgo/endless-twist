@@ -13,8 +13,10 @@
 }
 :root {
   --text-font-size: 1.2em;
-  --header-font-size: 1.8em;
+  --header-font-size: 1.7em;
   --padding: 36px;
+  --img-w1: 380px;
+  --img-w2: 120px;
 }
 html, body {
   padding: 0;
@@ -40,8 +42,10 @@ html, body {
   overflow: hidden;
 }
 a {
-  color: rgb(81, 142, 178);
+  /* color: rgb(81, 142, 178); */
+  color: #7D4F8A;
   text-decoration: none;
+  font-weight: 400;
 }
 /* --------- overlay / info --------- */
 #overlay {
@@ -100,26 +104,42 @@ a {
   left: 15vw;
   top: 110px;
   border: 1px solid #fff;
-  padding: var(--padding);
+  padding: calc(var(--padding) - 10px) var(--padding);
   overflow-y: scroll;
 }
 .about section {
   margin-bottom: 40px;
 }
 .about h3 {
-  margin-bottom: 0.5em;
+  font-size: var(--header-font-size);
+  margin-bottom: 1em;
 }
 .about p {
   font-size: var(--text-font-size);
-  margin-bottom: 20px;
+  margin-bottom: 0.8em;
   line-height: 1.8em;
   font-weight: 200;
 }
+.about p:last-child {
+  margin-bottom: 2.6em;
+}
+
+.image-container {
+  display: flex;
+  min-width: 100%;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+.image-container img {
+  width: var(--img-w1);
+}
+.image-container:first-child img {
+  width: var(--img-w2);
+}
 
 .guides, .duration {
-  /* font-size: 0.9em; */
   position: absolute;
-  z-index: 20;
+  z-index: 21;
   color: #7D4F8A;
   line-height: 1.8em;
   user-select: none;
@@ -142,6 +162,7 @@ a {
 .modal {
   position: absolute;
   transition: all 1s;
+  z-index: 11;
 }
 #video-player {
   position: absolute;
@@ -182,9 +203,11 @@ a {
 
 @media (max-width: 800px) {
   :root {
-    --text-font-size: 1em;
-    --header-font-size: 1.5em;
+    --text-font-size: 0.9em;
+    --header-font-size: 1.4em;
     --padding: 20px;
+    --img-w1: 220px;
+    --img-w2: 90px;
   }
   .project-title {
     top: var(--padding);

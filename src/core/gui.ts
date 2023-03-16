@@ -16,22 +16,29 @@
 //   label: 'fpsgraph',
 // }) as FPSGraph
 
-
 const aboutTexts = {
   aboutOne: 'While “local” is related to corporeal proximity, intimacy, slowness, and relational multi-sensorial connections, “global” is craving for speed, precision, convenience, interest rate, and marketing. Conglomerates such as Google use local resources in its way for their own sake. They use notions such as maps and mapping to establish local dependencies, and eventually financial dominance. The same is with local construction companies and urban development industries as a part global free-market constitution, appropriating water and land for marketing the spaces they construct. In this feedback loop of spatial appropriation, Google Maps services incorporate the absence of bodies and places while accumulating data regarding our cities and their existence. It is just a matter of perspective, how to extract that data, and how to read and narrate it. Is it possible to use it against its constitution?',
   aboutTwo: 'Endless Twist is a guided walk through a 3D space that is constructed by urban fragments and personal memories. It is an audiovisual performance presenting Hacer Sitio’s critical perspective regarding the agency of the human and non-human, and by extension of architects, planners, and owners. While reflecting on the role of architecture as an apparatus that produces power dynamics, Farzad Golghasemi and Gabriela Valdespino examine the corporeality associated with physical and digital spaces, through a techno-poetical interpretation of the contemporary state of political economy.',
 }
 
+import {
+  startAnim,
+  animDuration,
+  isMobile,
+  // container
+} from '../main';
+import { fraction } from './camera';
 
-import { startAnim, container, animDuration, isMobile } from "../main";
-import { fraction } from "./camera";
+import hfk_logo from '../images/logo-hfk.png';
+import sfk_logo from '../images/logo-sfk.png';
+import schwa_logo from '../images/logo-schwankhalle.png';
+import peira_logo from '../images/logo-peira.png';
 
 // let importedImageModule = 'blabla/images/01-render-cJustus-1.jpg'
 
 let aboutIsShown = false;
 
 const overlay = document.getElementById('overlay');
-
 
 const iconsStrings = ['☰', '☱','☲', '☳', '☴', '☵', '☶', '☷'];
 const getAnIcon = (arr:string[]) => {
@@ -79,11 +86,11 @@ guides.className = 'guides';
 const duration = document.createElement('div');
 duration.className = 'duration';
 
-// TODO: when about is shown, hide Guides and Start Btn with state...
 
 const showAbout = () => {
   aboutBtn.textContent = !aboutIsShown ? '✕' : getAnIcon(iconsStrings);
   startBtn.style.display = !aboutIsShown ? 'none' : 'block';
+  guides.style.display = !aboutIsShown ? 'none' : 'block';
   // projectTitle.style.display = !aboutIsShown ? 'none' : 'block';
 
   // <img src="${importedImageModule}" alt="senator-für-ükultur" />
@@ -91,30 +98,47 @@ const showAbout = () => {
   if (!aboutIsShown) {    
     infoDiv!.innerHTML = `
       <section>
-        <p>${aboutTexts.aboutOne}</p>
-        <p>${aboutTexts.aboutTwo}</p>
+        <p> ${aboutTexts.aboutOne} </p>
+        <p> ${aboutTexts.aboutTwo} </p>
       </section>
       <section>
         <h3> Credits </h3>
         <p> Concept, Text, 3D, Programming: <b>Farzad Golghasemi</b></p>
         <p> Sound, Dramaturgy, Artistic Collaboration: <b>Gabriela Valdespino</b></p>
-        <p> Audio technical support: <b>Alparslan Teke</b></p>
+        <p> Audio technical support: <a href="https://ap0teke.github.io/" target="blank">ap0teke</a></p>
       </section>
       <section>
         <h3> Biography </h3>
-        <p> Farzad Golghasemi <a href="https://instagram.com/dis___orient/" target="blank">@dis___orient</a> and Gabriela Valdespino <a href="https://instagram.com/lowfisd/" target="blank">@lowfisd</a> (hacer sitio) work together involving corporeal
-        and digital spaces in conjunction with text, image, sound, video, web, and installation. Their body of work is initiated
-        by inspections of social phenomena and associated spatial [re]productions. In this context, they question the
-        relationship between social and somatic, and how the body, mind, and social settings are intricately linked. Rather
-        than mere aesthetics, they are interested in lived experience which motivates them to work with performative
-        methodologies such as walking to explore phenomenological and multi-sensory aspects of the built environment.</p>
+        <p> Farzad Golghasemi <a href="https://instagram.com/dis___orient/" target="blank">@dis___orient</a> and Gabriela Valdespino
+        <a href="https://instagram.com/lowfisd/" target="blank">@lowfisd</a> (hacer sitio) work together involving corporeal and digital
+        spaces in conjunction with text, image, sound, video, web, and installation. Their body of work is initiated by inspections of
+        social phenomena and associated spatial [re]productions. In this context, they question the relationship between social and
+        somatic, and how the body, mind, and social settings are intricately linked. Rather than mere aesthetics, they are interested
+        in lived experience which motivates them to work with performative methodologies such as walking to explore phenomenological
+        and multi-sensory aspects of the built environment. </p>
       </section>
       <section>
-        <p>This project was made possible by participation in the project <b>Tender Absence</b> (ta.peira.space) by the collective <b>Peira</b> (www.peira.space) in cooperation with <b>Schwankhalle Bremen</b> and friendly support of <b>Senator für Kultur Bremen</b> and <b>University of the Arts Bremen</b>.</p>
+        <p> ❯❯ This project was made possible by participation in the project <a href="https://ta.peira.space/" target="blank"><b>Tender Absence</b></a> by the collective
+        <b>Peira</b> (www.peira.space) in cooperation with <b>Schwankhalle Bremen</b> and friendly support of <b>Senator für Kultur Bremen</b>
+        and <b>University of the Arts Bremen</b>. ❮❮ </p>
+      </section>
+      <section id="logos">
+        <div class="image-container"> <img src=${peira_logo} alt="peira-logo"> </div>
+        <div class="image-container"> <img src=${schwa_logo} alt="schwankhalle-logo"> </div>
+        <div class="image-container"> <img src=${hfk_logo} alt="HfK-logo"> </div>
+        <div class="image-container"> <img src=${sfk_logo} alt="SfK-logo"> </div>
       </section>
       <section>
         <h3> Special thanks to </h3>
-        <p> Lucas Kalmus · Abd Tammaa · Prof. Dr. Andrea Sick · Kilian Schwoon · Neus Ledesma Vidal · Saba Innab · Thealit F.K.L. · Jukka Boehm · Prof. Dennis Paul</p>
+        <p> Lucas Kalmus · Abd Tammaa · Prof. Dr. Andrea Sick · Kilian Schwoon · Neus Ledesma Vidal · Saba Innab · Thealit F.K.L. · Jukka Boehm · Victor Artiga Rodriguez · Prof. Dennis Paul </p>
+      </section>
+      <section>
+        <h3> Image Credits and Copyrights </h3>
+        <p> Renderings: Justus Grosse GmbH / 3D artists: Unknown </p>
+        <p> Postcards: Überseestadt Marketingverein / 3D artits: Unknown </p>
+        <p> Photos: © Hafenmuseum Bremen / Photographer: © Daniela Buchholz </p>
+        <p> Photos: © Kulturhaus-Walle Bremen / Photographer: © Hans Brockmöller </p>
+        <p> Banner photos: Farzad Golghasemi </p>
       </section>
     `
     overlay?.appendChild(infoDiv);
@@ -139,7 +163,7 @@ export const updateUI = () => {
 
 export const updateDurationUI = (elapsed: number) => {
   duration.innerHTML = `
-    <span>${timeFormatter(elapsed)}</span>
+    <span>${timeFormatter(Math.floor(elapsed))}</span>
     / <span>${timeFormatter(animDuration)}</span>
   `;
 }
@@ -160,7 +184,7 @@ export const showOverlay = () => {
     }, 10);
   }
 
-  startBtn.style.display = 'block';
+  if (!aboutIsShown) startBtn.style.display = 'block';
   startBtn.style.pointerEvents = 'none';
   startBtn.style.opacity = '0.3';
   setTimeout(() => {
@@ -177,6 +201,7 @@ export const showOverlay = () => {
     </ul>
   `;
   if (!isMobile()) overlay?.appendChild(guides);
+  if (!isMobile()) overlay?.appendChild(duration);
 }
 
 export const hideOverlay = () => {
@@ -192,5 +217,5 @@ export const showGuides = () => {
   duration.innerHTML = `
     <span>duration ${timeFormatter(animDuration)}</span>
   `;
-  if (!isMobile()) container?.appendChild(duration);
+  // if (!isMobile()) container?.appendChild(duration);
 }

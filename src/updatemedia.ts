@@ -1,7 +1,6 @@
 import { container } from './main';
-const audioUrl = 'https://cloud.disorient.xyz/s/GJ7Cd5ABkJmNAig/download/web-endless-twist_final.mp3';
 
-// --- Photo imports
+// --- Photo imports (local)
 import render_1 from './images/01-render-cJustus-1.jpg';
 import render_2 from './images/01-render-cJustus-2.jpg';
 import render_3 from './images/01-render-cJustus-3.jpg';
@@ -19,19 +18,14 @@ import museum_fun_1 from './images/07-hafenmuseum-Daniela-Buchholz-03.jpg';
 import museum_fun_2 from './images/08-hafenmuseum-Daniela-Buchholz-02.jpg';
 import museum_fun_3 from './images/09-hafenmuseum-Daniela-Buchholz-01.jpg';
 import hafen_storch from './images/06-hafen-Brockmoeller-Kulturhaus-Walle.jpg';
-// import museum_web_1 from './images/10-hafenmuseum-architect.jpg';
-// import museum_web_2 from './images/11-hafenmuseum-future.jpg';
-// import museum_devplan from './images/12-hafenmuseum-master-alt.jpg';
 import museum_master from './images/13-master.jpg';
 import postcard_render_1 from './images/14-postcard-reuse.jpg'; 
-// import postcard_landmark from './images/15-postcard-landmark.jpg';
 import landvalue from './images/16-landlord-henry-geoge.jpg';
 // import containerPlus from './images/17-container-A.jpg';
 
 import fabric_1 from './images/18-fabric-ation.jpg';
 import fabric_2 from './images/19-fabric-ation.jpg';
 import fabric_3 from './images/20-fabric-ation.jpg';
-// import land_sand from './images/21-land-sand.jpg';
 import watersand_1 from './images/22-water-sand.jpg';
 import watersand_2 from './images/23-water-sand.jpg';
 import sandfill_1 from './images/24-sand-fill.jpg';
@@ -44,30 +38,29 @@ import seehausen_4 from './images/Seehausen-5.jpg';
 import seehausen_5 from './images/Seehausen-6.jpg';
 import seehausen_6 from './images/Seehausen-8.jpg';
 
-import postcard_beach from './images/26-postcard-beach.jpg';
+// import postcard_beach from './images/26-postcard-beach.jpg';
 import postcard_render_2 from './images/27-postcard-europa.jpg';
 import postcard_render_3 from './images/28-postcard-unreal.jpg';
-// import london_bremen from './images/29-place-holder.jpg';
-// import insideout_1 from './images/30-inside-out.jpg';
-// import insideout_2 from './images/31-inside-out.jpg';
-// import einmal_alles from './images/34-fabric.jpg';
-import conversation_farzi_1 from './images/conversation-01.png';
-// import conversation_farzi_2 from './images/conversation-02.png';
-import conversation_gabi from './images/conversation-03.png';
+
+import i_wonder_text from './images/conversation-01.png';
+import as_i_walk_text from './images/conversation-02.png';
+import this_area_text from './images/conversation-03.png';
 
 
-// --- Video imports
+// --- Audio imports (URLs)
+const audioUrl = 'https://cloud.disorient.xyz/s/GJ7Cd5ABkJmNAig/download/web-endless-twist_final.mp3';
+
+
+// --- Video imports (URLs)
 const topViewConstructing = 'https://cloud.disorient.xyz/s/KfpKkN4BRexJcP8/download/overthesee_1.mp4';
-const laterlMove = 'https://cloud.disorient.xyz/s/ZpRkGx679QNmdJ6/download/overthesee_2.mov';
-const skyMove = 'https://cloud.disorient.xyz/s/EjKBoRctyZZgg2T/download/overthesee_3.mov';
 const walkingVideo = 'https://cloud.disorient.xyz/s/FpTEH6gHHpeN2Yf/download/they_are_short_720.mov';
-
+// const lateralMoveVideo = 'https://cloud.disorient.xyz/s/ZpRkGx679QNmdJ6/download/overthesee_2.mov';
+// const skyMoveVideo = 'https://cloud.disorient.xyz/s/EjKBoRctyZZgg2T/download/overthesee_3.mov';
 
 
 const randomIntFromInterval = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
-
 
 const getPosDims = () => {
   // const width = randomIntFromInterval(650, 800);
@@ -84,10 +77,33 @@ const getPosDims = () => {
   }
 }
 
+// class Timeout {
+//   time: number;
+//   callback: TimerHandler;
+//   timeout: number | undefined;
+//   startedTime: number = 0;
+//   constructor(callbackFunction: TimerHandler, time: number) {
+//     this.time = time; 
+//     this.callback = callbackFunction; 
+//     this.run(); // It will be automatically invoked when the constructor is run
+//   }
+//   run() {
+//     this.startedTime = new Date().getTime();
+//     if (this.time > 0) {
+//       this.timeout = setTimeout(this.callback, this.time); // Timeout must be set if this.time is greater than 0
+//     }
+//   }
+//   pause() {
+//     let currentTime = new Date().getTime();
+//     this.time = this.time - (currentTime - this.startedTime); // The time that was given when initializing the timeout is subtracted from the amount of time spent
+//     clearTimeout(this.timeout);
+//   }
+// }
+
 
 // --------- SINGLE AUDIO HANDLING ---------
 
-let audioStarted = false;
+// let audioStarted = false;
 let audioEnded = false;
 
 const audioElement = document.createElement('audio');
@@ -97,12 +113,18 @@ audioElement.src = audioUrl;
 audioElement.loop = false;
 
 
-audioElement?.addEventListener('playing', () => {
-  console.log('audio playing');
-  audioStarted = true;
-});
+// audioElement?.addEventListener('playing', () => {
+//   audioStarted = true;
+// });
 
-// audioElement?.addEventListener('pause', () => console.log('audio paused'));
+// audioElement?.addEventListener('play', () => {
+//   console.log('audio play');
+//   audioStarted = true;
+// });
+
+// audioElement?.addEventListener('pause', () => {
+//   console.log('audio pause');
+// });
 
 audioElement?.addEventListener('ended', () => {
   console.log('audio ended');
@@ -115,21 +137,11 @@ audioElement?.addEventListener('ended', () => {
 // });
 
 
-export const handleAudios = (elapsed: number, running: boolean) => {
-  // console.log(elapsed);
-  container?.appendChild(audioElement);
-  if (running) {
-    if (audioStarted && !audioEnded) {
-      audioElement.play();
-    }
-    if (elapsed === 1 && !audioStarted) {
-      audioElement.play();
-    }
-  }
-  if (!running) {
+export const updateAudio = (elapsed: number) => {
+  // container?.appendChild(audioElement);
+  // console.log(audioElement.volume);
+  if (audioEnded) {
     audioElement.pause();
-  }
-  if (running && audioEnded) {
     audioElement.remove();
     // audioElement.removeAttribute('src');
     // audioElement.load();
@@ -139,8 +151,39 @@ export const handleAudios = (elapsed: number, running: boolean) => {
   }
 }
 
+export const pauseAudio = () => {
+  let intervalID: number;
+  intervalID = setInterval(() => {
+    // console.log(audioElement.volume);
+    if (audioElement.volume > 0.1) {
+      audioElement.volume -= 0.1;
+    }
+    if (audioElement.volume < 0.1) {
+      audioElement.volume = 0;
+      audioElement.pause();
+      clearInterval(intervalID);
+    }
+  }, 100);
+}
+
+export const playAudio = () => {
+  audioElement.play();
+  audioElement.volume = 0;
+  let intervalID: number;
+  intervalID = setInterval(() => {
+    // console.log((Math.round(audioElement.volume * 10) / 10));
+    if (audioElement.volume < 0.9) {
+      audioElement.volume += 0.1;
+    }
+    if (audioElement.volume > 0.9) {
+      audioElement.volume = 1;
+      clearInterval(intervalID);
+    }
+  }, 100);
+}
+
+
 document.addEventListener('keyup', event => {
-  // console.log(event.code);
   if (event.code === 'KeyM') {
     if (!audioElement.muted) {
       audioElement.muted = true;
@@ -179,7 +222,7 @@ const createVideoElem = (id: number) => {
 }
 
 
-const videos = [createVideoElem(0), createVideoElem(1), createVideoElem(2), createVideoElem(3)];
+const videos = [createVideoElem(0), createVideoElem(1)];
 // to do with map()...
 // videos.map((e, i) => createVideoElem(i));
 
@@ -195,12 +238,11 @@ videos.forEach(e => e.element.addEventListener('ended', () => {
 
 
 export const handleVideos = (elapsed: number, running: boolean) => {
-  videoHandler(0, elapsed, 512, topViewConstructing, running);
-  videoHandler(1, elapsed, 891, walkingVideo, running);
-  videoHandler(2, elapsed, 970, laterlMove, running);
-  videoHandler(3, elapsed, 986, skyMove, running);
+  videoHandler(0, elapsed, 530, topViewConstructing, running);
+  videoHandler(1, elapsed, 710, walkingVideo, running);
+  // videoHandler(2, elapsed, 970, lateralMoveVideo, running);
+  // videoHandler(3, elapsed, 986, skyMoveVideo, running);
 }
-
 
 
 const videoHandler = (id: number, elapsed: number, t1: number, uri: string, running: boolean) => {
@@ -234,7 +276,7 @@ const videoHandler = (id: number, elapsed: number, t1: number, uri: string, runn
 // --------- IMAGES ---------
 
 export const handleImages = (elapsed: number) => {
-  imageHandler(elapsed, 17, 42, conversation_farzi_1);
+  imageHandler(elapsed, 12, 42, i_wonder_text);
 
   // --- ARCHITECTURE
   // 54 seconds
@@ -252,43 +294,47 @@ export const handleImages = (elapsed: number) => {
   imageHandler(elapsed, 269, 279, archihand);
 
   // --- HAFENMUSEUM
-  // 32 seconds
+  // 35 seconds
   imageHandler(elapsed, 321, 350, museum_fun_1);
   imageHandler(elapsed, 328, 352, museum_fun_2);
   imageHandler(elapsed, 334, 354, museum_fun_3);
   imageHandler(elapsed, 339, 356, hafen_storch);
 
-  // 67 seconds
+  // 45 seconds
   imageHandler(elapsed, 437, 467, museum_master);
   imageHandler(elapsed, 455, 472, postcard_render_1);
-  imageHandler(elapsed, 488, 503, landvalue);
+  // imageHandler(elapsed, 767, 793, postcard_beach);
+  imageHandler(elapsed, 463, 477, postcard_render_2);
+  imageHandler(elapsed, 471, 482, postcard_render_3);
 
-  // --- PART TWO
-  // 18 seconds
-  imageHandler(elapsed, 601, 615, fabric_1);
-  imageHandler(elapsed, 606, 617, fabric_2);
-  imageHandler(elapsed, 611, 619, fabric_3);
+  imageHandler(elapsed, 490, 520, landvalue);
+
+  // --- CONSTRUCTION
+  // 20 seconds
+  imageHandler(elapsed, 601, 617, fabric_1);
+  imageHandler(elapsed, 606, 619, fabric_2);
+  imageHandler(elapsed, 611, 621, fabric_3);
 
   // 28 seconds
   imageHandler(elapsed, 638, 653, watersand_1);
   imageHandler(elapsed, 644, 658, watersand_2);
   imageHandler(elapsed, 647, 662, sandfill_1);
   imageHandler(elapsed, 655, 666, sandfill_2);
+  
+  // 39 seconds
+  imageHandler(elapsed, 686, 710, seehausen_1);
+  imageHandler(elapsed, 692, 713, seehausen_2);
+  imageHandler(elapsed, 698, 716, seehausen_3);
+  imageHandler(elapsed, 704, 719, seehausen_4);
+  imageHandler(elapsed, 710, 722, seehausen_5);
+  imageHandler(elapsed, 716, 725, seehausen_6);
 
-  // 45 seconds
-  imageHandler(elapsed, 686, 716, seehausen_1);
-  imageHandler(elapsed, 692, 719, seehausen_2);
-  imageHandler(elapsed, 698, 722, seehausen_3);
-  imageHandler(elapsed, 704, 725, seehausen_4);
-  imageHandler(elapsed, 710, 728, seehausen_5);
-  imageHandler(elapsed, 716, 731, seehausen_6);
+  // in the middle of sidewalk video
+  imageHandler(elapsed, 742, 776, as_i_walk_text);
 
-  // 31 seconds
-  imageHandler(elapsed, 761, 796, postcard_render_3);
-  imageHandler(elapsed, 767, 793, postcard_beach);
-  imageHandler(elapsed, 773, 790, postcard_render_2);
+  bringAllImages(elapsed);
 
-  imageHandler(elapsed, 885, 910, conversation_gabi);
+  imageHandler(elapsed, 1030, 1060, this_area_text);
 }
 
 
@@ -296,8 +342,7 @@ const imageHandler = (elapsed: number, t1: number, t2: number, uri: string) => {
   
   const imageContainer = document.createElement('div');
   imageContainer.classList.value = 'modal';
-  // let uuid:string = Math.random().toString(36).slice(-6);
-  // imageContainer.setAttribute('id', uuid);
+
   imageContainer.style.left = `${getPosDims().xPos}px`;
   imageContainer.style.top = `${getPosDims().yPos}px`;
   imageContainer.style.width = `${getPosDims().width}px`;
@@ -312,27 +357,70 @@ const imageHandler = (elapsed: number, t1: number, t2: number, uri: string) => {
 
   imageContainer.appendChild(imageElement);
 
-  // const selectedContainer = document.querySelector<HTMLDivElement>('.modal');
+  // const removeElement = () => {
+  //   const selectedContainer = document.querySelector<HTMLDivElement>('.modal');
+  //   selectedContainer!.style.opacity = '0';
+  //   setTimeout(() => {
+  //     selectedContainer?.remove();
+  //     // return
+  //   }, 1000);
+  // }
 
   if (elapsed === t1) {
+    // let uuid = Math.random().toString(36).slice(-6);
+    // imageContainer.setAttribute('id', uuid);
     imageElement.src = uri;
     container?.appendChild(imageContainer);
     imageElement.onload = () => {
-      imageContainer.style.opacity = '1';
-      // setTimeout(() => {
-      //   imageContainer.style.opacity = '1';
-      // }, 500);
+      imageContainer.style.opacity = '0.88';
     }
+    // setTimeout(() => removeElement(), dur * 1000);
+    // const remover = new Timeout(removeElement, dur * 1000);
+    // remover.pause();
+    // remover.run();
   }
 
   if (elapsed === t2) {
     const selectedContainer = document.querySelector<HTMLDivElement>('.modal');
-    // const selected = document.getElementById(uuid);
     selectedContainer!.style.opacity = '0';
     setTimeout(() => {
       selectedContainer?.remove();
-      return
+      // return
     }, 1000);
   }
-
 }
+
+
+const bringAllImages = (elapsed: number) => {
+  const allImages = [
+    render_1, render_2, render_3, render_4, render_5, render_6,
+    render_7, render_8, render_9, render_10, render_11, archihand,
+    museum_fun_1, museum_fun_2, museum_fun_3, hafen_storch,
+    museum_master, postcard_render_1, postcard_render_2,
+    postcard_render_3, landvalue, fabric_1, fabric_2, fabric_3,
+    watersand_1, watersand_2, sandfill_1, sandfill_2
+  ];
+
+  allImages.forEach((e, i) => {
+    imageHandler(elapsed, i + 920, i + 923, e);
+    // imageHandler(elapsed, (i * 0.5) + 5, (i * 0.5) + 7, e);
+  });
+
+  // allImages.forEach((e, i) => {
+  // imageHandler(elapsed, i + 5, (36 + (i * 0.2)), e);
+  // });
+}
+
+
+// let imageOne: HTMLEmbedElement | null = null;
+// class FloatingImage {
+//   start: number;
+//   duration: number;
+//   constructor(start: number, duration: number) {
+//     this.start = start,
+//     this.duration = duration
+//   }
+//   get elem() {
+//     return 
+//   }
+// }

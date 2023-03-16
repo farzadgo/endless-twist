@@ -1,11 +1,11 @@
 
-import * as THREE from 'three';
 // import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
 // import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
 import { manager } from './core/loader';
+import { Clock, DirectionalLight, AmbientLight} from 'three';
 import { renderer, scene } from './core/renderer';
 import { camera, updateCamera, cameraRotations } from './core/camera';
-import { handleImages, handleAudios, handleVideos } from './updatemedia';
+import { handleImages, updateAudio, handleVideos, pauseAudio, playAudio } from './updatemedia';
 import { showOverlay, hideOverlay, updateUI, updateDurationUI } from './core/gui';
 
 import { throttle } from 'throttle-debounce';
@@ -19,12 +19,21 @@ export const container = document.getElementById('webgl-container');
 
 let animID: number;
 export let elapsed = 0;
+
 let running = false;
 let ended = false;
+let waited = true;
+
 export const animDuration = 1100;
 const STEPS_PER_FRAME = 5;
 
 manager.onError = (url) => console.log('error loading ' + url);
+
+const waiter = () => {
+  waited = false;
+  setTimeout(() => waited = true, 1000);
+  // return waited
+}
 
 
 // --------- CONTROLS ---------
@@ -42,6 +51,8 @@ export const startAnim = () => {
     running = true;
     camera.rotation.set(cameraRotations.x, cameraRotations.y, 0);
     hideOverlay();
+    waiter();
+    playAudio();
   } else {
     window.alert("please check the work on desktop device!");
     return
@@ -53,10 +64,11 @@ export const startAnim = () => {
 export const stopAnim = () => {
   document.exitPointerLock();
   // document.exitFullscreen();
-
   cancelAnimationFrame(animID);
   running = false;
   showOverlay();
+  waiter();
+  pauseAudio();
 }
 
 const onPointerLockChange = () => {
@@ -73,7 +85,7 @@ const onDocumentMouseMove = (event: {
   movementY: number; movementX: number; 
 }) => {
   // // 0.05 and (inertia / 50) also good
-  inertia = 0.2;
+  inertia = 0.1;
   movementX = event.movementX;
   movementY = event.movementY;
   // camera.rotation.y -= event.movementX * 0.0002;
@@ -86,8 +98,8 @@ const updateControls = (dt: number) => {
   if (inertia < 0) {
     inertia = 0;
   }
-  camera.rotation.y -= movementX * (inertia / 1000);
-  camera.rotation.x -= movementY * (inertia / 1000);
+  camera.rotation.y -= movementX * (inertia / 1500);
+  camera.rotation.x -= movementY * (inertia / 1500);
 }
 
 
@@ -96,9 +108,11 @@ document.addEventListener('pointerlockchange', onPointerLockChange);
 // document.addEventListener("fullscreenchange", onFullscreenchange);
 document.addEventListener('keyup', event => {
   if (event.code === 'Space') {
-    if (running) {
+    if (running && waited) {
       stopAnim();
-    } else {
+      // setTimeout(() => waited = true, 1000);
+    }
+    if (!running && waited) {
       startAnim();
     }
   }
@@ -124,10 +138,10 @@ document.addEventListener('keyup', event => {
 
 // --------- LIGHTS ---------
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+const ambientLight = new AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight('#ffffff', 1);
+const directionalLight = new DirectionalLight('#ffffff', 1);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.set(1024, 1024);
 directionalLight.shadow.camera.far = 15;
@@ -160,7 +174,7 @@ scene.add(directionalLight)
 
 // --------- LOOPING CONTROL ---------
 
-const clock = new THREE.Clock();
+const clock = new Clock();
 
 export const reset = () => {
   ended = true;
@@ -191,17 +205,14 @@ const loop = () => {
 
 
 
-const controlTime = throttle(1000, () => {
-  // console.log(elapsed);
-  // console.log(document.fullscreenElement, document.pointerLockElement);
-  
+const controlTime = throttle(100, () => {
   if (running) {
-    elapsed += 1;
+    elapsed += 0.1;
+    handleImages(Math.round(elapsed * 10) / 10);
   }
-  
-  handleImages(elapsed);
-  handleAudios(elapsed, running);
-  handleVideos(elapsed, running);
+  let time = Math.round(elapsed * 10) / 10;
+  updateAudio(time);
+  handleVideos(time, running);
 
-  updateDurationUI(elapsed);
+  updateDurationUI(time);
 });

@@ -8,7 +8,6 @@ import {
 } from 'three';
 import { scene, sizes } from './renderer';
 import { reset, elapsed, animDuration } from '../main';
-// import { throttle } from 'throttle-debounce';
 
 
 const VERTICAL_FIELD_OF_VIEW = 45;
@@ -33,7 +32,7 @@ export const camera = new PerspectiveCamera(
 // INITIAL CAM PROPS
 // camera.position.set(200, 100, 20);
 camera.rotation.order = 'YXZ';
-camera.rotation.set(0, 0, 0);
+camera.rotation.set(-0.9, -0.6, 0);
 
 // camera.rotation.set( 0, - Math.PI / 2, 2 );
 // camera.lookAt( 100, 10, 50 );
