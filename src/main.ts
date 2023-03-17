@@ -1,8 +1,8 @@
 
 // import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
 // import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
-import { Clock, DirectionalLight, AmbientLight} from 'three';
 import { manager } from './core/loader';
+import { Clock, DirectionalLight, AmbientLight} from 'three';
 import { renderer, scene } from './core/renderer';
 import { camera, updateCamera, cameraRotations } from './core/camera';
 import { handleImages, updateAudio, handleVideos, pauseAudio, playAudio } from './updatemedia';
@@ -92,7 +92,6 @@ const onDocumentMouseMove = (event: {
   // camera.rotation.x -= event.movementY * 0.0002;
 }
 
-
 const updateControls = (dt: number) => {
   inertia -= dt;
   if (inertia < 0) {
@@ -101,7 +100,6 @@ const updateControls = (dt: number) => {
   camera.rotation.y -= movementX * (inertia / 1500);
   camera.rotation.x -= movementY * (inertia / 1500);
 }
-
 
 document.body.addEventListener('mousemove', onDocumentMouseMove);
 document.addEventListener('pointerlockchange', onPointerLockChange);
@@ -118,6 +116,9 @@ document.addEventListener('keyup', event => {
   }
 });
 
+// --- init GUI
+showOverlay();
+
 
 // const controls = new PointerLockControls(camera, renderer.domElement);
 // // --- START
@@ -133,7 +134,6 @@ document.addEventListener('keyup', event => {
 //   renderer.domElement.removeEventListener('mousemove', onDocumentMouseMove);
 //   stopAnim();
 // })
-
 
 
 // --------- LIGHTS ---------
@@ -171,7 +171,6 @@ scene.add(directionalLight)
 // })
 
 
-
 // --------- LOOPING CONTROL ---------
 
 const clock = new Clock();
@@ -202,7 +201,6 @@ const loop = () => {
   renderer.render(scene, camera);
   animID = requestAnimationFrame(loop);
 }
-
 
 
 const controlTime = throttle(100, () => {

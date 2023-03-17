@@ -16,6 +16,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { scene } from '../core/renderer';
 import { showOverlay, showGuides } from './gui';
 
+export let modelLoaded = false;
 
 const loaderDiv = document.querySelector<HTMLDivElement>('.loader');
 const progressDiv = document.querySelector<HTMLDivElement>('.progress');
@@ -27,6 +28,7 @@ export const manager = new LoadingManager();
 
 manager.onLoad = () => {
   console.log("Loading complete!");
+  modelLoaded = true;
   // modelsData.forEach(group => scene.add(group));
 
   // --- handle loading elements

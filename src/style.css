@@ -176,14 +176,15 @@ a {
 
 /* --------- loader --------- */
 .loader {
-  display: flex;
   position: absolute;
-  height: 100vh;
-  width: 100vw;
-  flex-direction: column;
-  align-items: center;
   z-index: 30;
   color: #fff;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.spinner {
+  display: flex;
+  justify-content: center;
 }
 .spinner > div {
   width: 60px;

@@ -28,6 +28,7 @@ import {
   // container
 } from '../main';
 import { fraction } from './camera';
+import { modelLoaded } from './loader';
 
 import hfk_logo from '../images/logo-hfk.png';
 import sfk_logo from '../images/logo-sfk.png';
@@ -105,7 +106,7 @@ const showAbout = () => {
         <h3> Credits </h3>
         <p> Concept, Text, 3D, Programming: <b>Farzad Golghasemi</b></p>
         <p> Sound, Dramaturgy, Artistic Collaboration: <b>Gabriela Valdespino</b></p>
-        <p> Audio technical support: <a href="https://ap0teke.github.io/" target="blank">ap0teke</a></p>
+        <p> Audio technical support: <a href="https://ap0teke.github.io/" target="blank"><b>ap0teke</b></a></p>
       </section>
       <section>
         <h3> Biography </h3>
@@ -135,10 +136,11 @@ const showAbout = () => {
       <section>
         <h3> Image Credits and Copyrights </h3>
         <p> Renderings: Justus Grosse GmbH / 3D artists: Unknown </p>
-        <p> Postcards: Überseestadt Marketingverein / 3D artits: Unknown </p>
+        <p> Postcards: Überseestadt Marketingverein / 3D artists: Unknown </p>
         <p> Photos: © Hafenmuseum Bremen / Photographer: © Daniela Buchholz </p>
         <p> Photos: © Kulturhaus-Walle Bremen / Photographer: © Hans Brockmöller </p>
-        <p> Banner photos: Farzad Golghasemi </p>
+        <p> Photos: Gabriela Valdespino </p>
+        <p> Photos: Farzad Golghasemi </p>
       </section>
     `
     overlay?.appendChild(infoDiv);
@@ -173,7 +175,7 @@ export const showOverlay = () => {
 
   startBtn?.addEventListener('click', startAnim);
   overlay?.appendChild(projectTitle);
-  overlay?.appendChild(startBtn);
+  if (modelLoaded) overlay?.appendChild(startBtn);
   overlay?.appendChild(aboutBtn);
 
   if (overlay) {
