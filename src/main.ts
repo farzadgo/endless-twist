@@ -1,7 +1,7 @@
 
 // import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
 // import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
-import { manager } from './core/loader';
+import { loadModels } from './core/loader';
 import { Clock, DirectionalLight, AmbientLight} from 'three';
 import { renderer, scene } from './core/renderer';
 import { camera, updateCamera, cameraRotations } from './core/camera';
@@ -17,6 +17,11 @@ export const isMobile = () => {
 
 export const container = document.getElementById('webgl-container');
 
+export const loaderDiv = document.querySelector<HTMLDivElement>('.loader');
+export const spinnerDiv = document.querySelector<HTMLDivElement>('.spinner');
+export const progressDiv = document.querySelector<HTMLDivElement>('.progress');
+
+
 let animID: number;
 export let elapsed = 0;
 
@@ -27,7 +32,12 @@ let waited = true;
 export const animDuration = 1100;
 const STEPS_PER_FRAME = 5;
 
-manager.onError = (url) => console.log('error loading ' + url);
+if (!isMobile()) {
+  loadModels();
+} else {
+  spinnerDiv?.remove();
+  progressDiv!.innerHTML = 'this web installation is only <br> available on a desktop device';
+}
 
 const waiter = () => {
   waited = false;
@@ -54,7 +64,7 @@ export const startAnim = () => {
     waiter();
     playAudio();
   } else {
-    window.alert("please check the work on desktop device!");
+    window.alert("please check the work on a desktop device!");
     return
   }
   // // in case of PointerLockControls
@@ -123,14 +133,12 @@ showOverlay();
 // const controls = new PointerLockControls(camera, renderer.domElement);
 // // --- START
 // controls.addEventListener('lock', () => {
-//   // works without this as well !!!
 //   renderer.domElement.addEventListener('mousemove', onDocumentMouseMove);
 //   // camera.rotation.set(camRX, camRY, 0);
 //   loop();
 // })
 // // --- PAUSE
 // controls.addEventListener('unlock', () => {
-//   // works without this as well !!!
 //   renderer.domElement.removeEventListener('mousemove', onDocumentMouseMove);
 //   stopAnim();
 // })
@@ -152,7 +160,6 @@ scene.add(directionalLight)
 
 // const helper = new THREE.DirectionalLightHelper(directionalLight, 100);
 // scene.add(helper);
-
 
 // const DirectionalLightFolder = paneGui.addFolder({
 //   title: 'Directional Light',

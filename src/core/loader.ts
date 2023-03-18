@@ -11,6 +11,7 @@ const modelUrls = [
 const doublingUrl = 'https://res.cloudinary.com/dd3tumnu6/image/upload/v1676461879/tender-models/7_cream_g2rnvt.glb';
 
 
+import { loaderDiv, progressDiv } from '../main';
 import { LoadingManager } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { scene } from '../core/renderer';
@@ -18,46 +19,60 @@ import { showOverlay, showGuides } from './gui';
 
 export let modelLoaded = false;
 
-const loaderDiv = document.querySelector<HTMLDivElement>('.loader');
-const progressDiv = document.querySelector<HTMLDivElement>('.progress');
 
+export const loadModels = () => {
 
-// -------- Loading Manager --------
+  // --------- loading manager ---------
+  const manager = new LoadingManager();
 
-export const manager = new LoadingManager();
+  manager.onLoad = () => {
+    console.log("Loading complete!");
+    modelLoaded = true;
+    // modelsData.forEach(group => scene.add(group));
+    
+    // --- handle GUI and loading divs
+    loaderDiv?.remove();
+    showOverlay();
+    showGuides();
 
-manager.onLoad = () => {
-  console.log("Loading complete!");
-  modelLoaded = true;
-  // modelsData.forEach(group => scene.add(group));
+    // // TO_DO: start the loop/animate/renderer.render
+  }
 
-  // --- handle loading elements
-  loaderDiv?.remove();
+  manager.onProgress = (_url, itemsLoaded, _itemsTotal) => {
+    // console.log(`loaded: ${itemsLoaded}/${itemsTotal}`);
+    // if (progress) progress.style.width = `${(ratio * 300) - 80 }px`;
+    progressDiv!.innerHTML = `${itemsLoaded} / 459`;
+  }
 
-  // --- handle GUI or show start btn
-  showOverlay();
-  showGuides();
+  manager.onError = (url) => console.log('error loading ' + url);
 
-  // // TO_DO: start the loop/animate/renderer.render
-  // // BUT wait for the button to start the camera meove etc.
-  // // you need to change startAnim() and loop() a bit
-  // renderer.render(scene, camera);
-  
+  // --------- standard loaders ---------
+  const loader = new GLTFLoader(manager);
+
+  loader.load(modelUrls[0], gltf => scene.add(gltf.scene));
+  loader.load(modelUrls[1], gltf => scene.add(gltf.scene));
+  loader.load(modelUrls[2], gltf => scene.add(gltf.scene));
+  loader.load(modelUrls[3], gltf => scene.add(gltf.scene));
+  loader.load(modelUrls[4], gltf => scene.add(gltf.scene));
+  loader.load(modelUrls[5], gltf => scene.add(gltf.scene));
+  loader.load(modelUrls[6], gltf => scene.add(gltf.scene));
+  loader.load(modelUrls[7], gltf => scene.add(gltf.scene));
+
+  loader.load(
+    doublingUrl,
+    gltf => {
+      const object = gltf.scene;
+      scene.add(object);
+      const copyOne = object.clone();
+      const copyTwo = object.clone();
+      copyOne.position.set(398, 0, -484);
+      copyTwo.position.set(796, 0, -968);
+      scene.add(copyOne, copyTwo)
+    }
+  );
+
 }
 
-manager.onProgress = (_url, itemsLoaded, _itemsTotal) => {
-  // console.log(`loaded: ${itemsLoaded}/${itemsTotal}`);
-  // if (progress) progress.style.width = `${(ratio * 300) - 80 }px`;
-  progressDiv!.innerHTML = `${itemsLoaded} / 459`;
-}
-
-// manager.onError = (url) => console.log('error loading ' + url);
-
-
-
-// --------- LOAD MODELS AND INIT UI ---------
-
-const loader = new GLTFLoader(manager);
 
 // --- THIS WORKS but ESNEXT issue !!!
 
@@ -94,32 +109,7 @@ const loader = new GLTFLoader(manager);
 // modelFormatter(modelsData);
 
 
-// --------- standard loaders ---------
-
-loader.load(modelUrls[0], gltf => scene.add(gltf.scene));
-loader.load(modelUrls[1], gltf => scene.add(gltf.scene));
-loader.load(modelUrls[2], gltf => scene.add(gltf.scene));
-loader.load(modelUrls[3], gltf => scene.add(gltf.scene));
-loader.load(modelUrls[4], gltf => scene.add(gltf.scene));
-loader.load(modelUrls[5], gltf => scene.add(gltf.scene));
-loader.load(modelUrls[6], gltf => scene.add(gltf.scene));
-loader.load(modelUrls[7], gltf => scene.add(gltf.scene));
-
-loader.load(
-  doublingUrl,
-  gltf => {
-    const object = gltf.scene;
-    scene.add(object);
-    const copyOne = object.clone();
-    const copyTwo = object.clone();
-    copyOne.position.set(398, 0, -484);
-    copyTwo.position.set(796, 0, -968);
-    scene.add(copyOne, copyTwo)
-  }
-);
-
-
-// --------- collective wireframe models ---------
+// --------- COLLECTIVE WIREFRAME MODELS ---------
 
 // const wireMaterial = new MeshBasicMaterial({ color: 0xFF4500, wireframe: true });
 

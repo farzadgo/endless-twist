@@ -25,7 +25,8 @@ import {
   startAnim,
   animDuration,
   isMobile,
-  // container
+  // container,
+  loaderDiv
 } from '../main';
 import { fraction } from './camera';
 import { modelLoaded } from './loader';
@@ -35,7 +36,6 @@ import sfk_logo from '../images/logo-sfk.png';
 import schwa_logo from '../images/logo-schwankhalle.png';
 import peira_logo from '../images/logo-peira.png';
 
-// let importedImageModule = 'blabla/images/01-render-cJustus-1.jpg'
 
 let aboutIsShown = false;
 
@@ -92,7 +92,7 @@ const showAbout = () => {
   aboutBtn.textContent = !aboutIsShown ? '✕' : getAnIcon(iconsStrings);
   startBtn.style.display = !aboutIsShown ? 'none' : 'block';
   guides.style.display = !aboutIsShown ? 'none' : 'block';
-  // projectTitle.style.display = !aboutIsShown ? 'none' : 'block';
+  loaderDiv!.style.display = !aboutIsShown ? 'none' : 'block';
 
   // <img src="${importedImageModule}" alt="senator-für-ükultur" />
   
@@ -120,7 +120,7 @@ const showAbout = () => {
       </section>
       <section>
         <p> ❯❯ This project was made possible by participation in the project <a href="https://ta.peira.space/" target="blank"><b>Tender Absence</b></a> by the collective
-        <b>Peira</b> (www.peira.space) in cooperation with <b>Schwankhalle Bremen</b> and friendly support of <b>Senator für Kultur Bremen</b>
+        <b>Peira</b> in cooperation with <b>Schwankhalle Bremen</b> and friendly support of <b>Senator für Kultur Bremen</b>
         and <b>University of the Arts Bremen</b>. ❮❮ </p>
       </section>
       <section id="logos">
@@ -131,7 +131,7 @@ const showAbout = () => {
       </section>
       <section>
         <h3> Special thanks to </h3>
-        <p> Lucas Kalmus · Abd Tammaa · Prof. Dr. Andrea Sick · Kilian Schwoon · Neus Ledesma Vidal · Saba Innab · Thealit F.K.L. · Jukka Boehm · Victor Artiga Rodriguez · Prof. Dennis Paul </p>
+        <p> Prof. Dr. Andrea Sick · Noëlle BuAbbud · Guida Ribeiro · Lucas Kalmus · Abd Tammaa · Kilian Schwoon · Neus Ledesma Vidal · Victor Artiga Rodriguez · Prof. Natascha Sadr Haghighian · Saba Innab · Thealit F.K.L. · Jukka Boehm · Prof. Dennis Paul · Aurora Kellermann </p>
       </section>
       <section>
         <h3> Image Credits and Copyrights </h3>
@@ -141,6 +141,10 @@ const showAbout = () => {
         <p> Photos: © Kulturhaus-Walle Bremen / Photographer: © Hans Brockmöller </p>
         <p> Photos: Gabriela Valdespino </p>
         <p> Photos: Farzad Golghasemi </p>
+      </section>
+      <section>
+        <p><i> This page is programmed with Javascript and Typescript using <a href="https://threejs.org/" target="blank">Three.js</a> open source library for 3D computer graphics. </i></p>
+        <p><i> The project's source code is hosted publicly in this GitHub <a href="https://github.com/farzadgo/endless-twist/" target="blank">repository</a>. </i></p>
       </section>
     `
     overlay?.appendChild(infoDiv);

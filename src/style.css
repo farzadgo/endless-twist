@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,200;0,400;1,200;1,400&display=swap');
 
+:root {
+  --text-font-size: 1.2em;
+  --header-font-size: 1.6em;
+  --padding: 36px;
+  --pinky: #895498;
+}
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background-color: transparent; }
 ::-webkit-scrollbar-thumb {
@@ -8,13 +14,7 @@
   border: 4px solid rgba(0, 0, 0, 0);
 }
 ::selection {
-  /* background: #853833; */
-  background: #7D4F8A;
-}
-:root {
-  --text-font-size: 1.2em;
-  --header-font-size: 1.7em;
-  --padding: 36px;
+  background: var(--pinky);
 }
 html, body {
   padding: 0;
@@ -38,8 +38,7 @@ html, body {
   overflow: hidden;
 }
 a {
-  /* color: rgb(81, 142, 178); */
-  color: #7D4F8A;
+  color: var(--pinky);
   text-decoration: none;
   font-weight: 400;
 }
@@ -101,7 +100,7 @@ a {
   left: 15vw;
   top: 110px;
   border: 1px solid #fff;
-  padding: calc(var(--padding) - 10px) var(--padding);
+  padding: calc(var(--padding) - 7px) var(--padding);
   overflow-y: scroll;
 }
 .about section {
@@ -140,9 +139,10 @@ a {
 .guides, .duration {
   position: absolute;
   z-index: 21;
-  color: #7D4F8A;
-  line-height: 1.8em;
+  color: var(--pinky);
+  line-height: 2em;
   user-select: none;
+  font-weight: bold;
 }
 .guides {
   bottom: var(--padding);
@@ -153,7 +153,7 @@ a {
   right: var(--padding);
 }
 .guides span {
-  border: 1px solid #7D4F8A;
+  border: 1px solid var(--pinky);
   border-radius: 5px;
   padding: 0 5px;
 }
@@ -180,18 +180,21 @@ a {
   z-index: 30;
   color: #fff;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding: 0 var(--padding);
+  text-align: center;
 }
 .spinner {
   display: flex;
   justify-content: center;
+  margin-bottom: 30px;
 }
 .spinner > div {
   width: 60px;
   height: 60px;
   border: 1px solid #fff;
-  margin-top: calc(50vh - 30px);
-  margin-bottom: 30px;
   -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
   animation: sk-rotateplane 1.2s infinite ease-in-out;
 }
