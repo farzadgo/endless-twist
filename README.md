@@ -1,3 +1,5 @@
-# Endless twist of spatial appropriation
+# Endless Twist
 
-The code repository of the project _Endless twist of spatial appropriation_ participating in Glocal Class at Tender Absence 2023
+The code repository of the project _Endless Twist: as everything repeats and doubles itself, the ground moves under the feet_.
+
+For more information visit the project website [here](https://endlesstwist.xyz/).

@@ -226,3 +226,17 @@ a {
     top: calc(50px + var(--padding) * 2);
   }
 }
+
+#subtitle {
+  position: absolute;
+  width: 100%;
+  bottom: 50px;
+  font-size: 1.6em;
+  height: 2.9em;
+  line-height: 1.4em;
+  text-align: center;
+  color: #ffecb3;
+  opacity: 1;
+  transition: opacity 1s;
+  text-shadow: black -1.5px 1.5px;
+}

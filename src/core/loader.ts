@@ -15,7 +15,7 @@ import { loaderDiv, progressDiv } from '../main';
 import { LoadingManager } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { scene } from '../core/renderer';
-import { showOverlay, showGuides } from './gui';
+import { showOverlay } from './gui';
 
 export let modelLoaded = false;
 
@@ -33,9 +33,8 @@ export const loadModels = () => {
     // --- handle GUI and loading divs
     loaderDiv?.remove();
     showOverlay();
-    showGuides();
 
-    // // TO_DO: start the loop/animate/renderer.render
+    // // TODO!? start the loop/animate/renderer.render
   }
 
   manager.onProgress = (_url, itemsLoaded, _itemsTotal) => {

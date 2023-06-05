@@ -7,7 +7,7 @@ import {
   Line
 } from 'three';
 import { scene, sizes } from './renderer';
-import { reset, elapsed, animDuration } from '../main';
+import { reset, DURATION_IN_SECONDS } from '../main';
 
 
 const VERTICAL_FIELD_OF_VIEW = 45;
@@ -46,15 +46,15 @@ window.addEventListener('resize', () => {
 
 scene.add(camera);
 
-export const updateCamera = (dt: number) => {
-  fraction += dt / animDuration;
+export const updateCamera = (dt: number, elapsed: number) => {
+  fraction += dt / DURATION_IN_SECONDS;
   // console.log(fraction);
 
   // --- maybe redundant !?!?
   cameraRotations.x = camera.rotation.x;
   cameraRotations.y = camera.rotation.y;
 
-  if (fraction > 0.99 || elapsed > (animDuration - 1)) {
+  if (fraction > 0.99 || elapsed > (DURATION_IN_SECONDS - 1)) {
     fraction = 0;
     reset();
   }

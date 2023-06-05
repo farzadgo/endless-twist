@@ -1,12 +1,19 @@
 
 // import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
 // import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
+import { Clock, DirectionalLight, AmbientLight } from 'three';
 import { loadModels } from './core/loader';
-import { Clock, DirectionalLight, AmbientLight} from 'three';
 import { renderer, scene } from './core/renderer';
 import { camera, updateCamera, cameraRotations } from './core/camera';
-import { handleImages, updateAudio, handleVideos, pauseAudio, playAudio } from './updatemedia';
 import { showOverlay, hideOverlay, updateUI, updateDurationUI } from './core/gui';
+
+import {
+  updateImages,
+  updateAudio,
+  updateVideos,
+  pauseAudio,
+  playAudio
+} from './content/updatemedia';
 
 import { throttle } from 'throttle-debounce';
 import './style.css';
@@ -15,28 +22,27 @@ export const isMobile = () => {
   return (( window.innerWidth <= 800 ) || ( window.innerHeight <= 600 ));
 }
 
-export const container = document.getElementById('webgl-container');
-
 export const loaderDiv = document.querySelector<HTMLDivElement>('.loader');
 export const spinnerDiv = document.querySelector<HTMLDivElement>('.spinner');
 export const progressDiv = document.querySelector<HTMLDivElement>('.progress');
 
 
 let animID: number;
-export let elapsed = 0;
+// let elapsed = 0;
+let elapsedV2 = 0;
 
 let running = false;
 let ended = false;
 let waited = true;
 
-export const animDuration = 1100;
+export const DURATION_IN_SECONDS = 1040;
 const STEPS_PER_FRAME = 5;
 
 if (!isMobile()) {
   loadModels();
 } else {
   spinnerDiv?.remove();
-  progressDiv!.innerHTML = 'this web installation is only <br> available on a desktop device';
+  progressDiv!.innerHTML = 'this web installation is only <br> available on desktop devices';
 }
 
 const waiter = () => {
@@ -47,6 +53,28 @@ const waiter = () => {
 
 
 // --------- CONTROLS ---------
+
+
+interface DTObject {
+  start: number;
+  end: number;
+}
+
+let index = 0;
+let pauseTimes: DTObject[] = [];
+
+function calculateDifferenceSum(deltaObjects: DTObject[]): number {
+  let sum = 0;
+  deltaObjects.forEach((obj) => {
+    if (obj.end !== 0) {
+      const difference = obj.end - obj.start;
+      sum += difference;
+    }
+  });
+
+  return sum;
+}
+
 
 export const startAnim = () => {
   if (ended) {
@@ -63,12 +91,16 @@ export const startAnim = () => {
     hideOverlay();
     waiter();
     playAudio();
+
+    if (pauseTimes.length) {
+      pauseTimes[index - 1].end = clock.elapsedTime;
+      // console.log(index, pauseTimes, calculateDifferenceSum(pauseTimes));
+    }
+
   } else {
     window.alert("please check the work on a desktop device!");
     return
   }
-  // // in case of PointerLockControls
-  // controls.lock();
 }
 
 export const stopAnim = () => {
@@ -79,6 +111,12 @@ export const stopAnim = () => {
   showOverlay();
   waiter();
   pauseAudio();
+
+  pauseTimes.push({
+    start: clock.elapsedTime,
+    end: 0
+  });
+  index += 1;  
 }
 
 const onPointerLockChange = () => {
@@ -117,7 +155,8 @@ document.addEventListener('pointerlockchange', onPointerLockChange);
 document.addEventListener('keyup', event => {
   if (event.code === 'Space') {
     if (running && waited) {
-      stopAnim();
+      // stopAnim();
+      document.exitPointerLock();
       // setTimeout(() => waited = true, 1000);
     }
     if (!running && waited) {
@@ -126,22 +165,6 @@ document.addEventListener('keyup', event => {
   }
 });
 
-// --- init GUI
-showOverlay();
-
-
-// const controls = new PointerLockControls(camera, renderer.domElement);
-// // --- START
-// controls.addEventListener('lock', () => {
-//   renderer.domElement.addEventListener('mousemove', onDocumentMouseMove);
-//   // camera.rotation.set(camRX, camRY, 0);
-//   loop();
-// })
-// // --- PAUSE
-// controls.addEventListener('unlock', () => {
-//   renderer.domElement.removeEventListener('mousemove', onDocumentMouseMove);
-//   stopAnim();
-// })
 
 
 // --------- LIGHTS ---------
@@ -156,7 +179,11 @@ directionalLight.shadow.camera.far = 15;
 directionalLight.shadow.normalBias = 0.05;
 directionalLight.position.set(50, 50, 50);
 
-scene.add(directionalLight)
+scene.add(directionalLight);
+
+
+// --------- init GUI ---------
+showOverlay();
 
 // const helper = new THREE.DirectionalLightHelper(directionalLight, 100);
 // scene.add(helper);
@@ -184,24 +211,24 @@ const clock = new Clock();
 
 export const reset = () => {
   ended = true;
-  elapsed = 0;
-  stopAnim();
+  // elapsed = 0;
   // clock.stop();
+  elapsedV2 = 0;
+  stopAnim();
 }
 
 
 const loop = () => {
   // fpsGraph.begin();
+  const deltaTime: number = Math.min( 0.05, clock.getDelta()) / STEPS_PER_FRAME;
+  elapsedV2 = clock.elapsedTime - calculateDifferenceSum(pauseTimes);
+
   controlTime();
   updateUI();
-
-  const deltaTime: number = Math.min( 0.05, clock.getDelta()) / STEPS_PER_FRAME;
   updateControls(deltaTime);
 
-  // controls.update();
-  for (let i = 0; i < STEPS_PER_FRAME; i ++) {
-    // controls(deltaTime);
-    updateCamera(deltaTime);
+  for (let i = 0; i < STEPS_PER_FRAME; i++) {
+    updateCamera(deltaTime, elapsedV2);
   }
 
   // fpsGraph.end();
@@ -211,13 +238,18 @@ const loop = () => {
 
 
 const controlTime = throttle(100, () => {
-  if (running) {
-    elapsed += 0.1;
-    handleImages(Math.round(elapsed * 10) / 10);
-  }
-  let time = Math.round(elapsed * 10) / 10;
-  updateAudio(time);
-  handleVideos(time, running);
+  // if (running) {
+  //   elapsed += 0.1;
+  // }
 
-  updateDurationUI(time);
+  // let time = Math.round(elapsed * 10) / 10;
+  let time = Math.round(elapsedV2 * 10) / 10;
+
+  updateImages(time);
+  updateAudio(time);
+  updateVideos(time, running);
+
+  updateDurationUI(time, running);
+
+  // console.log(`clock: ${clock.elapsedTime} | elapsedV2: ${elapsedV2} | elapsed: ${elapsed}`);
 });
