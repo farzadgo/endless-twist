@@ -247,9 +247,10 @@ const getShuffledArr = (arr: any[]) => {
 
 const showImageContainer = (elem: HTMLDivElement) => {
   webGLContainer?.appendChild(elem);
+  // TODO: onload of child img element make opacity more..
   setTimeout(() => {
     elem.style.opacity = '0.87';
-  }, 50);
+  }, 750);
 }
 
 const hideImageContainer = (id: string) => {
