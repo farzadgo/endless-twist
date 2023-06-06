@@ -1,18 +1,25 @@
-
 // import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
 // import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
 import { Clock, DirectionalLight, AmbientLight } from 'three';
 import { loadModels } from './core/loader';
 import { renderer, scene } from './core/renderer';
 import { camera, updateCamera, cameraRotations } from './core/camera';
-import { showOverlay, hideOverlay, updateUI, updateDurationUI } from './core/gui';
+
+import {
+  showOverlay,
+  hideOverlay,
+  updateUI,
+  resetUI,
+  updateDurationUI
+} from './core/gui';
 
 import {
   updateImages,
   updateAudio,
   updateVideos,
   pauseAudio,
-  playAudio
+  playAudio,
+  audioElapsed
 } from './content/updatemedia';
 
 import { throttle } from 'throttle-debounce';
@@ -28,11 +35,11 @@ export const progressDiv = document.querySelector<HTMLDivElement>('.progress');
 
 
 let animID: number;
-// let elapsed = 0;
-let elapsedV2 = 0;
+let elapsed = 0;
+// let elapsedV2 = 0;
 
 let running = false;
-let ended = false;
+let started = false;
 let waited = true;
 
 export const DURATION_IN_SECONDS = 1040;
@@ -55,30 +62,30 @@ const waiter = () => {
 // --------- CONTROLS ---------
 
 
-interface DTObject {
-  start: number;
-  end: number;
-}
+// interface DTObject {
+//   start: number;
+//   end: number;
+// }
 
-let index = 0;
-let pauseTimes: DTObject[] = [];
+// let index = 0;
+// let pauseTimes: DTObject[] = [];
 
-function calculateDifferenceSum(deltaObjects: DTObject[]): number {
-  let sum = 0;
-  deltaObjects.forEach((obj) => {
-    if (obj.end !== 0) {
-      const difference = obj.end - obj.start;
-      sum += difference;
-    }
-  });
+// function calculateDifferenceSum(deltaObjects: DTObject[]): number {
+//   let sum = 0;
+//   deltaObjects.forEach((obj) => {
+//     if (obj.end !== 0) {
+//       const difference = obj.end - obj.start;
+//       sum += difference;
+//     }
+//   });
 
-  return sum;
-}
+//   return sum;
+// }
 
 
 export const startAnim = () => {
-  if (ended) {
-    ended = false;
+  if (!started) {
+    started = true;
     // clock.start();
   }
 
@@ -92,11 +99,9 @@ export const startAnim = () => {
     waiter();
     playAudio();
 
-    if (pauseTimes.length) {
-      pauseTimes[index - 1].end = clock.elapsedTime;
-      // console.log(index, pauseTimes, calculateDifferenceSum(pauseTimes));
-    }
-
+    // if (pauseTimes.length) {
+    //   pauseTimes[index - 1].end = clock.elapsedTime;
+    // }
   } else {
     window.alert("please check the work on a desktop device!");
     return
@@ -112,11 +117,11 @@ export const stopAnim = () => {
   waiter();
   pauseAudio();
 
-  pauseTimes.push({
-    start: clock.elapsedTime,
-    end: 0
-  });
-  index += 1;  
+  // pauseTimes.push({
+  //   start: clock.elapsedTime,
+  //   end: 0
+  // });
+  // index += 1;
 }
 
 const onPointerLockChange = () => {
@@ -210,25 +215,38 @@ showOverlay();
 const clock = new Clock();
 
 export const reset = () => {
-  ended = true;
-  // elapsed = 0;
+  started = false;
+  elapsed = 0;
+  // elapsedV2 = 0;
   // clock.stop();
-  elapsedV2 = 0;
+  resetUI();
   stopAnim();
 }
 
+let trigger = false;
 
 const loop = () => {
   // fpsGraph.begin();
   const deltaTime: number = Math.min( 0.05, clock.getDelta()) / STEPS_PER_FRAME;
-  elapsedV2 = clock.elapsedTime - calculateDifferenceSum(pauseTimes);
+  
+  // apparently not working well !!!
+  // elapsedV2 = clock.elapsedTime - calculateDifferenceSum(pauseTimes);
+  
+  if (Math.abs(audioElapsed - elapsed) > 1.0 && running) {
+    trigger = true;
+    if (trigger === true) {
+      elapsed = audioElapsed;
+      console.log('synced');
+      trigger = false;
+    }
+  }
 
   controlTime();
-  updateUI();
+  updateUI(started);
   updateControls(deltaTime);
 
   for (let i = 0; i < STEPS_PER_FRAME; i++) {
-    updateCamera(deltaTime, elapsedV2);
+    updateCamera(deltaTime, elapsed);
   }
 
   // fpsGraph.end();
@@ -238,12 +256,9 @@ const loop = () => {
 
 
 const controlTime = throttle(100, () => {
-  // if (running) {
-  //   elapsed += 0.1;
-  // }
+  if (running) elapsed += 0.1;
 
-  // let time = Math.round(elapsed * 10) / 10;
-  let time = Math.round(elapsedV2 * 10) / 10;
+  let time = Math.round(elapsed * 10) / 10;
 
   updateImages(time);
   updateAudio(time);

@@ -28,7 +28,6 @@ import {
   loaderDiv,
 } from '../main';
 
-import { fraction } from './camera';
 import { modelLoaded } from './loader';
 import { subtitleElement } from '../content/updatemedia';
 
@@ -149,32 +148,21 @@ const showAbout = () => {
 aboutBtn.addEventListener('click', showAbout);
 
 
-export const updateUI = () => {  
-  // let startBtnContent = _totalTime ? 'continue' : 'start';
-  if (fraction > 0.98 && fraction < 1.0) {
-    startBtn.textContent = 'restart';
-  } else {
-    startBtn.textContent = 'continue';
-  }
+export const updateUI = (started: boolean) => {  
+  startBtn.textContent = started ? 'continue' : 'start';
+}
+
+export const resetUI = () => {
+  startBtn.textContent = 'restart';
 }
 
 const durationHTML = (allDur: number) => `duration: <span>${formatDuration(allDur)}</span>`;
 
 export const updateDurationUI = (elapsed: number, running: boolean) => {
   duration.innerHTML = running ?
-  `<span>${formatDuration(Math.floor(elapsed))}</span>` :
-  durationHTML(DURATION_IN_SECONDS);
-  // duration.innerHTML = `
-  //   <span>${formatDuration(Math.floor(elapsed))}</span>
-  //   / <span>${formatDuration(DURATION_IN_SECONDS)}</span>
-  // `;
+    `<span>${formatDuration(Math.floor(elapsed))}</span>` :
+    durationHTML(DURATION_IN_SECONDS);
 }
-// export const updateDurationUI = (elapsed: number) => {
-//   duration.innerHTML = `
-//     <span>${timeFormatter(Math.floor(elapsed))}</span>
-//     / <span>${timeFormatter(DURATION_IN_SECONDS)}</span>
-//   `;
-// }
 
 
 export const showOverlay = () => {

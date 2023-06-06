@@ -6,6 +6,7 @@ import {
   LineBasicMaterial,
   Line
 } from 'three';
+
 import { scene, sizes } from './renderer';
 import { reset, DURATION_IN_SECONDS } from '../main';
 
@@ -14,7 +15,7 @@ const VERTICAL_FIELD_OF_VIEW = 45;
 const NEAR_PLANE = 0.1;
 const FAR_PLANE = 10000;
 
-export let fraction = 0;
+let fraction = 0;
 
 export const cameraRotations = {
   x: 0,
@@ -50,7 +51,7 @@ export const updateCamera = (dt: number, elapsed: number) => {
   fraction += dt / DURATION_IN_SECONDS;
   // console.log(fraction);
 
-  // --- maybe redundant !?!?
+  // MAYBE REDUNDANT !!
   cameraRotations.x = camera.rotation.x;
   cameraRotations.y = camera.rotation.y;
 

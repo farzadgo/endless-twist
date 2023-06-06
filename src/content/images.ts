@@ -48,11 +48,11 @@ interface ImageDataObject {
 }
 
 export const importedImages: ImageDataObject[] = [
-  // {image: render_01, t1: 1.8, t2: 9.8},
-  // {image: render_02, t1: 2.0, t2: 9.6},
-  // {image: render_03, t1: 2.2, t2: 9.4},
-  // {image: render_04, t1: 2.4, t2: 9.2},
-  // {image: render_05, t1: 2.6, t2: 9.0},
+  // {image: render_01, t1: 1.8, t2: 7.8},
+  // {image: render_02, t1: 2.0, t2: 7.6},
+  // {image: render_03, t1: 2.2, t2: 7.4},
+  // {image: render_04, t1: 2.4, t2: 7.2},
+  // {image: render_05, t1: 2.6, t2: 7.0},
 
   {image: i_wonder_text, t1: 12, t2: 42},
   
@@ -101,8 +101,8 @@ export const importedImages: ImageDataObject[] = [
   {image: seehausen_6, t1: 716, t2: 725},
 
   {image: as_i_walk_text, t1: 742, t2: 776},
-  // based on audio currentTime: 989
-  {image: this_area_text, t1: 1030, t2: 1060}
+
+  {image: this_area_text, t1: 988, t2: 1060}
 ]
 
 
@@ -148,7 +148,11 @@ const createImageElement = (data: ImageDataObject) => {
   
   imageContainer.setAttribute('id', genID());
   imageContainer.appendChild(imageElement);
-  return imageContainer
+  
+  return {
+    container: imageContainer,
+    image: imageElement
+  }
 }
 
 
@@ -158,7 +162,7 @@ export const images: any = [];
 
 importedImages.forEach(dt => {
   return images.push({
-    element: createImageElement(dt),
+    elements: createImageElement(dt),
     data: dt
   });
 });
@@ -169,6 +173,6 @@ export const outroImages: any = [];
 importedImages.forEach(dt => {  
   // FILTERING TEXT IMAGES OUT
   if (dt.t1 !== 12 && dt.t1 !== 742 && dt.t1 !== 1030) {
-    return outroImages.push({ element: createImageElement(dt) })
+    return outroImages.push({ elements: createImageElement(dt) })
   }
 });

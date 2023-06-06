@@ -56,7 +56,7 @@ function updateSubtitle() {
 
 // TODO: stop elapsed and camera movement if true
 export let loadingAudio = true;
-
+export let audioElapsed = 0;
 let audioEnded = false;
 
 export const audioElement = document.createElement('audio');
@@ -64,7 +64,6 @@ export const audioElement = document.createElement('audio');
 audioElement.controls = false;
 audioElement.src = audioUrl;
 audioElement.loop = false;
-
 
 // audioElement?.addEventListener('play', () => console.log('audio started'));
 // audioElement?.addEventListener('pause', () => console.log('audio paused'));
@@ -87,7 +86,8 @@ audioElement?.addEventListener('ended', () => {
 
 export const updateAudio = (elapsed: number) => {
   // console.log(audioElement.volume, audioElement.duration);
-  // console.log(`currentTime: ${audioElement.currentTime} - ellapsed: ${elapsed}`);
+  // console.log(`currentTime: ${audioElement.currentTime} - elapsed: ${elapsed}`);
+  audioElapsed = audioElement.currentTime;
   if (audioEnded) {
     audioElement.pause();
     audioElement.remove();
@@ -245,12 +245,18 @@ const getShuffledArr = (arr: any[]) => {
   return newArr
 }
 
-const showImageContainer = (elem: HTMLDivElement) => {
-  webGLContainer?.appendChild(elem);
-  // TODO: onload of child img element make opacity more..
-  setTimeout(() => {
-    elem.style.opacity = '0.87';
-  }, 750);
+const showImageContainer = (container: HTMLDivElement, img: HTMLImageElement) => {
+  webGLContainer?.appendChild(container);
+  // console.log(img);
+  if (!img.complete) {
+    img.onload = () => {
+      container.style.opacity = '0.87';
+    }
+  } else {
+    setTimeout(() => {
+      container.style.opacity = '0.87';
+    }, 500);
+  }
 }
 
 const hideImageContainer = (id: string) => {
@@ -272,32 +278,35 @@ let shuffledLength = shuffledImages.length;
 export const updateImages = (elapsed: number) => {
   
   images.forEach((imageObj: any) => {
-    const { element, data } = imageObj;
+    const { elements, data } = imageObj;
+    const { container, image } = elements;
     const { t1, t2 } = data;
     
-    if (elapsed >= t1 && elapsed <= t2) {
-      if (!element.parentElement) {
+    if (elapsed > t1 && elapsed < t2) {
+      if (!container.parentElement) {
         // containerElem?.appendChild(element);
-        showImageContainer(element);
+        showImageContainer(container, image);
       }
     } else {
-      if (element.parentElement) {
+      if (container.parentElement) {
         // element.parentElement.removeChild(element);
-        hideImageContainer(element.id);
+        hideImageContainer(container.id);
       }
     }
   });
 
   shuffledImages.forEach((imageObj: any, i: number) => {
-    const { element } = imageObj;
+    const { elements } = imageObj;
+    const { container, image } = elements;
+
     // COULD BE (elapsed > 2 + i && elapsed < 5 + i)
     if (elapsed > shuffleStart + i && elapsed < (shuffleStart + shuffledLength) + (i * 0.1)) {
-      if (!element.parentElement) {
-        showImageContainer(element);
+      if (!container.parentElement) {
+        showImageContainer(container, image);
       }
     } else {
-      if (element.parentElement) {
-        hideImageContainer(element.id);
+      if (container.parentElement) {
+        hideImageContainer(container.id);
       }
     }
   });
