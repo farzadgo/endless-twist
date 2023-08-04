@@ -1,0 +1,36 @@
+{
+  "name": "Endless Twist",
+  "short_name": "Endless Twist",
+  "start_url": "/",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "standalone",
+  "description": "Endless Twist is a walk through a 3D space that is constructed by urban fragments and personal memories. It is an audiovisual experience presenting the artist’s critical perspective regarding the agency of the human and non-human, and by extension of architects, planners, and owners by reflecting on the role of architecture as an apparatus that produces power dynamics.",
+  "icons": [
+    {
+      "src": "/logo-96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/logo-144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/logo-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/logo-384.png",
+      "type": "image/png",
+      "sizes": "384x384"
+    },
+    {
+      "src": "/logo-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

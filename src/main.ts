@@ -26,7 +26,12 @@ import { throttle } from 'throttle-debounce';
 import './style.css';
 
 export const isMobile = () => {
-  return (( window.innerWidth <= 800 ) || ( window.innerHeight <= 600 ));
+  // return (( window.innerWidth <= 800 ) || ( window.innerHeight <= 600 ));
+  if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 export const loaderDiv = document.querySelector<HTMLDivElement>('.loader');
