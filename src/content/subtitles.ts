@@ -1,7 +1,4 @@
-interface DataObject {
-  time: number;
-  body: string;
-}
+import { DataObject } from './types';
 
 export const subtitleData: DataObject[] = [
   {

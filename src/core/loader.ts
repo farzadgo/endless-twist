@@ -11,13 +11,11 @@ const modelUrls = [
 const doublingUrl = 'https://res.cloudinary.com/dd3tumnu6/image/upload/v1676461879/tender-models/7_cream_g2rnvt.glb';
 
 
-import { loaderDiv, progressDiv } from '../main';
+import { progressDiv } from '../main';
 import { LoadingManager } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { scene } from '../core/renderer';
-import { showOverlay } from './gui';
-
-export let modelLoaded = false;
+import { updateInitGUI } from './gui';
 
 
 export const loadModels = () => {
@@ -27,14 +25,10 @@ export const loadModels = () => {
 
   manager.onLoad = () => {
     console.log("Loading complete!");
-    modelLoaded = true;
     // modelsData.forEach(group => scene.add(group));
     
-    // --- handle GUI and loading divs
-    loaderDiv?.remove();
-    showOverlay();
-
-    // // TODO!? start the loop/animate/renderer.render
+    // --- handle GUI on load ---
+    updateInitGUI();
   }
 
   manager.onProgress = (_url, itemsLoaded, _itemsTotal) => {

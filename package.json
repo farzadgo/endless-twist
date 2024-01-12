@@ -5,7 +5,7 @@
   "version": "0.1",
   "author": "Farzad Golghasemi <fagosemi@gmail.com>",
   "keywords": [
-    "3d",
+    "mixed-media",
     "threejs",
     "vite",
     "typescript"
@@ -22,15 +22,13 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@tweakpane/core": "^1.1.4",
-    "@tweakpane/plugin-essentials": "^0.1.8",
+    "@ts-stack/markdown": "^1.5.0",
     "@types/three": "^0.149.0",
-    "@types/throttle-debounce": "^5.0.0",
-    "pathe": "^1.1.0",
+    "@types/throttle-debounce": "^5.0.2",
+    "pathe": "^1.1.1",
     "three": "^0.149.0",
     "throttle-debounce": "^5.0.0",
-    "tweakpane": "^3.1.4",
-    "typescript": "^4.9.3",
-    "vite": "^4.1.0"
+    "typescript": "^4.9.5",
+    "vite": "^4.5.1"
   }
 }

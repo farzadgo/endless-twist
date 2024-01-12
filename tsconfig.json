@@ -3,7 +3,7 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
+    "lib": ["ESNext", "DOM", "ES2021.String"],
     "types": ["vite/client", "three", "throttle-debounce"],
     "moduleResolution": "Node",
     "strict": true,

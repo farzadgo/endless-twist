@@ -1,5 +1,11 @@
+import { FORWARD_DURATION } from '../main';
+import { DataObject } from './types';
 import { subtitleData } from './subtitles';
 import { images, outroImages, getPosDims } from './images';
+import { sections } from './sections';
+
+
+const webGLContainer = document.getElementById('webgl-container');
 
 // --- AUDIO URLs ---
 const audioUrl = 'https://cloud.disorient.xyz/s/GJ7Cd5ABkJmNAig/download/web-endless-twist_final.mp3';
@@ -13,18 +19,12 @@ const walkingVideo = 'https://cloud.disorient.xyz/s/FpTEH6gHHpeN2Yf/download/the
 
 // --------- SUBTITLE HANDLING ---------
 
-const webGLContainer = document.getElementById('webgl-container');
 export const subtitleElement = document.createElement('p');
 subtitleElement.setAttribute('id', 'subtitle');
 webGLContainer?.appendChild(subtitleElement);
 
 
-interface DataObject {
-  time: number;
-  body: string;
-}
-
-function updateSubtitle() {
+const updateSubtitle = () => {
   const currentTime = audioElement.currentTime;
   let selectedDataItem: DataObject | undefined;
   let itemFound = false;
@@ -54,50 +54,38 @@ function updateSubtitle() {
 
 // ------------------ AUDIO HANDLING ------------------
 
-// TODO: stop elapsed and camera movement if true
-export let loadingAudio = true;
 export let audioElapsed = 0;
 let audioEnded = false;
 
 export const audioElement = document.createElement('audio');
-// audioElement.id = 'audio-player';
 audioElement.controls = false;
 audioElement.src = audioUrl;
 audioElement.loop = false;
 
-// audioElement?.addEventListener('play', () => console.log('audio started'));
-// audioElement?.addEventListener('pause', () => console.log('audio paused'));
-// WORKS LIKE `updateAudio HAS ELAPSED TIME`
+// // WORKS LIKE `updateAudio HAS ELAPSED TIME`
 // audioElement?.addEventListener('timeupdate', updateSubtitle);
-
-audioElement?.addEventListener('playing', () => {
-  loadingAudio = false;
-});
-
-audioElement?.addEventListener('waiting', () => {
-  loadingAudio = true;
-});
+// // FOR LOADING FEEDBACK CHECK 'playing' & 'waiting' events
 
 audioElement?.addEventListener('ended', () => {
   console.log('audio ended');
   audioEnded = true;
+  audioElement.pause();
+  // audioElement.remove();
+  // audioElement.removeAttribute('src');
+  // audioElement.load();
 });
 
 
-export const updateAudio = (elapsed: number) => {
+export const updateAudio = () => {
   // console.log(audioElement.volume, audioElement.duration);
   // console.log(`currentTime: ${audioElement.currentTime} - elapsed: ${elapsed}`);
   audioElapsed = audioElement.currentTime;
-  if (audioEnded) {
-    audioElement.pause();
-    audioElement.remove();
-    // audioElement.removeAttribute('src');
-    // audioElement.load();
-  }
-  if (elapsed === 0) {
-    audioElement.currentTime = 0;
-  }
   updateSubtitle();
+}
+
+export const resetAudio = () => {
+  audioElement.currentTime = 0;
+  audioEnded = false;
 }
 
 export const pauseAudio = () => {
@@ -115,7 +103,7 @@ export const pauseAudio = () => {
       clearInterval(intervalID);
 
       let delay = (Date.now() - start) * 0.001;
-      // console.log(delay);
+      // console.log(delay); // around one second
       audioElement.currentTime -= delay;
     }
   }, 100);
@@ -138,12 +126,30 @@ export const playAudio = () => {
 }
 
 
+export let isJPressed = false;
+let selectedSection = {};
+
+export const resetKeyPress = () => {
+  isJPressed = false;
+  selectedSection = {}
+}
+
+export const isKeyPressed = () => {
+  return selectedSection
+}
+
+
 document.addEventListener('keyup', event => {
-  if (event.code === 'KeyM') {
-    if (!audioElement.muted) {
-      audioElement.muted = true;
-    } else {
-      audioElement.muted = false;
+  
+  if (event.code === 'KeyJ' && !audioEnded) {
+    audioElement.currentTime += FORWARD_DURATION;
+    isJPressed = true;
+  }
+
+  for (const section of sections) {
+    if (event.code === section.eventCode && !audioEnded) {
+      audioElement.currentTime = section.timeStamp;
+      selectedSection = sections.filter(sec => sec.eventCode === event.code)[0];
     }
   }
 });
@@ -199,8 +205,8 @@ videos.forEach(e => e.element.addEventListener('ended', () => {
 
 
 export const updateVideos = (elapsed: number, running: boolean) => {
-  videoHandler(0, elapsed, 530, topViewConstructing, running);
-  videoHandler(1, elapsed, 710, walkingVideo, running);
+  videoHandler(0, elapsed, 527, topViewConstructing, running);
+  videoHandler(1, elapsed, 715, walkingVideo, running);
   // videoHandler(2, elapsed, 970, lateralMoveVideo, running);
   // videoHandler(3, elapsed, 986, skyMoveVideo, running);
 }

@@ -1,3 +1,5 @@
+import { ImageDataObject } from '../content/types';
+
 // --------- IMPORT LOCAL IMAGES ---------
 
 import render_01 from './assets/01-render-cJustus-1.jpg';
@@ -41,18 +43,7 @@ import this_area_text from './assets/conversation-03.png';
 
 // --------- CREATE IMAGE DATA ARRAY ---------
 
-interface ImageDataObject {
-  image: string;
-  t1: number;
-  t2: number;
-}
-
 export const importedImages: ImageDataObject[] = [
-  // {image: render_01, t1: 1.8, t2: 7.8},
-  // {image: render_02, t1: 2.0, t2: 7.6},
-  // {image: render_03, t1: 2.2, t2: 7.4},
-  // {image: render_04, t1: 2.4, t2: 7.2},
-  // {image: render_05, t1: 2.6, t2: 7.0},
 
   {image: i_wonder_text, t1: 12, t2: 42},
   
@@ -81,7 +72,7 @@ export const importedImages: ImageDataObject[] = [
   {image: postcard_render_2, t1: 463, t2: 477},
   {image: postcard_render_3, t1: 471, t2: 482},
   
-  {image: landvalue, t1: 490, t2: 520},
+  {image: landvalue, t1: 490, t2: 515},
   
   // --- CONSTRUCTION // 20"
   {image: fabric_1, t1: 601, t2: 617},
@@ -93,16 +84,16 @@ export const importedImages: ImageDataObject[] = [
   {image: sand_fill_1, t1: 647, t2: 662},
   {image: sand_fill_2, t1: 655, t2: 666},
   // 39"
-  {image: seehausen_1, t1: 686, t2: 710},
-  {image: seehausen_2, t1: 692, t2: 713},
-  {image: seehausen_3, t1: 698, t2: 716},
-  {image: seehausen_4, t1: 704, t2: 719},
-  {image: seehausen_5, t1: 710, t2: 722},
-  {image: seehausen_6, t1: 716, t2: 725},
+  {image: seehausen_1, t1: 705, t2: 720},
+  {image: seehausen_2, t1: 709, t2: 723},
+  {image: seehausen_3, t1: 713, t2: 726},
+  {image: seehausen_4, t1: 717, t2: 729},
+  {image: seehausen_5, t1: 721, t2: 732},
+  {image: seehausen_6, t1: 725, t2: 735},
 
-  {image: as_i_walk_text, t1: 742, t2: 776},
+  {image: as_i_walk_text, t1: 738, t2: 784},
 
-  {image: this_area_text, t1: 988, t2: 1060}
+  {image: this_area_text, t1: 988, t2: 1030}
 ]
 
 

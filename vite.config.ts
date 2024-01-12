@@ -8,6 +8,15 @@ export default defineConfig({
       '/@': resolve(__dirname, './src'),
     },
   },
+  assetsInclude: ["**/*.md"],
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        publication: resolve(__dirname, 'publication/index.html'),
+      }
+    }
+  }
   // plugins: [glsl()],
   // assetsInclude: ['**/*.gltf'] // if problem in production
 })

@@ -1,14 +1,17 @@
 import {
   WebGLRenderer,
   Scene,
-  // AxesHelper,
   sRGBEncoding,
   PCFShadowMap,
   ACESFilmicToneMapping,
   Color,
-  // Fog
+  // Fog,
+  // AxesHelper,
+  // BoxGeometry,
+  // MeshBasicMaterial
+  // Mesh,
 } from 'three';
-// import { connectValues } from '@tweakpane/core';
+
 
 export const sizes = {
   width: window.innerWidth,
@@ -18,7 +21,7 @@ export const sizes = {
 // --------- Scene
 export const scene = new Scene();
 scene.background = new Color('#333');
-// scene.fog = new Fog(0xffffff, 250, 1000);
+// scene.fog = new Fog('#333333', 600, 3000);
 
 export const canvas: HTMLElement = document.querySelector('#webgl') as HTMLElement
 
