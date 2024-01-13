@@ -28,8 +28,7 @@ sup a {
   letter-spacing: 3px;
   background-image: url("./endlesstwist-cover.png");
   background-size: auto 100%;
-  /* background-size: contain; */
-  /* background-size: cover; */
+  /* background-size: contain | cover; */
   background-repeat: no-repeat;
 }
 .book-cover > * {
@@ -138,8 +137,8 @@ sup a {
   top: 0;
   left: 0;
   height: 100vh;
-  height: 100svh;
-  /* height: -webkit-fill-available; */
+  height: 100dvh;
+  height: -webkit-fill-available;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -238,8 +237,8 @@ figure .long-img {
   top: 0;
   right: 0;
   height: 100vh;
-  height: 100svh;
-  /* height: -webkit-fill-available; */
+  height: 100dvh;
+  height: -webkit-fill-available;
   width: 550px;
   display: flex;
   background-color: rgba(24, 24, 24, 0.4);

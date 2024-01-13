@@ -86,9 +86,9 @@ const about = document.createElement('div');
 about.className = 'about';
 about.innerHTML = `
   <section>
-    <p> ENDLESS TWIST: <br>
-      <i>A critical autoethnographic approach to the current state of urban development</i>
-    </p>
+    <p> Endless Twist: <i> A critical autoethnographic approach to the current state of urban development </i></p>
+    <p> See the publication <a href="/publication/"> here </a></p>
+    <br>
     <p> Endless Twist is a guided walk through a 3D space that is constructed by urban fragments and personal memories.
     It is multimedia web installation and audiovisual performance presenting the artist's critical perspective regarding the agency
     of the human and non-human, and by extension of architects, planners, and owners.

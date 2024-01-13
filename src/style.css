@@ -19,8 +19,6 @@ a {
 .loader {
   display: flex;
   flex-direction: column;
-  font-family: var(--font-script);
-  font-weight: 400;
   position: absolute;
   z-index: 30;
   left: 50%;
@@ -145,7 +143,7 @@ a {
   margin-bottom: 0.7rem;
 }
 .about p {
-  font-size: var(--font-xs);
+  font-size: var(--font-sm);
   margin-bottom: 0.8em;
   line-height: 1.8em;
 }
