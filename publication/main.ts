@@ -16,7 +16,6 @@ interface Chapter {
 }
 
 const chapterStrings = [introAsString, chOneAsString, chTwoAsString, outroAsString, annexAsString];
-// const annexStrings = [biblioAsString, creditAsString];
 
 const bookContainer = document.getElementById('book-container');
 
@@ -32,7 +31,7 @@ const setNoteStyle = (p: HTMLElement) => {
   let top = narrowScreen ? 'calc(var(--padding-xl) * 3)' : p.dataset.top!;
   let left = narrowScreen ? '0' : '950px';
   let width = narrowScreen ? '100%' : 'calc(100vw - 1050px)';
-  let height = narrowScreen ? 'calc(100% - var(--padding-xl) * 3)' : 'auto';
+  let height = narrowScreen ? 'calc(100% - var(--padding-xl) * 4)' : 'auto';
   return (
     p.style.position = position,
     p.style.top = top,
@@ -105,6 +104,9 @@ chapterStrings.forEach((chapterString, i) => {
   const images = chapterContainer.querySelectorAll('img');
   const superscripts = chapterContainer.querySelectorAll('sup');
 
+  images.forEach(img => {
+    img.setAttribute('loading', 'lazy');    
+  });
 
   // --- CHAPTER TITLING ---
   const chapterTitle = chapterContainer.querySelector('h1') as HTMLHeadingElement;

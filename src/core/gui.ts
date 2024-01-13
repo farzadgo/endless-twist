@@ -69,7 +69,7 @@ resetBtn.appendChild(resetIcon);
 const pubLink = document.createElement('a');
 pubLink.href = '/publication/';
 pubLink.className = 'pub-link';
-pubLink.innerHTML = 'Publication';
+pubLink.innerHTML = 'publication';
 
 const pubThumb = document.createElement('img');
 // pubThumb.src = pub_cover;

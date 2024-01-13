@@ -17,6 +17,10 @@ a {
 
 /* --------- loader --------- */
 .loader {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-script);
+  font-weight: 400;
   position: absolute;
   z-index: 30;
   left: 50%;
@@ -168,7 +172,7 @@ a {
 @media (max-width: 800px) {
   .about {
     width: 100%;
-    height: calc(100% - var(--padding-xl) * 2 - 50px);
+    height: calc(100% - var(--padding-xl) * 4);
     top: calc(30px + var(--padding-xl) * 2);
   }
 }

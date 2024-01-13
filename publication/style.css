@@ -14,7 +14,10 @@ sup a {
   font-weight: 400;
   font-size: var(--font-sm);
 }
-
+#book-container {
+  width: 100%;
+  overflow-x: hidden;
+}
 
 /* --------- BOOK COVER --------- */
 
@@ -23,7 +26,7 @@ sup a {
   height: 100vh;
   font-family: 'Changes-Modern-Demo';
   letter-spacing: 3px;
-  background-image: url("./endlesstwist-cover-bw.png");
+  background-image: url("./endlesstwist-cover.png");
   background-size: auto 100%;
   /* background-size: contain; */
   /* background-size: cover; */
@@ -33,7 +36,7 @@ sup a {
   max-width: 900px;
 }
 .book-cover > h1 {
-  font-size: var(--font-3xl);
+  font-size: 3.0rem;
   font-weight: 400;
 }
 .book-cover > h2 {
@@ -80,6 +83,10 @@ sup a {
 .chapter-type span {
   color: #707070;
   letter-spacing: -6px;
+}
+.chapter-title span {
+  position: relative;
+  bottom: 5px;
 }
 
 .chapter .para {
@@ -131,7 +138,8 @@ sup a {
   top: 0;
   left: 0;
   height: 100vh;
-  height: -webkit-fill-available;
+  height: 100svh;
+  /* height: -webkit-fill-available; */
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -218,6 +226,9 @@ figure .long-img {
   font-size: var(--font-xs);
   margin-bottom: var(--margin-b);
   line-height: 1.4;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: normal;
 }
 
 /* --------- MENU --------- */
@@ -227,11 +238,12 @@ figure .long-img {
   top: 0;
   right: 0;
   height: 100vh;
-  height: -webkit-fill-available;
+  height: 100svh;
+  /* height: -webkit-fill-available; */
   width: 550px;
   display: flex;
   background-color: rgba(24, 24, 24, 0.4);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
   overflow: hidden;
   z-index: 10;
   transform: translateX(calc(100% - var(--padding-xl)));
@@ -247,7 +259,6 @@ figure .long-img {
   flex-direction: column;
   justify-content: space-between;
   overflow-y: auto;
-  height: 100%;
   padding: var(--padding-md);
 }
 
@@ -268,11 +279,13 @@ figure .long-img {
 }
 .content-item.active > a {
   font-style: oblique;
-  color: var(--pinky);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 .imprint {
-  margin-top: var(--padding-xl);
+  margin-top: var(--padding-md);
 }
 .imprint > p {
   font-size: calc(var(--font-xs) * 0.9);
@@ -289,7 +302,7 @@ figure .long-img {
 .menu-toggle {
   width: var(--padding-xl);
   border: none;
-  background: none;
+  background-color: var(--gray-dk);
   color: #ddd;
   display: flex;
   justify-content: center;
@@ -305,18 +318,15 @@ figure .long-img {
 .menu-toggle span {
   display: flex;
   transform: rotate(-90deg);
-  height: var(--padding-xl);
   white-space: nowrap;
   pointer-events: none;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
 }
 .menu-toggle i {
-  display: inline-block;
   font-style: normal;
   transform: rotate(0deg);
-  color: var(--gray-lt);
-  font-size: 2.4rem;
+  font-size: var(--font-md);
   transition: transform 0.3s ease-in-out;
 }
 .menu-container.show .menu-toggle i {
@@ -336,6 +346,9 @@ figure .long-img {
 
 /* NOT SURE */
 @media (max-width: 950px) {
+  .book-cover {
+    padding-right: calc(var(--padding-xl) * 1.5);
+  }
   .chapter {
     padding: 0 calc(var(--padding-xl) * 1.5) 0 var(--padding-xl);
   }
@@ -345,26 +358,35 @@ figure .long-img {
   .chapter > ul {
     padding: 0 20px;
   }
-  
   .note-para {
     font-size: var(--font-sm);
     padding: 0 var(--padding-xl);
     max-width: 100%;
   }
-
   figure {
     grid-template-columns: 1fr;
   }
   figure .long-img {
     grid-column: span 1;
   }
-
   .menu-container {
     width: calc(100vw - var(--padding-xl));
   }
-
+  .book-cover > h1{
+    font-size: 2.5rem;
+  }
   .book-cover > h2,
   .book-cover > h3 {
     font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .book-cover > h1{
+    font-size: 1.4rem;
+  }
+  .book-cover > h2,
+  .book-cover > h3 {
+    font-size: 0.8rem;
   }
 }
