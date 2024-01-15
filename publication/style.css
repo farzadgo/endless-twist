@@ -76,7 +76,7 @@ sup a {
 .chapter-type {
   font-size: var(--font-2xl);
   font-weight: 400;
-  color: #707070;;
+  color: #707070;
 }
 .chapter-title span,
 .chapter-type span {
@@ -110,8 +110,8 @@ sup a {
 .chapter > blockquote {
   font-size: calc(var(--font-md) * 0.95);
   line-height: 1.3;
-  padding-left: 1.7rem;
-  border-left: 4px solid var(--pinky);
+  padding-left: var(--font-md);
+  border-left: 4px solid var(--gray-dk);
   margin-bottom: var(--margin-b);
 }
 
@@ -154,10 +154,9 @@ sup a {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 20px;
-  width: 40px;
-  height: 40px;
-  color: #eee;
+  width: var(--btn-height);
+  height: var(--btn-height);
+  padding: 6px;
 }
 
 .note-para {
@@ -203,20 +202,37 @@ hr::before {
 }
 
 /* --------- IMAGE GROUP --------- */
-figure {
+.image-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: var(--gap);
+  grid-gap: var(--padding-md);
   margin: calc(var(--margin-b) * 2) 0;
   font-size: calc(var(--font-xs) * 1.05);
   line-height: 1.55rem;
   font-style: italic;
 }
-figure img {
+.image-container img {
   width: 100%;
+  vertical-align: middle;
 }
-figure .long-img {
+.image-container figure {
+  position: relative;
+}
+.image-container .long-img {
   grid-column: span 2;
+}
+.image-container figcaption {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  top: 0;
+  right: 0;
+  font-size: calc(var(--font-xs) * 0.8);
+  height: var(--font-sm);
+  color: #0e0e0e;
+  font-weight: 400;
+  padding: 0 8px;
+  background-color: hsla(0, 0%, 100%, 0.5) ;
 }
 
 
@@ -362,10 +378,10 @@ figure .long-img {
     padding: 0 var(--padding-xl);
     max-width: 100%;
   }
-  figure {
+  .image-container {
     grid-template-columns: 1fr;
   }
-  figure .long-img {
+  .image-container .long-img {
     grid-column: span 1;
   }
   .menu-container {

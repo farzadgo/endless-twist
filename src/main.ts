@@ -5,7 +5,7 @@ import { Clock, DirectionalLight, AmbientLight } from 'three';
 import { loadModels } from './core/loader';
 import { renderer, scene } from './core/renderer';
 import { camera, updateCamera, cameraRotations, resetCamera } from './core/camera';
-import { initGUI, showOverlay, hideOverlay, updateGUI } from './core/gui';
+import { initGUI, showOverlay, hideOverlay, updateGUI, progressDiv, spinnerDiv } from './core/gui';
 import {
   updateImages,
   updateAudio,
@@ -26,11 +26,6 @@ export const isMobile = () => {
     return false;
   }
 }
-
-export const loaderDiv = document.querySelector<HTMLDivElement>('.loader');
-export const spinnerDiv = document.querySelector<HTMLDivElement>('.spinner');
-export const progressDiv = document.querySelector<HTMLDivElement>('.progress');
-
 
 let animID: number;
 let elapsed = 0;

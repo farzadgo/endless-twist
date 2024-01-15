@@ -25,7 +25,6 @@ a {
   top: calc(45% - 42px);
   transform: translate(-50%, 0);
   width: 100%;
-  padding: 0 var(--padding-md);
   text-align: center;
 }
 .spinner {
@@ -68,30 +67,26 @@ a {
 }
 #overlay > button {
   cursor: pointer;
-  color: #ccc;
   background: none;
   user-select: none;
-  font-weight: 300;
 }
 
 .page-title {
   left: var(--padding-xl);
   top: var(--padding-xl);
   font-weight: 300;
-  height: 40px;
+  height: var(--btn-height);
 }
 .about-btn {
   border: none;
   right: var(--padding-xl);
   top: var(--padding-xl);
-  height: 40px;
+  height: var(--btn-height);
+  width: var(--btn-height);
+  padding: 6px;
   z-index: 25;
-  font-family: var(--font-sans);
 }
 
-.start-btn {
-  font-family: var(--font-script);
-}
 .start-btn,
 .reset-btn, 
 .pub-link {
@@ -102,14 +97,18 @@ a {
   padding: 8px 18px 12px;
   height: 56px;
 }
+.start-btn {
+  font-family: var(--font-script);
+  color: #ccc;
+}
 .reset-btn {
   left: calc(50% - 126px);
-  padding: 0;
+  padding: 13px;
   width: 56px;
 }
 .pub-link {
   top: calc(45% + 80px);
-  border: 1px solid var(--pinky);
+  border: 2px solid var(--pinky);
 }
 
 .pub-thumbnail {
@@ -185,18 +184,18 @@ a {
   line-height: 2em;
   user-select: none;
   font-weight: bold;
-  bottom: var(--padding-md);
+  bottom: var(--padding-xl);
   opacity: 1;
   transition: opacity 0.3s ease-out;
   font-family: var(--font-script);
 }
 .duration {
   display: none;
-  right: var(--padding-md);
+  right: var(--padding-xl);
 }
 .guides {
   display: none;
-  left: var(--padding-md);
+  left: var(--padding-xl);
 }
 .guides span {
   border: 1px solid var(--gray-dk);

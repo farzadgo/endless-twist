@@ -47,7 +47,7 @@ Zanetti, Sandro. "1957. Situationistische Interventionen mittels Zweckentfremdun
 
 ## Image Credits
 
-pp. 2-3, 14-15, 30-31, 44-45  Screen captures from website endlesstwist.xyz. The interactive and curated website is part of this research that is constructed/programmed by text, 3D models, and audio/visual media.
+cover. Screen captures from website endlesstwist.xyz. The interactive and curated website is part of this research that is constructed/programmed by text, 3D models, and audio/visual media.
 
 p. 18  © Überseeinsel GmbH. Three-dimentional visualization regarding the Kellogg's area in Bremen Überseestadt. Artists unknown. See "Eine Insel mit… Rahmenplanung der Überseeinsel. 2019/2020" Hafenmuseum Bremen, https://hafenmuseum-bremen.de/portfolio-item/eine-insel-mit-rahmenplanung-der-ueberseeinsel-30-november-2019-bis-2-februar-2020/ Accessed 13.11.2023.
 
@@ -64,6 +64,7 @@ p. 23  Photograph of a part of the Überseestadt Masterplan's gigantic model loc
 p. 24  Selected photos of the postcard obtained by the author at Hafenmuseum Bremen. The handouts are created by the company responsible for the urban renewal project and Bremen's marketing agenda (WFB Wirtschaftsförderung Bremen GmbH). The contents are mixture of photography from various old and new buildings from Überseestadt as well as architectural visualizations of the imagined futures  
 
 p. 25  © Daniela-Buchholz/Hafenmuseum Bremen. Selected images from Hafenmuseum Bremen website for advertising purposes regarding the private museum's collection that concerns itself with history of cotton trade  in Bremen ports. As the individulas are repeating in other photos with various happy and curious postures, it is probable that they are posed as as photo models.
+
 
 ## Acknowledgements
 

@@ -8,6 +8,7 @@ import chTwoAsString from './chapters/2-chapter.md?raw';
 import outroAsString from './chapters/3-outro.md?raw';
 import annexAsString from './chapters/4-annex.md?raw';
 
+import x from '../src/content/assets/x.svg';
 
 interface Chapter {
   id: string;
@@ -79,7 +80,9 @@ noteContainer.style.display = 'none';
 
 const noteClose = document.createElement('button');
 noteClose.className = 'note-close';
-noteClose.innerHTML = '✕';
+const closeIcon = document.createElement('img');
+closeIcon.src = x;
+noteClose.appendChild(closeIcon);
 
 noteContainer.appendChild(noteClose);
 
@@ -105,7 +108,7 @@ chapterStrings.forEach((chapterString, i) => {
   const superscripts = chapterContainer.querySelectorAll('sup');
 
   images.forEach(img => {
-    img.setAttribute('loading', 'lazy');    
+    img.setAttribute('loading', 'lazy');
   });
 
   // --- CHAPTER TITLING ---
@@ -151,7 +154,7 @@ chapterStrings.forEach((chapterString, i) => {
     
     images.forEach(img => {
       let aspectRatio = img.naturalWidth / img.naturalHeight;
-      if (aspectRatio > 2) img.classList.add('long-img');
+      if (aspectRatio > 2) img.parentElement!.classList.add('long-img');  
     });
 
 

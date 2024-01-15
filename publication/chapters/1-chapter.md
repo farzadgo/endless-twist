@@ -11,44 +11,44 @@ Walking down towards the vanishing point an architecture firm comes into view.<s
 
 Offices that to satisfy the master's desires should utilize digital tools.<sup>[8](#b8)</sup> Three-dimensional software that ensure abstract geometries within the limited Cartesian coordinates, ending up with analogic forms and hierarchies. A homogenizer and purifier that makes the windows, doors, stairs, walls, desks, people, animals, work, sport, food, and feelings look the same, become the same.
 
-<figure>
+<div class="image-container">
   Architectural 3D visualization regarding the Kellogg's area Überseestadt /Überseeinsel (lowermost), and various projects of a major real estate entrepreneur (opposite and below) in Bremen.
-  <img src="/pub-images/01-render-cJustus-11.jpg" alt="jg-render-" width="50%">
-  <img src="/pub-images/01-render-cJustus-6.jpg" alt="jg-render-" width="50%">
-  <img src="/pub-images/01-render-cJustus-9.jpg" alt="jg-render-" width="50%">
-  <img src="/pub-images/gallery_slider_lg.jpg" alt="kelloggs-render" width="50%">
-</figure>
+  <figure><img src="/pub-images/01-render-cJustus-11.jpg" alt="jg-render" width="50%"><figcaption>© Justus Grosse GmbH</figcaption></figure>
+  <figure><img src="/pub-images/01-render-cJustus-6.jpg" alt="jg-render" width="50%"><figcaption>© Justus Grosse GmbH</figcaption></figure>
+  <figure><img src="/pub-images/01-render-cJustus-9.jpg" alt="jg-render" width="50%"><figcaption>© Justus Grosse GmbH</figcaption></figure>
+  <figure><img src="/pub-images/gallery_slider_lg.jpg" alt="kelloggs-render" width="50%"><figcaption>© Überseeinsel GmbH</figcaption></figure>
+</div>
 
 ## The Master Mind
 
 Moving on toward the horizon, a museum manifests itself.<sup>[9](#b9)</sup> Seemingly devoted to this old harbor, it narrates the past proudly. A history of several shipyards and traffic. It speaks of cotton and coffee with no signs of modesty on its constitutional greed.<sup>[10](#b10)</sup> A history of constructions and watercourses. Fancying the paradise somewhere else out there, it glorifies an extinct maritime phantasm. It renders the tale of a city striving to become a portal, by washing out a world of sand from its river's banks.<sup>[11](#b11)</sup>
 
-<figure>
-  <img src="/pub-images/06-hafen-Brockmoeller-Kulturhaus-Walle.jpg" alt="©Kulturhaus-Walle" width="50%">
+<div class="image-container">
+  <figure><img src="/pub-images/06-hafen-Brockmoeller-Kulturhaus-Walle.jpg" alt="©Kulturhaus-Walle" width="50%"><figcaption>© Kulturhaus Walle</figcaption></figure>
   Photograph by Hans Brockmöller, part of the photographer's collection regarding the ports of Bremen taken 1945 – 1974.
-  <img src="/pub-images/Weser-1805-Bremen-bis-Oslebshausen.jpg" alt="Weser by C.A. Heineken" width="50%">
+  <figure><img src="/pub-images/Weser-1805-Bremen-bis-Oslebshausen.jpg" alt="Weser by C.A. Heineken" width="50%"></figure>
   The sandy Weser full of shallows. From a map of Bremen and its river Weser in 1805 by C.A. Heineken.
-</figure>
+</div>
 
 The institution is intertwined with an entity dedicated to inform the public regarding the new constructions. About transforming the past into the future, and perhaps the future into the past.<sup>[12](#b12)</sup> The information flows through a gigantic illuminated model, commercial development plans, and postcards, depicting the area under the capitalist siege.<sup>[13](#b13)</sup>
 
-<figure>
-  <img src="/pub-images/Hafenmuseum-Bremen-cDaniela-Buchholz-354.jpg" alt="©Hafenmuseum" width="50%">
+<div class="image-container">
+  <figure><img src="/pub-images/Hafenmuseum-Bremen-cDaniela-Buchholz-354.jpg" alt="©Hafenmuseum" width="50%"><figcaption>© Daniela-Buchholz/Hafenmuseum</figcaption></figure>
   Image depicting a thoughtful young photo model representing a generation obtained from Hafenmuseum webpage.
   <br>
   <br>
   Below,  Photograph of a part of the gigantic model (located at Infocenter) mapping the Überseestadt Masterplan.
-  <img src="/pub-images/hafenmuseum-fago.jpg" alt="infocenter-golghasemi" width="50%">
-</figure>
+  <figure><img src="/pub-images/hafenmuseum-fago.jpg" alt="infocenter-golghasemi" width="50%"></figure>
+</div>
 
 The profit-oriented agenda of this constellation obeys the master's _master plan_.<sup>[14](#b14)</sup> An apparatus that blends the local with global models of growth.<sup>[15](#b15)</sup> A dynamic long-term document that provides concepts for the future, appropriating the past in collaboration with a museum. The master with a plan is the private owner of the city, flying high over the terrain and parceling land and water. He has the upper hand over the architects, ordering them to visualize future perspectives for the postcards, establishing a weird association of non-existence and visited, between old, new, use, and re-use.
 
-<figure>
+<div class="image-container">
   Selected postcards obtained form Hafenmuseum Bremen. The handouts are created in the context of the urban renewal project and city marketing agenda. The contents are mixture of photography from various old and new buildings from Überseestadt as well as architectural visualizations of the imagined futures.
-  <img src="/pub-images/postcard-landmark-01.jpg" alt="uberseestadt-postcard" width="50%">
-  <img src="/pub-images/postcard-reuse-01.jpg" alt="uberseestadt-postcard" width="50%">
-  <img src="/pub-images/postcard-schuppen-3.jpg" alt="uberseestadt-postcard" width="50%">
-</figure>
+  <figure><img src="/pub-images/postcard-landmark-01.jpg" alt="uberseestadt-postcard" width="50%"></figure>
+  <figure><img src="/pub-images/postcard-reuse-01.jpg" alt="uberseestadt-postcard" width="50%"></figure>
+  <figure><img src="/pub-images/postcard-schuppen-3.jpg" alt="uberseestadt-postcard" width="50%"></figure>
+</div>
 
 >    *This immense texturology spread out before one's eyes is nothing but a representation, an optical artifact. It is analogue of the facsimile procedure, through a projection that is a way of keeping aloof by the space planner urbanist, city planner [and architect] or cartographer. The panorama city is a "theoretical", (thus visual) simulacrum, in short a picture, whose condition of possibility is an oblivion (unconsciousness) and a misunderstanding of practices.*
 >
@@ -56,12 +56,12 @@ The profit-oriented agenda of this constellation obeys the master's _master plan
 
 This way makes it more vivid that these agencies and collaborations between designers, architects, journalists, planners, and politicians, are in favor of private ownerships and aristocratic businesses, that have been twisting through a variety of spectacles, adding up value, to what they hold.<sup>[17](#b17)</sup>
 
-<figure>
+<div class="image-container">
   Selected images from Hafenmuseum Bremen website with advertising purposes regarding the private museum's collection that concerns itself with history of cotton trade in Bremen ports.
-  <img src="/pub-images/08-hafenmuseum-Daniela-Buchholz-02.jpg" alt="©Hafenmuseum" width="50%">
-  <img src="/pub-images/07-hafenmuseum-Daniela-Buchholz-03.jpg" alt="©Hafenmuseum" width="50%">
-  <img src="/pub-images/09-hafenmuseum-Daniela-Buchholz-01.jpg" alt="©Hafenmuseum" width="50%">
-</figure>
+  <figure><img src="/pub-images/08-hafenmuseum-Daniela-Buchholz-02.jpg" alt="©Hafenmuseum" width="50%"><figcaption>© Daniela-Buchholz/Hafenmuseum</figcaption></figure>
+  <figure><img src="/pub-images/07-hafenmuseum-Daniela-Buchholz-03.jpg" alt="©Hafenmuseum" width="50%"><figcaption>© Daniela-Buchholz/Hafenmuseum</figcaption></figure>
+  <figure><img src="/pub-images/09-hafenmuseum-Daniela-Buchholz-01.jpg" alt="©Hafenmuseum" width="50%"><figcaption>© Daniela-Buchholz/Hafenmuseum</figcaption></figure>
+</div>
 
 A way that passes through construction sites—for material and immaterial, cities and ports, software and topology—equipped with technologies since 50s and 60s that have been developing under favor of industries and economical agenda of their times. In this terms, it is possible to follow a shift from techno-futuristic modern ideologies (modernist architecture and productions) to a Neoliberalist drive for the contemporary constructions with an specific taste (aesthetics). Constructions that give priority to private ownership and a profitability that uses self-image and appropriates already expired technologies and narratives to establish more power and profit in the name of reuse, or culture, or user-friendly, or *Apple*, or postmodern architecture, or algorithmic design.
 

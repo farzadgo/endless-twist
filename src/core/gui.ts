@@ -1,4 +1,5 @@
-import { startAnim, DURATION_IN_SECONDS, loaderDiv, reset } from '../main';
+// import { startAnim, DURATION_IN_SECONDS, loaderDiv, reset } from '../main';
+import { startAnim, DURATION_IN_SECONDS, reset } from '../main';
 import { subtitleElement } from '../content/updatemedia';
 import { fraction } from './camera';
 
@@ -6,6 +7,9 @@ import hfk_logo from '../content/assets/logo-hfk.png';
 import sfk_logo from '../content/assets/logo-sfk.png';
 import schwa_logo from '../content/assets/logo-schwankhalle.png';
 import peira_logo from '../content/assets/logo-peira.png';
+
+import x from '../content/assets/x.svg';
+import info from '../content/assets/info.svg';
 import rotate from '../content/assets/rotate-ccw.svg';
 
 
@@ -13,10 +17,14 @@ let aboutIsShown = false;
 let hover = false;
 
 const webGLContainer = document.getElementById('webgl-container');
-const overlay = document.getElementById('overlay');
+// const overlay = document.getElementById('overlay');
+// let pageTitle = overlay?.querySelector('h1') as HTMLHeadingElement;
+// pageTitle.className = 'page-title';
 
-let pageTitle = overlay?.querySelector('h1') as HTMLHeadingElement;
-pageTitle.className = 'page-title';
+export const loaderDiv = document.querySelector<HTMLDivElement>('.loader');
+export const spinnerDiv = document.querySelector<HTMLDivElement>('.spinner');
+export const progressDiv = document.querySelector<HTMLDivElement>('.progress');
+progressDiv!.innerHTML = 'downloading 65MB 3D model';
 
 // const iconsStrings = ['☰', '☱','☲', '☳', '☴', '☵', '☶', '☷'];
 // const getAnIcon = (arr:string[]) => {
@@ -55,6 +63,20 @@ const toggleElem = (elms: HTMLElement[]) => {
   }
 }
 
+const overlay = document.createElement('div');
+overlay.id = 'overlay';
+document.body.insertBefore(overlay, webGLContainer);
+
+const pageTitle = document.createElement('h1');
+pageTitle.className = 'page-title';
+pageTitle.textContent = 'ENDLESS TWIST';
+
+const aboutBtn = document.createElement('button');
+aboutBtn.className = 'about-btn';
+// aboutBtn.textContent = getAnIcon(iconsStrings);
+const aboutIcon = document.createElement('img');
+aboutIcon.src = info;
+aboutBtn.appendChild(aboutIcon);
 
 const startBtn = document.createElement('button');
 startBtn.className = 'start-btn';
@@ -72,15 +94,9 @@ pubLink.className = 'pub-link';
 pubLink.innerHTML = 'publication';
 
 const pubThumb = document.createElement('img');
-// pubThumb.src = pub_cover;
 pubThumb.src = '/et-pub.png';
 pubThumb.alt = 'endless twist publication';
 pubThumb.className = 'pub-thumbnail';
-
-const aboutBtn = document.createElement('button');
-aboutBtn.className = 'about-btn';
-aboutBtn.textContent = 'about';
-// aboutBtn.textContent = getAnIcon(iconsStrings);
 
 const about = document.createElement('div');
 about.className = 'about';
@@ -169,6 +185,7 @@ export const updateGUI = (elapsed: number, running: boolean, started: boolean) =
 
 
 export const initGUI = () => {
+  overlay?.appendChild(pageTitle);
   overlay?.appendChild(pubLink);
   overlay?.appendChild(aboutBtn);
   overlay?.appendChild(about);
@@ -193,7 +210,7 @@ export const initGUI = () => {
 }
 
 
-export const updateInitGUI = () => {
+export const initGUIonLoad = () => {
   loaderDiv?.remove();
   overlay?.appendChild(startBtn);
   overlay?.appendChild(duration);
@@ -206,15 +223,14 @@ const toggleAbout = () => {
   let elements = [loaderDiv!, startBtn, resetBtn, pubLink];
   if (!aboutIsShown) {
     about.style.display = 'block';
-    aboutBtn.textContent = '✕';
+    aboutIcon.src = x;
     for (let el of elements) {
       el.style.display = 'none';
     }
     aboutIsShown = true;
   } else {
     about.style.display = 'none';
-    // aboutBtn.textContent = getAnIcon(iconsStrings);
-    aboutBtn.textContent = 'about';
+    aboutIcon.src = info;
     for (let el of elements) {
       el.style.display = 'flex';
     }
