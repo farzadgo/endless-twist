@@ -77,19 +77,18 @@ Abd Tammaa ·
 Noëlle BuAbbud ·
 Apo Teke ·
 Guida Ribeiro ·
-Prof. Natascha Sadr Haghighian ·
 Lucas Kalmus ·
 Victor Artiga Rodriguez ·
+Prof. Natascha Sadr Haghighian ·
 Markus Walthert ·
 Saba Innab ·
 Prof. Asli Serbest ·
 Jukka Boehm ·
-Prof. Ralf Baecker ·
 Peira collective (Tender Absence) ·
 Schwankhalle ·
+Prof. Ralf Baecker ·
 Neus Ledesma Vidal ·
 Thealit F.K.L. ·
-Prof. Asli Serbest ·
 Aurora Kellermann ·
 Farkhondeh Ardabili ·
 Nader Golghasemi

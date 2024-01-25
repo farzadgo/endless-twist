@@ -8,7 +8,10 @@ import chTwoAsString from './chapters/2-chapter.md?raw';
 import outroAsString from './chapters/3-outro.md?raw';
 import annexAsString from './chapters/4-annex.md?raw';
 
-import x from '../src/content/assets/x.svg';
+import x_w from '../src/content/assets/x.svg';
+import x_b from '../src/content/assets/x-b.svg';
+import moon from '../src/content/assets/moon.svg';
+import sun from '../src/content/assets/sun.svg';
 
 interface Chapter {
   id: string;
@@ -20,6 +23,33 @@ const chapterStrings = [introAsString, chOneAsString, chTwoAsString, outroAsStri
 
 const bookContainer = document.getElementById('book-container');
 
+let root = document.querySelector(':root') as HTMLElement;
+let lightTheme = false;
+let scrollPercentage = 0;
+
+const setTheme = () => {
+  let background = lightTheme ? '#eee' : '#0f0f0f';
+  let color = lightTheme ? '#111' : '#ccc';
+  let pinki = lightTheme ? '#a43f97' : '#9a4f90';
+  
+  root.style.setProperty('--bg-color', background);
+  root.style.setProperty('--text-color', color);
+  root.style.setProperty('--pinky', pinki);
+  
+  // FOR THIS ELEMENT HEIGHTS SHOULD GET RECALCULATED!
+  // let fontWeight = lightTheme ? '400' : '300';
+  // document.body.style.fontWeight = fontWeight;
+}
+
+setTheme();
+
+const toggleTheme = () => {
+  lightTheme = !lightTheme;
+  setTheme();
+  themeIcon.src = lightTheme ? moon : sun;
+  closeIcon.src = lightTheme ? x_b : x_w;
+}
+
 let narrowScreen = false;
 let activeParagraph: HTMLElement | null = null;
 let activeChapter: HTMLElement | null = null;
@@ -29,7 +59,7 @@ export const allChapterTitles: Chapter[] = [];
 
 const setNoteStyle = (p: HTMLElement) => {
   let position = narrowScreen ? 'relative' : 'absolute';
-  let top = narrowScreen ? 'calc(var(--padding-xl) * 3)' : p.dataset.top!;
+  let top = narrowScreen ? 'calc(var(--padding-xl) * 2.7)' : p.dataset.top!;
   let left = narrowScreen ? '0' : '950px';
   let width = narrowScreen ? '100%' : 'calc(100vw - 1050px)';
   let height = narrowScreen ? 'calc(100% - var(--padding-xl) * 4)' : 'auto';
@@ -52,6 +82,17 @@ const setTitles = (chapTitles: Chapter) => {
   allChapterTitles.push(chapTitles);  
 }
 
+const calculateScrollPercentage = () => {
+  const coverHeight = bookCover.offsetHeight;
+  const scrollTop = window.scrollY - coverHeight;
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight - coverHeight;
+
+  scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+  scrollPercentage = Math.max(0, Math.min(100, scrollPercentage));
+
+  percentageValue.innerText = `${scrollPercentage.toFixed(0)}%`;
+};
 
 // --- COVER ELEMENTS ---
 const title = document.createElement('h1');
@@ -72,6 +113,26 @@ bookCover.appendChild(author);
 bookContainer!.appendChild(bookCover);
 // --- end COVER ELEMENTS ---
 
+// --- READING BAR ---
+const readingBar = document.createElement('div');
+readingBar.className = 'reading-bar';
+
+const percentageValue = document.createElement('span');
+percentageValue.className = 'percentage-value';
+readingBar.appendChild(percentageValue);
+
+const themeButton = document.createElement('button');
+themeButton.className = 'theme-button';
+const themeIcon = document.createElement('img');
+themeIcon.src = sun;
+themeButton.appendChild(themeIcon);
+themeButton.addEventListener('click', toggleTheme);
+readingBar.appendChild(themeButton);
+
+bookContainer!.appendChild(readingBar);
+
+window.addEventListener('scroll', calculateScrollPercentage);
+// --- end READING BAR ---
 
 // --- CREATE MOBILE NOTE ---
 const noteContainer = document.createElement('div');
@@ -81,7 +142,7 @@ noteContainer.style.display = 'none';
 const noteClose = document.createElement('button');
 noteClose.className = 'note-close';
 const closeIcon = document.createElement('img');
-closeIcon.src = x;
+closeIcon.src = x_w;
 noteClose.appendChild(closeIcon);
 
 noteContainer.appendChild(noteClose);
@@ -107,9 +168,7 @@ chapterStrings.forEach((chapterString, i) => {
   const images = chapterContainer.querySelectorAll('img');
   const superscripts = chapterContainer.querySelectorAll('sup');
 
-  images.forEach(img => {
-    img.setAttribute('loading', 'lazy');
-  });
+  // images.forEach(img => img.setAttribute('loading', 'lazy'));
 
   // --- CHAPTER TITLING ---
   const chapterTitle = chapterContainer.querySelector('h1') as HTMLHeadingElement;
@@ -133,7 +192,7 @@ chapterStrings.forEach((chapterString, i) => {
 
   const chapterSubtitles = chapterContainer.querySelectorAll('h2');
 
-  const subtitles = Array.from(chapterSubtitles).map((subtitle, i) => {
+  const subtitles = Array.from(chapterSubtitles).map((subtitle) => {
     return {
       id: subtitle.id,
       title: subtitle.innerHTML
@@ -166,6 +225,7 @@ chapterStrings.forEach((chapterString, i) => {
           yPos: noteAnchor.getBoundingClientRect().top
         };
       }
+      return null; // Add a return statement to handle the case when noteAnchor is falsy
     });
 
     const noteParagraphs = inlineNoteRefs.map((ref) => {
@@ -334,14 +394,17 @@ menuBody.appendChild(imprint);
 const menuToggle = document.createElement('button');
 menuToggle.className = 'menu-toggle';
 menuToggle.innerHTML = '<span> about <i> ＋ </i> contents </span>';
+
 menuToggle.addEventListener('click', () => {
   menuContainer.classList.toggle('show');
+  if (narrowScreen) document.body.classList.toggle('stop-scroll');
 });
 
 document.addEventListener('click', (event) => {
   let target = event.target as HTMLElement;
-  if (target !== menuToggle&& target !== menuContainer && target !== contentList && target.className !== 'content-item' && target.className !== 'subcontent-item') {
+  if (menuContainer.classList.contains('show') && target !== menuToggle && target !== menuBody) {
     menuContainer.classList.remove('show');
+    document.body.classList.remove('stop-scroll');
   }
 });
 
@@ -359,7 +422,7 @@ const options = {
   threshold: 0.005
 }
 
-const handleIntersection = (entries: IntersectionObserverEntry[], observer) => {
+const handleIntersection = (entries: IntersectionObserverEntry[]) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       let chapter = entry.target as HTMLElement;

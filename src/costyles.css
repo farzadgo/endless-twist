@@ -20,6 +20,8 @@
   --btn-height: 40px;
   --margin-b: 2.5rem;
 
+  --bg-color: #0f0f0f;
+  --text-color: #ccc;
   --pinky: #9A4F90;
   --gray-lt: hsl(0, 0%, 45%);
   --gray-dk: hsl(0, 0%, 30%);
@@ -45,13 +47,13 @@
 }
 ::selection {
   background: var(--pinky);
+  color: #eee;
+  /* color: #a43f97; */
 }
 
 html, body {
   padding: 0;
   margin: 0;
-  background: #0f0f0f;
-  color: #ccc;
   /* scroll-behavior: smooth; */
 }
 
@@ -74,9 +76,9 @@ button img {
   :root {
     --font-xs: 1.0rem;
     --font-sm: 1.1rem;
-    --font-md: 1.3rem;
-    --font-xl: 1.6rem;
-    --font-2xl: 1.9rem;
+    --font-md: 1.2rem;
+    --font-xl: 1.5rem;
+    --font-2xl: 1.8rem;
 
     --padding-xl: 30px;
     --padding-md: 20px;
@@ -89,7 +91,7 @@ button img {
   :root {
     --font-xs: 0.7rem;
     --font-sm: 0.8rem;
-    --font-md: 1.0rem;
+    --font-md: 1.9rem;
     --font-xl: 1.3rem;
     --font-2xl: 1.4rem;
   }

@@ -1,5 +1,8 @@
 html, body {
   font-family: var(--font-sans);
+  /* check JS for manipulation */
+  background: var(--bg-color);
+  color: var(--text-color);
   font-weight: 300;
 }
 a {
@@ -12,11 +15,14 @@ sup {
 }
 sup a { 
   font-weight: 400;
-  font-size: var(--font-sm);
+  /* font-size: var(--font-sm); */
+}
+strong {
+  font-weight: 400;
 }
 #book-container {
   width: 100%;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 /* --------- BOOK COVER --------- */
@@ -36,21 +42,48 @@ sup a {
 }
 .book-cover > h1 {
   font-size: 3.0rem;
-  font-weight: 400;
+  color: #ccc;
 }
 .book-cover > h2 {
   font-size: 1.6rem;
-  font-weight: 300;
   text-transform: uppercase;
   margin-top: 30px;
+  color: #ccc;
 }
 .book-cover > h3 {
   font-size: 1.6rem;
-  font-weight: 300;
   position: absolute;
   bottom: 60px;
 }
 
+/* --------- Theme Toggle --------- */
+
+.reading-bar {
+  position: sticky;
+  top: 0;
+  height: var(--btn-height);
+  width: 900px;
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 var(--padding-xl);
+  backdrop-filter: blur(10px);
+  background-color: hsla(0, 0%, 30%, 0.4);
+  z-index: 5;
+  user-select: none;
+}
+.theme-button {
+  background: none;
+  border: none;
+  height: var(--btn-height);
+  cursor: pointer;
+  position: relative;
+  padding: 4px;
+}
+.percentage-value {
+  font-size: var(--font-sm);
+}
 
 /* --------- CHAPTER and PARAGS --------- */
 
@@ -59,7 +92,7 @@ sup a {
   flex-direction: column;
   /* WHEN RELATIVE ADDED SCREWS UP WITH GETBOUNDINGBOX */
   width: 900px;
-  border-right: 1px solid var(--gray-lt);
+  /* border-right: 1px solid var(--gray-lt); */
   padding: 0 var(--padding-xl);
   margin: 300px 0;
 }
@@ -71,7 +104,7 @@ sup a {
   font-family: 'Changes-Modern-Demo';
   letter-spacing: 3px;
   margin-bottom: 200px;
-  padding-top: var(--padding-xl);
+  padding-top: calc(var(--padding-xl) * 1.4);
 }
 .chapter-type {
   font-size: var(--font-2xl);
@@ -98,7 +131,7 @@ sup a {
   font-size: var(--font-2xl);
   font-weight: 400;
   margin-bottom: var(--margin-b);
-  padding-top: var(--padding-xl);
+  padding-top: calc(var(--padding-xl) * 1.4);
 }
 .chapter > h3 {
   font-size: var(--font-xl);
@@ -143,7 +176,7 @@ sup a {
   display: flex;
   justify-content: center;
   backdrop-filter: blur(15px);
-  background-color: rgba(24, 24, 24, 0.4);
+  background-color: hsla(0, 0%, 30%, 0.4);
   z-index: 20;
 }
 
@@ -195,9 +228,9 @@ hr::before {
   content: "* * *";
   position: relative;
   bottom: -20px;
-  background-color: #0f0f0f;
-  color: #bbb;
-  font-weight: 100;
+  background-color: var(--bg-color);
+  color: var(--gray-lt);
+  font-weight: 300;
   padding: 0 15px;
 }
 
@@ -257,8 +290,8 @@ hr::before {
   height: -webkit-fill-available;
   width: 550px;
   display: flex;
-  background-color: rgba(24, 24, 24, 0.4);
-  backdrop-filter: blur(15px);
+  background-color: hsla(0, 0%, 30%, 0.4);
+  backdrop-filter: blur(10px);
   overflow: hidden;
   z-index: 10;
   transform: translateX(calc(100% - var(--padding-xl)));
@@ -276,10 +309,16 @@ hr::before {
   overflow-y: auto;
   padding: var(--padding-md);
 }
+.menu-body * {
+  pointer-events: none;
+}
+.menu-body a {
+  pointer-events: auto;
+}
 
 /* --- */
 .content-list a {
-  color: #ddd;
+  color: var(--text-color);
   font-size: var(--font-sm);
 }
 .content-item {
@@ -326,6 +365,7 @@ hr::before {
   font-size: var(--font-xs);
   font-family: var(--font-sans);
   font-weight: 300;
+  user-select: none;
 }
 .menu-toggle:focus {
   outline: none;
@@ -359,13 +399,16 @@ hr::before {
   }
 }
 
-/* NOT SURE */
 @media (max-width: 950px) {
   .book-cover {
     padding-right: calc(var(--padding-xl) * 1.5);
   }
-  .chapter {
+  .chapter,
+  .reading-bar {
     padding: 0 calc(var(--padding-xl) * 1.5) 0 var(--padding-xl);
+  }
+  .reading-bar {
+    width: 100%;
   }
 }
 
@@ -388,11 +431,11 @@ hr::before {
     width: calc(100vw - var(--padding-xl));
   }
   .book-cover > h1{
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
   .book-cover > h2,
   .book-cover > h3 {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 }
 

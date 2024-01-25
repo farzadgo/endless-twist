@@ -1,4 +1,4 @@
-import { FORWARD_DURATION } from '../main';
+import { FORWARD_DURATION, running } from '../main';
 import { DataObject } from './types';
 import { subtitleData } from './subtitles';
 import { images, outroImages, getPosDims } from './images';
@@ -55,7 +55,6 @@ const updateSubtitle = () => {
 // ------------------ AUDIO HANDLING ------------------
 
 export let audioElapsed = 0;
-let audioEnded = false;
 
 export const audioElement = document.createElement('audio');
 audioElement.controls = false;
@@ -68,11 +67,7 @@ audioElement.loop = false;
 
 audioElement?.addEventListener('ended', () => {
   console.log('audio ended');
-  audioEnded = true;
   audioElement.pause();
-  // audioElement.remove();
-  // audioElement.removeAttribute('src');
-  // audioElement.load();
 });
 
 
@@ -85,7 +80,6 @@ export const updateAudio = () => {
 
 export const resetAudio = () => {
   audioElement.currentTime = 0;
-  audioEnded = false;
 }
 
 export const pauseAudio = () => {
@@ -141,13 +135,13 @@ export const isKeyPressed = () => {
 
 document.addEventListener('keyup', event => {
   
-  if (event.code === 'KeyJ' && !audioEnded) {
+  if (event.code === 'KeyJ' && running) {
     audioElement.currentTime += FORWARD_DURATION;
     isJPressed = true;
   }
 
   for (const section of sections) {
-    if (event.code === section.eventCode && !audioEnded) {
+    if (event.code === section.eventCode && running) {
       audioElement.currentTime = section.timeStamp;
       selectedSection = sections.filter(sec => sec.eventCode === event.code)[0];
     }

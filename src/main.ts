@@ -30,7 +30,7 @@ export const isMobile = () => {
 let animID: number;
 let elapsed = 0;
 
-let running = false;
+export let running = false;
 let started = false;
 let waited = true;
 
