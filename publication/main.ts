@@ -31,10 +31,12 @@ const setTheme = () => {
   let background = lightTheme ? '#eee' : '#0f0f0f';
   let color = lightTheme ? '#111' : '#ccc';
   let pinki = lightTheme ? '#a43f97' : '#9a4f90';
-  
+  let blurgray = lightTheme ? 70 : 30;
+
   root.style.setProperty('--bg-color', background);
   root.style.setProperty('--text-color', color);
-  root.style.setProperty('--pinky', pinki);
+  root.style.setProperty('--pinki', pinki);
+  root.style.setProperty('--blur-bg', `hsla(0, 0%, ${blurgray}%, 0.4)`);
   
   // FOR THIS ELEMENT HEIGHTS SHOULD GET RECALCULATED!
   // let fontWeight = lightTheme ? '400' : '300';
@@ -83,15 +85,20 @@ const setTitles = (chapTitles: Chapter) => {
 }
 
 const calculateScrollPercentage = () => {
-  const coverHeight = bookCover.offsetHeight;
-  const scrollTop = window.scrollY - coverHeight;
+  const coverHeight = bookCover.offsetHeight * 1.4;
+  const scrollTop = window.scrollY - coverHeight;  
   const windowHeight = window.innerHeight;
   const documentHeight = document.documentElement.scrollHeight - coverHeight;
 
   scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
   scrollPercentage = Math.max(0, Math.min(100, scrollPercentage));
-
   percentageValue.innerText = `${scrollPercentage.toFixed(0)}%`;
+
+  if (scrollTop > -800) {
+    readingBar.classList.add('show');
+  } else {
+    readingBar.classList.remove('show');
+  }
 };
 
 // --- COVER ELEMENTS ---
@@ -168,7 +175,7 @@ chapterStrings.forEach((chapterString, i) => {
   const images = chapterContainer.querySelectorAll('img');
   const superscripts = chapterContainer.querySelectorAll('sup');
 
-  // images.forEach(img => img.setAttribute('loading', 'lazy'));
+  images.forEach(img => img.setAttribute('loading', 'lazy'));
 
   // --- CHAPTER TITLING ---
   const chapterTitle = chapterContainer.querySelector('h1') as HTMLHeadingElement;

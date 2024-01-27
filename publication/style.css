@@ -63,15 +63,16 @@ strong {
   top: 0;
   height: var(--btn-height);
   width: 900px;
-  margin-top: 60px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 0 var(--padding-xl);
-  backdrop-filter: blur(10px);
-  background-color: hsla(0, 0%, 30%, 0.4);
+  background: var(--bg-color);
+  border-bottom: 1px solid var(--grayi);
   z-index: 5;
   user-select: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 }
 .theme-button {
   background: none;
@@ -79,10 +80,13 @@ strong {
   height: var(--btn-height);
   cursor: pointer;
   position: relative;
-  padding: 4px;
+  padding: 5px;
 }
 .percentage-value {
   font-size: var(--font-sm);
+}
+.reading-bar.show {
+  opacity: 1;
 }
 
 /* --------- CHAPTER and PARAGS --------- */
@@ -92,7 +96,7 @@ strong {
   flex-direction: column;
   /* WHEN RELATIVE ADDED SCREWS UP WITH GETBOUNDINGBOX */
   width: 900px;
-  /* border-right: 1px solid var(--gray-lt); */
+  border-right: 1px solid var(--grayi);
   padding: 0 var(--padding-xl);
   margin: 300px 0;
 }
@@ -144,7 +148,7 @@ strong {
   font-size: calc(var(--font-md) * 0.95);
   line-height: 1.3;
   padding-left: var(--font-md);
-  border-left: 4px solid var(--gray-dk);
+  border-left: 4px solid var(--grayi);
   margin-bottom: var(--margin-b);
 }
 
@@ -176,7 +180,7 @@ strong {
   display: flex;
   justify-content: center;
   backdrop-filter: blur(15px);
-  background-color: hsla(0, 0%, 30%, 0.4);
+  background-color: var(--blur-bg);
   z-index: 20;
 }
 
@@ -216,7 +220,7 @@ hr {
   left: 50%;
   transform: translateX(-50%);
   border: none;
-  border-bottom: 1px solid var(--gray-lt);
+  border-bottom: 1px solid var(--grayi);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -229,7 +233,7 @@ hr::before {
   position: relative;
   bottom: -20px;
   background-color: var(--bg-color);
-  color: var(--gray-lt);
+  color: var(--grayi);
   font-weight: 300;
   padding: 0 15px;
 }
@@ -290,7 +294,7 @@ hr::before {
   height: -webkit-fill-available;
   width: 550px;
   display: flex;
-  background-color: hsla(0, 0%, 30%, 0.4);
+  background-color: var(--blur-bg);
   backdrop-filter: blur(10px);
   overflow: hidden;
   z-index: 10;
@@ -347,7 +351,7 @@ hr::before {
   margin-bottom: 10px;
 }
 .imprint a {
-  color: var(--pinky);
+  color: var(--pinki);
   letter-spacing: 1px;
   font-weight: 400;
 }
@@ -356,7 +360,7 @@ hr::before {
 .menu-toggle {
   width: var(--padding-xl);
   border: none;
-  background-color: var(--gray-dk);
+  background-color: var(--grayi);
   color: #ddd;
   display: flex;
   justify-content: center;

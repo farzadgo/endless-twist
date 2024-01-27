@@ -108,7 +108,7 @@ a {
 }
 .pub-link {
   top: calc(45% + 80px);
-  border: 2px solid var(--pinky);
+  border: 2px solid var(--pinki);
 }
 
 .pub-thumbnail {
@@ -180,7 +180,7 @@ a {
 .guides {
   position: absolute;
   z-index: 21;
-  color: var(--gray-dk);
+  color: var(--grayi);
   line-height: 2em;
   user-select: none;
   font-weight: bold;
@@ -198,7 +198,7 @@ a {
   left: var(--padding-xl);
 }
 .guides span {
-  border: 1px solid var(--gray-dk);
+  border: 1px solid var(--grayi);
   border-radius: 5px;
   padding: 0 5px;
 }
