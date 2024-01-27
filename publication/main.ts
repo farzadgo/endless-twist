@@ -175,7 +175,7 @@ chapterStrings.forEach((chapterString, i) => {
   const images = chapterContainer.querySelectorAll('img');
   const superscripts = chapterContainer.querySelectorAll('sup');
 
-  images.forEach(img => img.setAttribute('loading', 'lazy'));
+  // images.forEach(img => img.setAttribute('loading', 'lazy'));
 
   // --- CHAPTER TITLING ---
   const chapterTitle = chapterContainer.querySelector('h1') as HTMLHeadingElement;
