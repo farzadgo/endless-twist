@@ -85,16 +85,13 @@ const setTitles = (chapTitles: Chapter) => {
 }
 
 const calculateScrollPercentage = () => {
-  const coverHeight = bookCover.offsetHeight * 1.4;
-  const scrollTop = window.scrollY - coverHeight;  
-  const windowHeight = window.innerHeight;
-  const documentHeight = document.documentElement.scrollHeight - coverHeight;
-
-  scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+  let scrollTop = window.scrollY - (window.innerHeight * 1.5);
+  let documentHeight = document.documentElement.scrollHeight - (window.innerHeight * 2.5);
+  scrollPercentage = (scrollTop / documentHeight) * 100;
   scrollPercentage = Math.max(0, Math.min(100, scrollPercentage));
   percentageValue.innerText = `${scrollPercentage.toFixed(0)}%`;
-
-  if (scrollTop > -800) {
+  
+  if (scrollTop > -200) {
     readingBar.classList.add('show');
   } else {
     readingBar.classList.remove('show');
