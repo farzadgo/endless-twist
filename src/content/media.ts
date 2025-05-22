@@ -208,14 +208,14 @@ type PlaybackNode = {
 }
 let activeNodes: PlaybackNode[] = []
 
-// Load and decode audio
-const loadIntroSound = async () => {
+const loadIntroSound = async (): Promise<AudioBuffer> => {
   const response = await fetch(introSoundUrl)
   const arrayBuffer = await response.arrayBuffer()
-  audioBuffer = await introAudioContext.decodeAudioData(arrayBuffer)
+  return await introAudioContext.decodeAudioData(arrayBuffer)
 }
 
-// Play a single instance with fade in/out
+audioBuffer = await loadIntroSound()
+
 const playAudioInstance = () => {
   if (!audioBuffer || !isIntroPlaying) return
 

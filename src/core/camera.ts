@@ -10,6 +10,7 @@ import {
 import { scene, sizes } from './renderer'
 import { DURATION_IN_SECONDS } from '../main'
 import { getLoading } from '../content/media'
+import { sections } from '../content/sections'
 
 const VERTICAL_FIELD_OF_VIEW = 45
 const NEAR_PLANE = 0.1

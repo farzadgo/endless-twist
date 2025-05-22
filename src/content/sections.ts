@@ -6,6 +6,11 @@ import { Vector3 } from 'three';
 
 export const sections: Section[] = [
   {
+    eventCode: 'Digit0',
+    timeStamp: 0,
+    lookVector: new Vector3(-0.6, -0.2, 0)
+  },
+  {
     eventCode: 'Digit1',
     timeStamp: 110,
     lookVector: new Vector3(-0.36, -0.28, 0)

@@ -41,7 +41,7 @@ const formatDuration = (durationInSeconds: number): string => {
   return `${minutes}' ${seconds}"`
 }
 
-const durationHTML = (allDur: number) => `duration <span> ${formatDuration(allDur)}</span>`
+const durationHTML = (allDur: number) => `duration <span>${formatDuration(allDur)}</span>`
 
 
 const toggleElem = (elms: HTMLElement[]) => {
@@ -159,9 +159,9 @@ const guides = document.createElement('div')
 guides.className = 'guides'
 guides.innerHTML = `
   <ul>
-    <li><i>play_ pause</i> <span>space bar</span></li>
-    <li><i>look around</i> <span>mouse_trackpad</span></li>
-    <li>different sections <span>1</span> <span>2</span> ... <span>9</span></li>
+    <li><i>play_pause</i> <span>space bar</span></li>
+    <li><i>look around</i> <span>mouse_touchpad </span></li>
+    <li>different sections <span>0</span> <span>1</span> ... <span>9</span></li>
     <li><i>fullscreen</i> <span>F11</span></li>
   </ul>
 `
