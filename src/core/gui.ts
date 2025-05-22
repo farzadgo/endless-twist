@@ -1,116 +1,114 @@
-// import { startAnim, DURATION_IN_SECONDS, loaderDiv, reset } from '../main';
-import { startAnim, DURATION_IN_SECONDS, reset } from '../main';
-import { subtitleElement } from '../content/updatemedia';
-import { fraction } from './camera';
+import { DURATION_IN_SECONDS, reset, startAnim } from '../main'
+import { getLoading, subtitleElement, startLayeredIntroAudio, pauseLayeredIntroAudio } from '../content/media'
+import { getFraction } from './camera'
 
-import hfk_logo from '../content/assets/logo-hfk.png';
-import sfk_logo from '../content/assets/logo-sfk.png';
-import schwa_logo from '../content/assets/logo-schwankhalle.png';
-import peira_logo from '../content/assets/logo-peira.png';
+import hfk_logo from '../content/assets/logo-hfk.png'
+import sfk_logo from '../content/assets/logo-sfk.png'
+import schwa_logo from '../content/assets/logo-schwankhalle.png'
+import peira_logo from '../content/assets/logo-peira.png'
 
-import x from '../content/assets/x.svg';
-import info from '../content/assets/info.svg';
-import rotate from '../content/assets/rotate-ccw.svg';
+import rotate from '../content/assets/rotate-ccw.svg'
 
+let aboutIsShown = false
+let hover = false
 
-let aboutIsShown = false;
-let hover = false;
+const webGLContainer = document.getElementById('webgl-container')
 
-const webGLContainer = document.getElementById('webgl-container');
-// const overlay = document.getElementById('overlay');
-// let pageTitle = overlay?.querySelector('h1') as HTMLHeadingElement;
-// pageTitle.className = 'page-title';
+export const loaderDiv = document.querySelector<HTMLDivElement>('.loader')
+export const spinnerDiv = document.querySelector<HTMLDivElement>('.spinner')
+export const progressDiv = document.querySelector<HTMLDivElement>('.progress')
+progressDiv!.innerHTML = 'downloading 65MB 3D model'
 
-export const loaderDiv = document.querySelector<HTMLDivElement>('.loader');
-export const spinnerDiv = document.querySelector<HTMLDivElement>('.spinner');
-export const progressDiv = document.querySelector<HTMLDivElement>('.progress');
-progressDiv!.innerHTML = 'downloading 65MB 3D model';
-
-// const iconsStrings = ['☰', '☱','☲', '☳', '☴', '☵', '☶', '☷'];
-// const getAnIcon = (arr:string[]) => {
-//   let index = Math.floor(Math.random() * arr.length);
-//   let selectedIcon: string = arr[index];
-//   return selectedIcon
-// }
-
-const formatDuration = (durationInSeconds: number): string => {
-  const minutes = Math.floor(durationInSeconds / 60);
-  const seconds = durationInSeconds % 60;
-
-  return `${minutes}' ${seconds}"`;
-}
-
-const durationHTML = (allDur: number) => `duration: <span>${formatDuration(allDur)}</span>`;
-
-
-const toggleElem = (elms: HTMLElement[]) => {
-  hover = !hover;
-  if (hover) {
-    elms.forEach(elm => {
-      elm.style.display = 'block';
-      elm.style.opacity = '0';
-      setTimeout(() => {
-        elm.style.opacity = '1';
-      }, 100);
-    });
+export const checkLoading = () => {
+  if (getLoading()) {
+    spinnerDiv!.style.display = 'flex'
   } else {
-    elms.forEach(elm => {
-      elm.style.opacity = '0';
-      setTimeout(() => {
-        elm.style.display = 'none';
-      }, 300);
-    });
+    spinnerDiv!.style.display = 'none'
   }
 }
 
-const overlay = document.createElement('div');
-overlay.id = 'overlay';
-document.body.insertBefore(overlay, webGLContainer);
+const trigrams = ['☰', '☱','☲', '☳', '☴', '☵', '☶', '☷']
+const getAnIcon = (arr:string[]) => {
+  let index = Math.floor(Math.random() * arr.length)
+  let selectedIcon: string = arr[index]
+  return selectedIcon
+}
 
-const pageTitle = document.createElement('h1');
-pageTitle.className = 'page-title';
-pageTitle.textContent = 'ENDLESS TWIST';
+const formatDuration = (durationInSeconds: number): string => {
+  const minutes = Math.floor(durationInSeconds / 60)
+  const seconds = durationInSeconds % 60
 
-const aboutBtn = document.createElement('button');
-aboutBtn.className = 'about-btn';
-// aboutBtn.textContent = getAnIcon(iconsStrings);
-const aboutIcon = document.createElement('img');
-aboutIcon.src = info;
-aboutBtn.appendChild(aboutIcon);
+  return `${minutes}' ${seconds}"`
+}
 
-const startBtn = document.createElement('button');
-startBtn.className = 'start-btn';
-startBtn.textContent = 'start';
+const durationHTML = (allDur: number) => `duration <span> ${formatDuration(allDur)}</span>`
 
-const resetBtn = document.createElement('button');
-resetBtn.className = 'reset-btn';
-const resetIcon = document.createElement('img');
-resetIcon.src = rotate;
-resetBtn.appendChild(resetIcon);
 
-const pubLink = document.createElement('a');
-pubLink.href = '/publication/';
-pubLink.className = 'pub-link';
-pubLink.innerHTML = 'publication';
+const toggleElem = (elms: HTMLElement[]) => {
+  hover = !hover
+  if (hover) {
+    elms.forEach(elm => {
+      elm.style.display = 'block'
+      elm.style.opacity = '0'
+      setTimeout(() => {
+        elm.style.opacity = '1'
+      }, 100)
+    })
+  } else {
+    elms.forEach(elm => {
+      elm.style.opacity = '0'
+      setTimeout(() => {
+        elm.style.display = 'none'
+      }, 300)
+    })
+  }
+}
 
-const pubThumb = document.createElement('img');
-pubThumb.src = '/et-pub.png';
-pubThumb.alt = 'endless twist publication';
-pubThumb.className = 'pub-thumbnail';
+const overlay = document.createElement('div')
+overlay.id = 'overlay'
+document.body.insertBefore(overlay, webGLContainer)
 
-const about = document.createElement('div');
-about.className = 'about';
+const pageTitle = document.createElement('h1')
+pageTitle.className = 'page-title'
+pageTitle.textContent = 'ENDLESS TWIST'
+
+const aboutBtn = document.createElement('button')
+aboutBtn.className = 'about-btn'
+aboutBtn.textContent = '☲'
+
+const startBtn = document.createElement('button')
+startBtn.className = 'start-btn'
+startBtn.textContent = 'start'
+
+const resetBtn = document.createElement('button')
+resetBtn.className = 'reset-btn'
+const resetIcon = document.createElement('img')
+resetIcon.src = rotate
+resetBtn.appendChild(resetIcon)
+
+const pubLink = document.createElement('a')
+pubLink.href = '/publication/'
+pubLink.className = 'pub-link'
+pubLink.innerHTML = 'publication'
+
+const pubThumb = document.createElement('img')
+pubThumb.src = '/et-pub.png'
+pubThumb.alt = 'endless twist publication'
+pubThumb.className = 'pub-thumbnail'
+
+const about = document.createElement('div')
+about.className = 'about'
 about.innerHTML = `
   <section>
     <p> Endless Twist: <i> A critical autoethnographic approach to the current state of urban development </i></p>
     <p> See the publication <a href="/publication/"> here </a></p>
     <br>
     <p> Endless Twist is a guided walk through a 3D space that is constructed by urban fragments and personal memories.
-    It is multimedia web installation and audiovisual performance presenting the artist's critical perspective regarding the agency
-    of the human and non-human, and by extension of architects, planners, and owners.
-    While reflecting on the role of architecture as an apparatus that produces power dynamics, Farzad Golghasemi and
-    Gabriela Valdespino examine the corporeality associated with physical and digital spaces, through a techno-poetical
-    interpretation of the contemporary state of political economy. </p>
+    It is multimedia web installation and audiovisual performance presenting the artist's critical perspective regarding
+    the agency of the human and non-human, and by extension of architects, planners, and owners.
+    While reflecting on the role of architecture as an apparatus that produces power dynamics, Farzad Golghasemi examines
+    the corporeality associated with physical and digital spaces, through a techno-poetical interpretation of the contemporary
+    state of political economy. </p>
   </section>
   <section>
     <h3> Credits </h3>
@@ -157,117 +155,136 @@ about.innerHTML = `
   </section>
 `
 
-const guides = document.createElement('div');
-guides.className = 'guides';
+const guides = document.createElement('div')
+guides.className = 'guides'
 guides.innerHTML = `
   <ul>
-    <li><i>pause</i> <span>space bar</span></li>
+    <li><i>play_ pause</i> <span>space bar</span></li>
     <li><i>look around</i> <span>mouse_trackpad</span></li>
+    <li>different sections <span>1</span> <span>2</span> ... <span>9</span></li>
     <li><i>fullscreen</i> <span>F11</span></li>
   </ul>
 `
 
-const duration = document.createElement('div');
-duration.className = 'duration';
+const duration = document.createElement('div')
+duration.className = 'duration'
 
 
 export const updateGUI = (elapsed: number, running: boolean, started: boolean) => {
   duration.innerHTML = running ?
     `<span>${formatDuration(Math.floor(elapsed))}</span>` :
-    durationHTML(DURATION_IN_SECONDS);
+    durationHTML(DURATION_IN_SECONDS)
 
-  if (fraction > 0.99999) {
-    overlay?.appendChild(resetBtn);
+  if (getFraction() > 0.99999) {
+    overlay?.appendChild(resetBtn)
   }
 
-  startBtn.textContent = started ? 'continue' : 'start';
+  startBtn.textContent = started ? 'continue' : 'start'
 }
 
 
 export const initGUI = () => {
-  overlay?.appendChild(pageTitle);
-  overlay?.appendChild(pubLink);
-  overlay?.appendChild(aboutBtn);
-  overlay?.appendChild(about);
-  about.style.display = 'none';
-  duration.innerHTML = durationHTML(DURATION_IN_SECONDS);
+  overlay?.appendChild(pageTitle)
+  overlay?.appendChild(pubLink)
+  overlay?.appendChild(aboutBtn)
+  overlay?.appendChild(about)
   
-  aboutBtn.addEventListener('click', toggleAbout);
-  startBtn.addEventListener('click', startAnim);
+  about.style.display = 'none'
+  duration.innerHTML = durationHTML(DURATION_IN_SECONDS)
+  
+  aboutBtn.addEventListener('click', toggleAbout)
+  startBtn.addEventListener('click', startAnim)
 
-  startBtn.addEventListener('mouseover', () => toggleElem([guides, duration]));
-  startBtn.addEventListener('mouseout', () => toggleElem([guides, duration]));
+  startBtn.addEventListener('mouseover', () => toggleElem([guides]))
+  startBtn.addEventListener('mouseout', () => toggleElem([guides]))
 
-  pubLink.addEventListener('mouseover', () => toggleElem([pubThumb]));
-  pubLink.addEventListener('mouseout', () => toggleElem([pubThumb]));
+  pubLink.addEventListener('mouseover', () => toggleElem([pubThumb]))
+  pubLink.addEventListener('mouseout', () => toggleElem([pubThumb]))
 
   resetBtn.addEventListener('click', () => {
-    reset();
-    startBtn.textContent = 'restart';
-    resetBtn.remove();
-  });
+    reset()
+    startBtn.textContent = 'restart'
+    resetBtn.remove()
+  })
 
 }
 
 
-export const initGUIonLoad = () => {
-  loaderDiv?.remove();
-  overlay?.appendChild(startBtn);
-  overlay?.appendChild(duration);
-  overlay?.appendChild(guides);
-  overlay?.appendChild(pubThumb);
+export const initGUIonLoad = async () => {
+  progressDiv!.remove()
+  spinnerDiv!.style.display = 'none'
+
+  await startLayeredIntroAudio()
+  overlay?.classList.add('intro-gradient')
+
+  setTimeout(() => {
+    overlay?.classList.add('loaded')
+  }, 100)
+
+  overlay?.appendChild(startBtn)
+  overlay?.appendChild(duration)
+  overlay?.appendChild(guides)
+  overlay?.appendChild(pubThumb)
 }
 
 
 const toggleAbout = () => {
-  let elements = [loaderDiv!, startBtn, resetBtn, pubLink];
+  let elements = [loaderDiv!, startBtn, resetBtn, pubLink]
   if (!aboutIsShown) {
-    about.style.display = 'block';
-    aboutIcon.src = x;
+    about.style.display = 'block'
+    aboutBtn.textContent = '⨉'
     for (let el of elements) {
-      el.style.display = 'none';
+      el.style.display = 'none'
     }
-    aboutIsShown = true;
+    guides.style.display = 'none'
+    duration.style.display = 'none'
+    aboutIsShown = true
   } else {
-    about.style.display = 'none';
-    aboutIcon.src = info;
+    about.style.display = 'none'
+    aboutBtn.textContent = getAnIcon(trigrams)
     for (let el of elements) {
-      el.style.display = 'flex';
+      el.style.display = 'flex'
     }
-    aboutIsShown = false;
+    guides.style.display = 'flex'
+    duration.style.display = 'flex'
+    aboutIsShown = false
   }
 }
 
 
-export const showOverlay = () => {
-  if (overlay) {
-    overlay.style.display = 'block';
-    overlay.style.opacity = '0';
-    setTimeout(() => {
-      overlay.style.opacity = '1';
-    }, 10);
-  }
-
-  subtitleElement!.style.opacity = '0';
-
-  startBtn.style.display = 'block';
-  startBtn.style.pointerEvents = 'none';
-  startBtn.style.opacity = '0.3';
+export const showOverlay = async () => {
+  overlay!.style.display = 'block'
+  overlay!.style.opacity = '0'
   setTimeout(() => {
-    startBtn.style.opacity = '1';
-    startBtn.style.pointerEvents = 'auto';
-  }, 1000);
+    overlay!.style.opacity = '1'
+  }, 10)
+
+  subtitleElement!.style.opacity = '0'
+
+  startBtn.style.display = 'block'
+  startBtn.style.pointerEvents = 'none'
+  startBtn.style.opacity = '0.3'
+  setTimeout(() => {
+    startBtn.style.opacity = '1'
+    startBtn.style.pointerEvents = 'auto'
+  }, 1000)
+
+  await startLayeredIntroAudio()
+  overlay?.classList.add('intro-gradient')
 }
 
 
 export const hideOverlay = () => {
-  overlay!.style.opacity = '0';
+  overlay!.style.opacity = '0'
   setTimeout(() => {
-    overlay!.style.display = 'none';
-  }, 1000);
+    overlay!.style.display = 'none'
+  }, 1000)
 
-  subtitleElement!.style.opacity = '1';
-  startBtn.style.display = 'none';
+  subtitleElement!.style.opacity = '1'
+  startBtn.style.display = 'none'
 
-  webGLContainer?.appendChild(duration);
+  webGLContainer!.appendChild(duration)
+
+  pauseLayeredIntroAudio()
+  overlay?.classList.remove('intro-gradient')
 }

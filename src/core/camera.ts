@@ -5,18 +5,19 @@ import {
   BufferGeometry,
   LineBasicMaterial,
   Line
-} from 'three';
+} from 'three'
 
-import { scene, sizes } from './renderer';
-import { DURATION_IN_SECONDS, FORWARD_DURATION } from '../main';
-import { isKeyPressed, resetKeyPress, isJPressed } from '../content/updatemedia';
-import { Section } from '../content/types';
+import { scene, sizes } from './renderer'
+import { DURATION_IN_SECONDS } from '../main'
+import { getLoading } from '../content/media'
 
-const VERTICAL_FIELD_OF_VIEW = 45;
-const NEAR_PLANE = 0.1;
-const FAR_PLANE = 10000;
+const VERTICAL_FIELD_OF_VIEW = 45
+const NEAR_PLANE = 0.1
+const FAR_PLANE = 10000
 
-export let fraction = 0;
+let fraction = 0
+export const setFraction = (value: number) => fraction = value
+export const getFraction = () => fraction
 
 export const cameraRotations = {
   x: 0,
@@ -32,9 +33,9 @@ export const camera = new PerspectiveCamera(
 
 // --- INITIAL CAM PROPS ---
 
-// camera.position.set(200, 100, 20);
-camera.rotation.order = 'YXZ';
-camera.rotation.set(-0.6, -0.2, 0);
+// camera.position.set(200, 100, 20)
+camera.rotation.order = 'YXZ'
+camera.rotation.set(-0.6, -0.2, 0)
 
 
 window.addEventListener('resize', () => {
@@ -45,58 +46,35 @@ window.addEventListener('resize', () => {
 })
 
 
-scene.add(camera);
+scene.add(camera)
 
 
 // --------- CAMERA UPDATE ---------
 
 export const updateCamera = (dt: number) => {
-
-  if (fraction < 1) {
-    fraction += dt / DURATION_IN_SECONDS;
-  }
-
-  let selected = isKeyPressed();
-  for (let prop in selected) {
-    if (selected.hasOwnProperty(prop)) {
-      const section = selected as Section;
-      fraction = section.timeStamp / DURATION_IN_SECONDS;
-      camera.rotation.set(section.lookVector.x, section.lookVector.y, section.lookVector.z);
-      resetKeyPress();
-    }
-  }
-
-  if (isJPressed) {
-    if (1 - fraction > FORWARD_DURATION / DURATION_IN_SECONDS) {
-      fraction += FORWARD_DURATION / DURATION_IN_SECONDS;
-    } else {
-      fraction = 1;
-    }
-
-    camera.lookAt(1400, 0, -1100);
-    // camera.rotation.set(tangent.x, tangent.y, 0, 'YXZ');
-    resetKeyPress();
+  if (fraction < 1 && !getLoading()) {
+    fraction += dt / DURATION_IN_SECONDS
   }
 
   // for exiting pause with the latest rotation
-  cameraRotations.x = camera.rotation.x;
-  cameraRotations.y = camera.rotation.y;
+  cameraRotations.x = camera.rotation.x
+  cameraRotations.y = camera.rotation.y
 
-  const newPosition = splineCurve.getPoint(fraction);
-  // camera.setRotationFromEuler(new Euler(tangent.x, tangent.y, 0, 'YXZ'));
-  camera.position.copy(newPosition);
+  const newPosition = splineCurve.getPoint(fraction)
+  // camera.setRotationFromEuler(new Euler(tangent.x, tangent.y, 0, 'YXZ'))
+  camera.position.copy(newPosition)
 }
 
 
 export const resetCamera = () => {
-  fraction = 0;
-  camera.rotation.set(-0.6, -0.2, 0);
+  fraction = 0
+  camera.rotation.set(-0.6, -0.2, 0)
 }
 
 // --------- CAMERA SPLINE PATH ---------
 
 // e.g. ( 993.8, -175.8, 1310 ) >> ( 993.8, 1310, 175.8 )
-// <without tweaking>.rotation.set(- Math.PI / 2, 0, 0);
+// <without tweaking>.rotation.set(- Math.PI / 2, 0, 0)
 
 const splineCurve = new CatmullRomCurve3([
 	new Vector3( 314.3, 210.7, 597 ),
@@ -118,15 +96,15 @@ const splineCurve = new CatmullRomCurve3([
 	new Vector3( 1694.6, 271.3, -686.5 ),
 	new Vector3( 1308.9, 706.4, -211 ),
 	new Vector3( 993.8, 1310, 175.8 ),
-]);
+])
 
-// const pointsPath = new CurvePath();
-// pointsPath.add(splineCurve);
-// const points = pointsPath.curves.reduce((p, d)=> [...p, ...d.getPoints(20)], []);
+// const pointsPath = new CurvePath()
+// pointsPath.add(splineCurve)
+// const points = pointsPath.curves.reduce((p, d)=> [...p, ...d.getPoints(20)], [])
 
-const points = splineCurve.getPoints(300);
+const points = splineCurve.getPoints(300)
 
-const geometry = new BufferGeometry().setFromPoints(points);
-const material = new LineBasicMaterial({ color: 0x9132A8 });
-const myPath = new Line(geometry, material);
-scene.add(myPath);
+const geometry = new BufferGeometry().setFromPoints(points)
+const material = new LineBasicMaterial({ color: 0x9132A8 })
+const myPath = new Line(geometry, material)
+scene.add(myPath)

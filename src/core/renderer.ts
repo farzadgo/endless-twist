@@ -41,7 +41,7 @@ renderer.toneMapping = ACESFilmicToneMapping
 renderer.toneMappingExposure = 1
 
 
-function updateRenderer() {
+const updateRenderer = () => {
   renderer.setSize(sizes.width, sizes.height)
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)) // To avoid performance problems on devices with higher pixel ratio
 }

@@ -56,7 +56,7 @@ let narrowScreen = false;
 let activeParagraph: HTMLElement | null = null;
 let activeChapter: HTMLElement | null = null;
 
-export const allChapterTitles: Chapter[] = [];
+const allChapterTitles: Chapter[] = [];
 
 
 const setNoteStyle = (p: HTMLElement) => {
@@ -83,6 +83,14 @@ const modifyTitle = (txt: string) => {
 const setTitles = (chapTitles: Chapter) => {
   allChapterTitles.push(chapTitles);  
 }
+
+// const resetNotes = (elements: HTMLElement[]) => {
+//   elements.forEach((element) => {
+//     element.style.display = 'none';
+//   });
+//   activeParagraph = null;
+//   activeChapter = null;
+// }
 
 const calculateScrollPercentage = () => {
   let scrollTop = window.scrollY - (window.innerHeight * 1.5);
@@ -261,8 +269,7 @@ chapterStrings.forEach((chapterString, i) => {
 
       return paragraph;
     });
-    
-    
+
 
     const resetNotes = () => {
       noteParagraphs.forEach((paragraph) => {
@@ -340,6 +347,22 @@ chapterStrings.forEach((chapterString, i) => {
 
 });
 
+// let navigation = performance.getEntriesByType("navigation")[0].type;
+// console.log(navigation);
+
+// if (navigation === "back_forward") {
+//   location.reload();
+// }
+
+// window.addEventListener('pageshow', (event) => {
+//   handleReload();
+//   // var historyTraversal = event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2 );
+//   // if ( historyTraversal ) {
+//   //   window.location.reload();
+//   // }
+// });
+
+
 
 
 // ------ TABLE OF CONTENTS ------
@@ -387,9 +410,9 @@ const imprint = document.createElement('div');
 imprint.className = 'imprint';
 let impTitle = '<p> Endless Twist: <i>A critical autoethnographic approach to the current state of urban development.</i> </p>';
 let impAuthor = '<p> Farzad Golghasemi </p> <br>';
-let impDesc = '<p> A thesis submitted in partial fullfilment of the requirements for the degree of Master of Arts in Digital Media (M.A.) at the University of the Arts Bremen. </p> <br>';
+let impDesc = '<p> A thesis submitted in partial fulfillment of the requirements for the degree of Master of Arts in Digital Media (M.A.) at the University of the Arts Bremen. </p> <br>';
 let impLink = '<p> <a href="/"> www.endlesstwist.xyz </a> </p>';
-let impCopy = '<p> © 2021 Farzad Golghasemi </p>';
+let impCopy = '<p> © 2023 Farzad Golghasemi </p>';
 imprint.innerHTML = impTitle + impAuthor + impDesc + impLink + impCopy;
 
 menuBody.appendChild(imprint);

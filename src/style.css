@@ -52,9 +52,9 @@ a {
   height: 100%;
   overflow: hidden;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 20;
-  transition: all 1s;
+  transition: all 2s;
 }
 #overlay > h1,
 #overlay > button,
@@ -85,6 +85,7 @@ a {
   width: var(--btn-height);
   padding: 6px;
   z-index: 25;
+  color: #ccc;
 }
 
 .start-btn,
@@ -180,7 +181,7 @@ a {
 .guides {
   position: absolute;
   z-index: 21;
-  color: var(--grayi);
+  color: var(--pinki);
   line-height: 2em;
   user-select: none;
   font-weight: bold;
@@ -190,7 +191,7 @@ a {
   font-family: var(--font-script);
 }
 .duration {
-  display: none;
+  /* display: none; */
   right: var(--padding-xl);
 }
 .guides {
@@ -198,7 +199,7 @@ a {
   left: var(--padding-xl);
 }
 .guides span {
-  border: 1px solid var(--grayi);
+  border: 1px solid var(--pinki);
   border-radius: 5px;
   padding: 0 5px;
 }
@@ -230,4 +231,37 @@ a {
   z-index: 11;
   opacity: 0;
   transition: opacity 2s;
+}
+
+/* --------- intro background --------- */
+@keyframes gradient {
+	0% {
+		background-position: 0 0, 0% 50%;
+	}
+	50% {
+		background-position: 0 0, 100% 50%;
+	}
+	100% {
+		background-position: 0 0, 0% 50%;
+	}
+}
+
+#overlay.intro-gradient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1);
+  background:
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="200" height="200" filter="url(%23noise)" opacity="0.18"/></svg>'),
+    linear-gradient(-45deg, #10101018, #1f1d2083);
+  background-size: 200px 200px, 400% 100%;
+  background-repeat: repeat, no-repeat;
+  background-position: 0 0, 0% 50%;
+  animation: gradient 10s ease infinite;
+}
+
+#overlay.intro-gradient.loaded::after {
+  opacity: 1;
 }
