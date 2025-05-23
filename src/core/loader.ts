@@ -23,7 +23,7 @@ export const loadModels = () => {
   const manager = new LoadingManager();
 
   manager.onLoad = () => {
-    console.log("Loading complete!");
+    console.log('loaded all models...');
     // modelsData.forEach(group => scene.add(group));
     
     // --- handle GUI on load ---

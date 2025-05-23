@@ -209,12 +209,15 @@ type PlaybackNode = {
 let activeNodes: PlaybackNode[] = []
 
 const loadIntroSound = async (): Promise<AudioBuffer> => {
+  console.log('loading intro sound...');
   const response = await fetch(introSoundUrl)
   const arrayBuffer = await response.arrayBuffer()
   return await introAudioContext.decodeAudioData(arrayBuffer)
 }
 
-audioBuffer = await loadIntroSound()
+export const preloadIntroSound = async () => {  
+  audioBuffer = await loadIntroSound()
+}
 
 const playAudioInstance = () => {
   if (!audioBuffer || !isIntroPlaying) return
@@ -250,7 +253,7 @@ const playAudioInstance = () => {
 }
 
 export const startLayeredIntroAudio = async () => {
-  if (!audioBuffer) await loadIntroSound()
+  // if (!audioBuffer) await loadIntroSound()
   if (!isIntroPlaying) {
     isIntroPlaying = true
     playAudioInstance()

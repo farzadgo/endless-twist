@@ -6,7 +6,16 @@ import { loadModels } from './core/loader'
 import { renderer, scene } from './core/renderer'
 import { camera, updateCamera, cameraRotations, resetCamera } from './core/camera'
 import { initGUI, showOverlay, hideOverlay, updateGUI, progressDiv, spinnerDiv, checkLoading } from './core/gui'
-import { updateImages, updateAudio, updateVideos, pauseAudio, playAudio, audioElapsed, resetAudio } from './content/media'
+import {
+  updateImages,
+  updateAudio,
+  updateVideos,
+  audioElapsed,
+  playAudio,
+  pauseAudio,
+  resetAudio,
+  preloadIntroSound
+} from './content/media'
 
 import { throttle } from 'throttle-debounce'
 
@@ -19,8 +28,6 @@ export const isMobile = () => {
 }
 
 let animID: number
-
-// let transitionLock = false
 
 let elapsed = 0
 export const setElapsed = (value: number) => elapsed = value
@@ -37,8 +44,12 @@ export const DURATION_IN_SECONDS = 1040
 export const FORWARD_DURATION = 60
 const STEPS_PER_FRAME = 5
 
+
+// --------- PRELOAD ---------
+
 if (!isMobile()) {
   loadModels()
+  preloadIntroSound()
 } else {
   spinnerDiv?.remove()
   progressDiv!.innerHTML = 'the web installation is only <br> available on desktop devices'
@@ -184,7 +195,7 @@ const loop = () => {
     trigger = true
     if (trigger === true) {
       elapsed = audioElapsed
-      console.log('elapsed synced with audio...')
+      console.log('synced...')
       trigger = false
     }
   }
