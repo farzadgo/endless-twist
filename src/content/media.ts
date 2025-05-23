@@ -53,8 +53,11 @@ let loading = false
 export const setLoading = (value: boolean) => loading = value
 export const getLoading = (): boolean => loading
 
+let ended = false
+export const getEnded = () => ended
+export const setEnded = (value: boolean) => ended = value
+
 export const audioElement = document.createElement('audio')
-// audioElement.controls = false
 audioElement.crossOrigin = 'anonymous' // MUST come before .src
 audioElement.src = audioUrl
 audioElement.loop = false
@@ -66,7 +69,10 @@ gainNode.gain.value = 1
 
 source.connect(gainNode).connect(audioContext.destination)
 
-audioElement.addEventListener('ended', () => audioElement.pause())
+audioElement.addEventListener('ended', async () => {
+  ended = true
+  await pauseAudio()
+})
 
 audioElement.addEventListener('waiting', () => setLoading(true))
 
@@ -169,6 +175,7 @@ document.addEventListener('keyup', async (event) => {
       console.error("Failed to jump to section", err)
     }
   }
+  // await jumpToSection({eventCode: 'KeyE', timeStamp: 1036, lookVector: new Vector3(-0.5, -0.2, 0)})
 })
 
 

@@ -1,23 +1,23 @@
-import { Vector3 } from 'three';
+import { Vector3 } from 'three'
 
 
 // MIXED-MEDIA
 
 export interface DataObject {
-  time: number;
-  body: string;
+  time: number
+  body: string
 }
 
 export interface ImageDataObject {
-  image: string;
-  t1: number;
-  t2: number;
+  image: string
+  t1: number
+  t2: number
 }
 
 export interface Section {
-  eventCode: string;
-  timeStamp: number;
-  lookVector: Vector3;  
+  eventCode: string
+  timeStamp: number
+  lookVector: Vector3  
 }
 
 export type BaseVideo = {
@@ -43,19 +43,19 @@ export enum ParagraphType {
 }
 
 export interface Note {
-  id: string;
-  body: string;
+  id: string
+  body: string
 }
 
 export interface Paragraph {
-  id: string;
-  body: string;
-  type: ParagraphType;
+  id: string
+  body: string
+  type: ParagraphType
 }
 
 export interface Chapter {
-  id: string;
-  title: string;
-  paragraphs?: Paragraph[];
-  subchapters?: Chapter[];
+  id: string
+  title: string
+  paragraphs?: Paragraph[]
+  subchapters?: Chapter[]
 }

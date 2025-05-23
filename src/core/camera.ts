@@ -69,6 +69,7 @@ export const updateCamera = (dt: number) => {
 export const resetCamera = () => {
   fraction = 0
   camera.rotation.set(-0.6, -0.2, 0)
+  updateCamera(0)
 }
 
 // --------- CAMERA SPLINE PATH ---------

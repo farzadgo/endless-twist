@@ -6,7 +6,7 @@ import { loadModels } from './core/loader'
 import { renderer, scene } from './core/renderer'
 import { camera, updateCamera, cameraRotations, resetCamera } from './core/camera'
 import { initGUI, showOverlay, hideOverlay, updateGUI, progressDiv, spinnerDiv, checkLoading } from './core/gui'
-import { updateImages, updateAudio, updateVideos, audioElapsed, playAudio, pauseAudio, resetAudio } from './content/media'
+import { updateImages, updateAudio, updateVideos, audioElapsed, playAudio, pauseAudio, resetAudio, getEnded, setEnded } from './content/media'
 
 import { throttle } from 'throttle-debounce'
 
@@ -65,7 +65,7 @@ export const startAnim = async ():Promise<void> => {
       camera.rotation.set(cameraRotations.x, cameraRotations.y, 0)
       hideOverlay()
       waiter()
-      await playAudio()
+      if (!getEnded()) await playAudio()
     } catch (error) {
       console.error("Failed to start animation or audio:", error)
       running = false
@@ -170,10 +170,12 @@ initGUI()
 const clock = new Clock()
 
 export const reset = () => {
+  setEnded(false)
   started = false
   elapsed = 0
-  resetCamera()
   resetAudio()
+  resetCamera()
+  renderer.render(scene, camera)
 }
 
 let trigger = false

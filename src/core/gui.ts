@@ -109,32 +109,34 @@ about.className = 'about'
 about.innerHTML = `
   <section>
     <p> Endless Twist: <i> A critical autoethnographic approach to the current state of urban development </i></p>
-    <p> See the publication <a href="/publication/"> here </a></p>
     <br>
-    <p> Endless Twist is a guided walk through a 3D space that is constructed by urban fragments and personal memories.
+    <p> <i>Endless Twist</i> is a guided walk through a 3D space that is constructed by urban fragments and personal memories.
     It is multimedia web installation and audiovisual performance presenting the artist's critical perspective regarding
     the agency of the human and non-human, and by extension of architects, planners, and owners.
     While reflecting on the role of architecture as an apparatus that produces power dynamics, Farzad Golghasemi examines
     the corporeality associated with physical and digital spaces, through a techno-poetical interpretation of the contemporary
     state of political economy. </p>
+    <p>
+    — Read the publication <a href="/publication/"> here </a> </br>
+    — Check the work's exhibitions & performances <a href="https://fagosemi.xyz/works/endless-twist/" target="blank"> here </a> 
+    </p>
   </section>
   <section>
     <h3> Credits </h3>
-    <p> Concept, Text, 3D, Programming: <b>Farzad Golghasemi</b></p>
-    <p> Sound, Dramaturgy, Artistic Collaboration: <b>Gabriela Valdespino</b></p>
+    <p>
+    — Concept, Text, 3D, Programming: <a href="https://fagosemi.xyz/" target="blank">Farzad Golghasemi</a> </br>
+    — Sound, Dramaturgy: <a href="https://gvaldespino.xyz/" target="blank">Gabriela Valdespino</a>
+    </p>
   </section>
   <section>
     <h3> Biography </h3>
-    <p> Farzad Golghasemi <a href="https://instagram.com/dis___orient/" target="blank">@dis___orient</a> and Gabriela Valdespino
-    <a href="https://instagram.com/lowfisd/" target="blank">@lowfisd</a> (hacer sitio) work together involving corporeal and digital
-    spaces in conjunction with text, image, sound, video, web, and installation. Their body of work is initiated by inspections of
-    social phenomena and associated spatial [re]productions. In this context, they question the relationship between social and
-    somatic, and how the body, mind, and social settings are intricately linked. Rather than mere aesthetics, they are interested
-    in lived experience which motivates them to work with performative methodologies such as walking to explore phenomenological
-    and multi-sensory aspects of the built environment. </p>
+    <p> Farzad Golghasemi (1988 he/they) is a transdisciplinary artist and researcher who focuses on architecture and spatial
+    production through the agency of software and technology. By incorporating speculation, programming, and 3D modeling,
+    they explore the new modes of world-making through synthetic and temporal aspects of construction. ...</p>
   </section>
+  </br>
   <section>
-    <p> * This project was made possible by participation in the project <a href="https://ta.peira.space/" target="blank"><b>Tender Absence</b></a> by the collective
+    <p> * This project was made possible by participation in the project <a href="https://ta.peira.space/" target="blank">Tender Absence</a> by the collective
     <b>Peira</b> in cooperation with <b>Schwankhalle Bremen</b> and friendly support of <b>Senator für Kultur Bremen</b>
     and <b>University of the Arts Bremen</b>. </p>
   </section>
@@ -144,13 +146,9 @@ about.innerHTML = `
     <div class="image-container"> <img src=${hfk_logo} alt="HfK-logo"> </div>
     <div class="image-container"> <img src=${sfk_logo} alt="SfK-logo"> </div>
   </section>
+  </br>
   <section>
-    <h3> Special thanks to </h3>
-    <p> Prof. Dr. Andrea Sick · Noëlle BuAbbud · Guida Ribeiro · Lucas Kalmus · Abd Tammaa · Kilian Schwoon · Neus Ledesma Vidal ·
-    Victor Artiga Rodriguez · Prof. Natascha Sadr Haghighian · Saba Innab · Thealit F.K.L. · Jukka Boehm · Prof. Dennis Paul · Aurora Kellermann </p>
-  </section>
-  <section>
-    <h3> Image Credits and Copyrights </h3>
+    <h3> Image Credits </h3>
     <p> Renderings: Justus Grosse GmbH / 3D artists: Unknown <br>
     Postcards: Überseestadt Marketingverein / 3D artists: Unknown <br>
     Photos: © Hafenmuseum Bremen / Photographer: © Daniela Buchholz <br>
@@ -207,7 +205,7 @@ export const initGUI = () => {
 
   soundBtn.addEventListener('click', async () => {
     if (getIntroPlaying()) {
-      pauseLayeredIntroAudio().then(() => soundIcon.src = volume_off)
+      await pauseLayeredIntroAudio().then(() => soundIcon.src = volume_off)
     } else {
       await startLayeredIntroAudio().then(() => soundIcon.src = volume_up)
     }
@@ -293,7 +291,7 @@ export const showOverlay = async () => {
 }
 
 
-export const hideOverlay = () => {
+export const hideOverlay = async () => {
   overlay!.style.opacity = '0'
   setTimeout(() => {
     overlay!.style.display = 'none'
@@ -304,6 +302,6 @@ export const hideOverlay = () => {
 
   webGLContainer!.appendChild(duration)
 
-  pauseLayeredIntroAudio()
+  await pauseLayeredIntroAudio()
   overlay?.classList.remove('intro-gradient')
 }
