@@ -257,7 +257,7 @@ export const startLayeredIntroAudio = async () => {
   }
 }
 
-export const pauseLayeredIntroAudio = () => {
+export const pauseLayeredIntroAudio = async () => {
   isIntroPlaying = false
   if (scheduleTimeout) clearTimeout(scheduleTimeout)
 

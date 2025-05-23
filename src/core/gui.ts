@@ -43,7 +43,7 @@ const formatDuration = (durationInSeconds: number): string => {
   return `${minutes}' ${seconds}"`
 }
 
-const durationHTML = (allDur: number) => `duration <span>${formatDuration(allDur)}</span>`
+const durationHTML = (allDur: number) => `</span>duration ${formatDuration(allDur)}</span>`
 
 
 const toggleElem = (elms: HTMLElement[]) => {
@@ -207,11 +207,9 @@ export const initGUI = () => {
 
   soundBtn.addEventListener('click', async () => {
     if (getIntroPlaying()) {
-      soundIcon.src = volume_off
-      pauseLayeredIntroAudio()
+      pauseLayeredIntroAudio().then(() => soundIcon.src = volume_off)
     } else {
-      soundIcon.src = volume_up
-      await startLayeredIntroAudio()
+      await startLayeredIntroAudio().then(() => soundIcon.src = volume_up)
     }
   })
 
