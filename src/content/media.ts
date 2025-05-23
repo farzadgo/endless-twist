@@ -1,5 +1,5 @@
 import { /* FORWARD_DURATION, */ DURATION_IN_SECONDS, getRunning, setElapsed } from '../main'
-import { DataObject, Section } from './types'
+import { DataObject, Section, BaseVideo, OverlayVideo } from './types'
 import { subtitleData } from './subtitles'
 import { images, outroImages, getPosDims } from './images'
 import { sections } from './sections'
@@ -45,7 +45,6 @@ const updateSubtitle = () => {
 
 // ------------------ AUDIO HANDLING ------------------
 
-// const audioUrl = 'https://cloud.disorient.xyz/s/GJ7Cd5ABkJmNAig/download/web-endless-twist_final.mp3'
 const audioUrl = 'https://res.cloudinary.com/dd3tumnu6/video/upload/v1747574023/tender-audios/web-endless-twist_final_xzqyk6.mp3'
 
 export let audioElapsed = 0
@@ -199,6 +198,8 @@ let audioBuffer: AudioBuffer | null = null
 let isIntroPlaying = false
 let scheduleTimeout: ReturnType<typeof setTimeout> | null = null
 
+export const getIntroPlaying = () => isIntroPlaying
+
 const FADE_TIME = 2
 const PLAY_INTERVAL = 7
 
@@ -208,15 +209,11 @@ type PlaybackNode = {
 }
 let activeNodes: PlaybackNode[] = []
 
-const loadIntroSound = async (): Promise<AudioBuffer> => {
-  console.log('loading intro sound...');
+const loadIntroSound = async () => {
+  console.log('loading intro sound...')
   const response = await fetch(introSoundUrl)
   const arrayBuffer = await response.arrayBuffer()
-  return await introAudioContext.decodeAudioData(arrayBuffer)
-}
-
-export const preloadIntroSound = async () => {  
-  audioBuffer = await loadIntroSound()
+  audioBuffer = await introAudioContext.decodeAudioData(arrayBuffer)
 }
 
 const playAudioInstance = () => {
@@ -253,7 +250,7 @@ const playAudioInstance = () => {
 }
 
 export const startLayeredIntroAudio = async () => {
-  // if (!audioBuffer) await loadIntroSound()
+  if (!audioBuffer) await loadIntroSound()
   if (!isIntroPlaying) {
     isIntroPlaying = true
     playAudioInstance()
@@ -318,21 +315,6 @@ export const pauseLayeredIntroAudio = () => {
 
 
 // ------------------ VIDEO HANDLING ------------------
-
-// const lateralMoveVideoUrl = 'https://cloud.disorient.xyz/s/ZpRkGx679QNmdJ6/download/overthesee_2.mov'
-// const skyMoveVideoUrl = 'https://cloud.disorient.xyz/s/EjKBoRctyZZgg2T/download/overthesee_3.mov'
-
-type BaseVideo = {
-  id: string
-  url: string
-  startTime: number
-  started?: boolean
-  ended?: boolean
-}
-
-type OverlayVideo = BaseVideo & {
-  element: HTMLVideoElement
-}
 
 const baseVideos: BaseVideo[] = [
   {

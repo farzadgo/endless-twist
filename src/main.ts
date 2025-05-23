@@ -6,16 +6,7 @@ import { loadModels } from './core/loader'
 import { renderer, scene } from './core/renderer'
 import { camera, updateCamera, cameraRotations, resetCamera } from './core/camera'
 import { initGUI, showOverlay, hideOverlay, updateGUI, progressDiv, spinnerDiv, checkLoading } from './core/gui'
-import {
-  updateImages,
-  updateAudio,
-  updateVideos,
-  audioElapsed,
-  playAudio,
-  pauseAudio,
-  resetAudio,
-  preloadIntroSound
-} from './content/media'
+import { updateImages, updateAudio, updateVideos, audioElapsed, playAudio, pauseAudio, resetAudio } from './content/media'
 
 import { throttle } from 'throttle-debounce'
 
@@ -45,11 +36,10 @@ export const FORWARD_DURATION = 60
 const STEPS_PER_FRAME = 5
 
 
-// --------- PRELOAD ---------
+// --------- PRE-LOAD ---------
 
 if (!isMobile()) {
   loadModels()
-  preloadIntroSound()
 } else {
   spinnerDiv?.remove()
   progressDiv!.innerHTML = 'the web installation is only <br> available on desktop devices'

@@ -20,6 +20,18 @@ export interface Section {
   lookVector: Vector3;  
 }
 
+export type BaseVideo = {
+  id: string
+  url: string
+  startTime: number
+  started?: boolean
+  ended?: boolean
+}
+
+export type OverlayVideo = BaseVideo & {
+  element: HTMLVideoElement
+}
+
 
 // PUBLICATION
 

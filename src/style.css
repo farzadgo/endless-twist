@@ -77,15 +77,23 @@ a {
   font-weight: 300;
   height: var(--btn-height);
 }
-.about-btn {
+.about-btn,
+.sound-btn {
   border: none;
   right: var(--padding-xl);
-  top: var(--padding-xl);
   height: var(--btn-height);
   width: var(--btn-height);
-  padding: 6px;
   z-index: 25;
+}
+.about-btn {  
+  top: var(--padding-xl);
+  padding: 6px;
   color: #ccc;
+}
+.sound-btn {
+  top: calc(var(--padding-xl) + var(--btn-height) + 30px);
+
+  padding: 4px;
 }
 
 .start-btn,
@@ -94,13 +102,14 @@ a {
   left: 50%;
   top: 45%;
   transform: translate(-50%, 0);
-  border: 1px solid #ccc;
+  border: 2px solid var(--pinki);
   padding: 8px 18px 12px;
   height: 56px;
 }
 .start-btn {
   font-family: var(--font-script);
-  color: #ccc;
+  color: var(--pinki);
+  
 }
 .reset-btn {
   left: calc(50% - 126px);
@@ -109,14 +118,16 @@ a {
 }
 .pub-link {
   top: calc(45% + 80px);
-  border: 2px solid var(--pinki);
+  border: 1px solid #ccc;
+  color: #ccc;
+  font-weight: 300;
 }
 
 .pub-thumbnail {
   display: none;
   width: 500px;
   position: absolute;
-  top: 70px;
+  bottom: 60px;
   left: 50%;
   transform: translate(-50%, 0);
   opacity: 1;

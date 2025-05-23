@@ -1,5 +1,5 @@
 import { DURATION_IN_SECONDS, reset, startAnim } from '../main'
-import { getLoading, subtitleElement, startLayeredIntroAudio, pauseLayeredIntroAudio } from '../content/media'
+import { getLoading, subtitleElement, startLayeredIntroAudio, pauseLayeredIntroAudio, getIntroPlaying } from '../content/media'
 import { getFraction } from './camera'
 
 import hfk_logo from '../content/assets/logo-hfk.png'
@@ -7,6 +7,8 @@ import sfk_logo from '../content/assets/logo-sfk.png'
 import schwa_logo from '../content/assets/logo-schwankhalle.png'
 import peira_logo from '../content/assets/logo-peira.png'
 
+import volume_up from '../content/assets/volume_up.svg'
+import volume_off from '../content/assets/volume_off.svg'
 import rotate from '../content/assets/rotate-ccw.svg'
 
 let aboutIsShown = false
@@ -95,6 +97,12 @@ const pubThumb = document.createElement('img')
 pubThumb.src = '/et-pub.png'
 pubThumb.alt = 'endless twist publication'
 pubThumb.className = 'pub-thumbnail'
+
+const soundBtn = document.createElement('button')
+soundBtn.className = 'sound-btn'
+const soundIcon = document.createElement('img')
+soundIcon.src = volume_off
+soundBtn.appendChild(soundIcon)
 
 const about = document.createElement('div')
 about.className = 'about'
@@ -185,8 +193,10 @@ export const updateGUI = (elapsed: number, running: boolean, started: boolean) =
 
 export const initGUI = () => {
   overlay?.appendChild(pageTitle)
-  overlay?.appendChild(pubLink)
   overlay?.appendChild(aboutBtn)
+  overlay?.appendChild(soundBtn)
+  overlay?.appendChild(pubLink)
+
   overlay?.appendChild(about)
   
   about.style.display = 'none'
@@ -194,6 +204,16 @@ export const initGUI = () => {
   
   aboutBtn.addEventListener('click', toggleAbout)
   startBtn.addEventListener('click', startAnim)
+
+  soundBtn.addEventListener('click', async () => {
+    if (getIntroPlaying()) {
+      soundIcon.src = volume_off
+      pauseLayeredIntroAudio()
+    } else {
+      soundIcon.src = volume_up
+      await startLayeredIntroAudio()
+    }
+  })
 
   startBtn.addEventListener('mouseover', () => toggleElem([guides]))
   startBtn.addEventListener('mouseout', () => toggleElem([guides]))
@@ -214,17 +234,16 @@ export const initGUIonLoad = async () => {
   progressDiv!.remove()
   spinnerDiv!.style.display = 'none'
 
-  await startLayeredIntroAudio()
   overlay?.classList.add('intro-gradient')
-
   setTimeout(() => {
     overlay?.classList.add('loaded')
   }, 100)
 
-  overlay?.appendChild(startBtn)
-  overlay?.appendChild(duration)
+  overlay?.insertBefore(startBtn, pubLink)
+
   overlay?.appendChild(guides)
   overlay?.appendChild(pubThumb)
+  overlay?.appendChild(duration)
 }
 
 
@@ -269,7 +288,9 @@ export const showOverlay = async () => {
     startBtn.style.pointerEvents = 'auto'
   }, 1000)
 
+  soundIcon.src = volume_up
   await startLayeredIntroAudio()
+
   overlay?.classList.add('intro-gradient')
 }
 
