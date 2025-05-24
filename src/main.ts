@@ -1,7 +1,7 @@
 import './costyles.css'
 import './style.css'
 
-import { Clock, DirectionalLight, AmbientLight } from 'three'
+import { Clock } from 'three'
 import { loadModels } from './core/loader'
 import { renderer } from './core/renderer'
 import { scene } from './core/scene'
@@ -52,10 +52,9 @@ const waiter = () => {
 }
 
 
-
 // --------- CONTROLS ---------
 
-export const startAnim = async ():Promise<void> => {
+export const startAnim = async (): Promise<void> => {
   if (!running && waited && !isMobile()) {
     if (!started) started = true
     try {
@@ -70,17 +69,6 @@ export const startAnim = async ():Promise<void> => {
       console.error("Failed to start animation or audio:", error)
       running = false
     }
-  } else {
-    window.alert("please check the work on a desktop device!")
-    return
-  }
-}
-
-export const pauseAnim = async (): Promise<void> => {
-  if (running && waited) {
-    running = false
-    waiter()
-    await pauseAudio()
   }
 }
 
@@ -100,33 +88,6 @@ export const stopAnim = async (): Promise<void> => {
   }
 }
 
-// let inertia: number
-// let movementX: number
-// let movementY: number
-
-// const onDocumentMouseMove = (event: {
-//   movementY: number; movementX: number 
-// }) => {
-//   // // 0.05 and (inertia / 50) also good
-//   inertia = 0.1
-//   movementX = event.movementX
-//   movementY = event.movementY
-//   // camera.rotation.y -= event.movementX * 0.0002
-//   // camera.rotation.x -= event.movementY * 0.0002
-// }
-
-// const updateCameraRotation = (dt: number) => {
-//   inertia -= dt
-//   if (inertia < 0) {
-//     inertia = 0
-//   }
-//   camera.rotation.y -= movementX * (inertia / 1500)
-//   camera.rotation.x -= movementY * (inertia / 1500)
-// }
-
-// document.addEventListener('mousemove', onDocumentMouseMove)
-
-// document.addEventListener("fullscreenchange", onFullscreenchange)
 
 document.addEventListener('pointerlockchange', async () => {
   if (document.pointerLockElement === null) {
@@ -143,26 +104,6 @@ document.addEventListener('keyup', async event => {
     }
   }
 })
-
-
-// --------- LIGHTS ---------
-
-const ambientLight = new AmbientLight(0xffffff, 0.5)
-scene.add(ambientLight)
-
-const directionalLight = new DirectionalLight('#ffffff', 1)
-directionalLight.castShadow = true
-directionalLight.shadow.mapSize.set(1024, 1024)
-directionalLight.shadow.camera.far = 15
-directionalLight.shadow.normalBias = 0.05
-directionalLight.position.set(50, 50, 50)
-
-scene.add(directionalLight)
-
-
-// --------- init GUI ---------
-
-initGUI()
 
 
 // --------- LOOPING CONTROL ---------
@@ -214,3 +155,8 @@ const controlTime = throttle(100, () => {
   checkLoading()
   // console.log(`elapsed: ${time} | audioElapsed: ${audioElapsed}`)
 })
+
+
+// --------- init GUI ---------
+
+initGUI()

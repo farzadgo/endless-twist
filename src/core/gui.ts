@@ -216,6 +216,7 @@ export const initGUI = () => {
 export const initGUIonLoad = async () => {
   progressDiv!.remove()
   spinnerDiv!.style.display = 'none'
+  spinnerDiv!.style.marginTop = '42px'
 
   overlay?.classList.add('intro-gradient')
   setTimeout(() => {
@@ -286,7 +287,6 @@ export const hideOverlay = async () => {
   startBtn.style.display = 'none'
 
   webGLContainer!.appendChild(duration)
-  duration.style.opacity = '1'
 
   await pauseLayeredIntroAudio()
   overlay?.classList.remove('intro-gradient')

@@ -134,7 +134,6 @@ a {
 }
 
 .start-btn:hover ~ .guides,
-.start-btn:hover ~ .duration,
 .publication-link:hover ~ .publication-thumb {
   opacity: 1;
   transition: opacity 0.3s ease-in;
@@ -211,7 +210,6 @@ a {
   font-family: var(--font-script);
 }
 .duration {
-  opacity: 0;
   right: var(--padding-xl);
 }
 .guides {
