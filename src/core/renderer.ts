@@ -1,31 +1,10 @@
-import {
-  WebGLRenderer,
-  Scene,
-  sRGBEncoding,
-  PCFShadowMap,
-  ACESFilmicToneMapping,
-  Color,
-  // Fog,
-  // AxesHelper,
-  // BoxGeometry,
-  // MeshBasicMaterial
-  // Mesh,
-} from 'three';
 
+import { WebGLRenderer, sRGBEncoding, PCFShadowMap, ACESFilmicToneMapping } from 'three'
+import { scene, sizes } from './scene'
+import { camera } from './camera'
 
-export const sizes = {
-  width: window.innerWidth,
-  height: window.innerHeight,
-}
+const canvas: HTMLElement = document.querySelector('#webgl') as HTMLElement
 
-// --------- Scene
-export const scene = new Scene();
-scene.background = new Color('#333');
-// scene.fog = new Fog('#333333', 600, 3000);
-
-export const canvas: HTMLElement = document.querySelector('#webgl') as HTMLElement
-
-// --------- Renderer
 export const renderer = new WebGLRenderer({
   canvas,
   antialias: true,
@@ -50,13 +29,11 @@ window.addEventListener('resize', () => {
   sizes.width = window.innerWidth
   sizes.height = window.innerHeight
   updateRenderer()
+
+  camera.aspect = sizes.width / sizes.height
+  camera.updateProjectionMatrix()
+
+  renderer.render(scene, camera)
 })
 
 updateRenderer()
-
-export default renderer
-
-// export default {
-//   renderer,
-//   gui,
-// }

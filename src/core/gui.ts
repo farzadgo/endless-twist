@@ -10,9 +10,9 @@ import peira_logo from '../content/assets/logo-peira.png'
 import volume_up from '../content/assets/volume_up.svg'
 import volume_off from '../content/assets/volume_off.svg'
 import rotate from '../content/assets/rotate-ccw.svg'
+import touchpad_mouse from '../content/assets/touchpad_mouse.svg'
 
 let aboutIsShown = false
-let hover = false
 
 const webGLContainer = document.getElementById('webgl-container')
 
@@ -43,27 +43,32 @@ const formatDuration = (durationInSeconds: number): string => {
   return `${minutes}' ${seconds}"`
 }
 
-const durationHTML = (allDur: number) => `</span>duration ${formatDuration(allDur)}</span>`
+const createIcon = (src: string, className: string): HTMLImageElement => {
+  const icon = document.createElement('img')
+  icon.src = src
+  icon.className = className
+  icon.alt = className
+  return icon
+}
 
+const createButtonWithText = (className: string, text: string): HTMLButtonElement => {
+  const button = document.createElement('button')
+  button.className = className
+  button.textContent = text
+  return button
+}
 
-const toggleElem = (elms: HTMLElement[]) => {
-  hover = !hover
-  if (hover) {
-    elms.forEach(elm => {
-      elm.style.display = 'block'
-      elm.style.opacity = '0'
-      setTimeout(() => {
-        elm.style.opacity = '1'
-      }, 100)
-    })
-  } else {
-    elms.forEach(elm => {
-      elm.style.opacity = '0'
-      setTimeout(() => {
-        elm.style.display = 'none'
-      }, 300)
-    })
-  }
+const createButtonWithIcon = (className: string, iconSrc: string): HTMLButtonElement => {
+  const button = createButtonWithText(className, '')
+  const icon = createIcon(iconSrc, className + '-icon')
+  icon.alt = className + '-icon'
+  button.appendChild(icon)
+  return button
+}
+
+const updateButtonIcon = (button: HTMLButtonElement, iconSrc: string) => {
+  const icon = button.querySelector('img')
+  if (icon) icon.src = iconSrc
 }
 
 const overlay = document.createElement('div')
@@ -74,35 +79,25 @@ const pageTitle = document.createElement('h1')
 pageTitle.className = 'page-title'
 pageTitle.textContent = 'ENDLESS TWIST'
 
-const aboutBtn = document.createElement('button')
-aboutBtn.className = 'about-btn'
-aboutBtn.textContent = '☲'
+const aboutBtn = createButtonWithText('about-btn', getAnIcon(trigrams))
 
-const startBtn = document.createElement('button')
-startBtn.className = 'start-btn'
-startBtn.textContent = 'start'
+const startBtn = createButtonWithText('start-btn', 'start')
 
-const resetBtn = document.createElement('button')
-resetBtn.className = 'reset-btn'
-const resetIcon = document.createElement('img')
-resetIcon.src = rotate
-resetBtn.appendChild(resetIcon)
+const resetBtn = createButtonWithIcon('reset-btn', rotate)
 
 const pubLink = document.createElement('a')
 pubLink.href = '/publication/'
-pubLink.className = 'pub-link'
+pubLink.className = 'publication-link'
 pubLink.innerHTML = 'publication'
 
-const pubThumb = document.createElement('img')
-pubThumb.src = '/et-pub.png'
-pubThumb.alt = 'endless twist publication'
-pubThumb.className = 'pub-thumbnail'
+const pubThumb = createIcon('/et-pub.png', 'publication-thumb')
 
-const soundBtn = document.createElement('button')
-soundBtn.className = 'sound-btn'
-const soundIcon = document.createElement('img')
-soundIcon.src = volume_off
-soundBtn.appendChild(soundIcon)
+const soundBtn = createButtonWithIcon('sound-btn', volume_off)
+
+const touchpadIcon = createIcon(touchpad_mouse, 'trackpad-icon')
+
+const duration = document.createElement('div')
+duration.className = 'duration'
 
 const about = document.createElement('div')
 about.className = 'about'
@@ -165,21 +160,18 @@ const guides = document.createElement('div')
 guides.className = 'guides'
 guides.innerHTML = `
   <ul>
-    <li><i>play_pause</i> <span>space bar</span></li>
-    <li><i>look around</i> <span>mouse_touchpad </span></li>
+  <li><i>look around</i> ${touchpadIcon.outerHTML}</li>
+  <li><i>play_pause</i> <span style="white-space:pre;"> ▁▁▁ </span></li>
     <li>different sections <span>0</span> <span>1</span> ... <span>9</span></li>
     <li><i>fullscreen</i> <span>F11</span></li>
   </ul>
 `
 
-const duration = document.createElement('div')
-duration.className = 'duration'
-
 
 export const updateGUI = (elapsed: number, running: boolean, started: boolean) => {
   duration.innerHTML = running ?
     `<span>${formatDuration(Math.floor(elapsed))}</span>` :
-    durationHTML(DURATION_IN_SECONDS)
+    `</span>duration ${formatDuration(DURATION_IN_SECONDS)}</span>`
 
   if (getFraction() > 0.99999) {
     overlay?.appendChild(resetBtn)
@@ -198,24 +190,19 @@ export const initGUI = () => {
   overlay?.appendChild(about)
   
   about.style.display = 'none'
-  duration.innerHTML = durationHTML(DURATION_IN_SECONDS)
+
+  duration.innerHTML = `</span>duration ${formatDuration(DURATION_IN_SECONDS)}</span>`
   
   aboutBtn.addEventListener('click', toggleAbout)
   startBtn.addEventListener('click', startAnim)
 
   soundBtn.addEventListener('click', async () => {
     if (getIntroPlaying()) {
-      await pauseLayeredIntroAudio().then(() => soundIcon.src = volume_off)
+      await pauseLayeredIntroAudio().then(() => updateButtonIcon(soundBtn, volume_off))
     } else {
-      await startLayeredIntroAudio().then(() => soundIcon.src = volume_up)
+      await startLayeredIntroAudio().then(() => updateButtonIcon(soundBtn, volume_up))
     }
   })
-
-  startBtn.addEventListener('mouseover', () => toggleElem([guides]))
-  startBtn.addEventListener('mouseout', () => toggleElem([guides]))
-
-  pubLink.addEventListener('mouseover', () => toggleElem([pubThumb]))
-  pubLink.addEventListener('mouseout', () => toggleElem([pubThumb]))
 
   resetBtn.addEventListener('click', () => {
     reset()
@@ -251,8 +238,6 @@ const toggleAbout = () => {
     for (let el of elements) {
       el.style.display = 'none'
     }
-    guides.style.display = 'none'
-    duration.style.display = 'none'
     aboutIsShown = true
   } else {
     about.style.display = 'none'
@@ -260,8 +245,6 @@ const toggleAbout = () => {
     for (let el of elements) {
       el.style.display = 'flex'
     }
-    guides.style.display = 'flex'
-    duration.style.display = 'flex'
     aboutIsShown = false
   }
 }
@@ -284,8 +267,10 @@ export const showOverlay = async () => {
     startBtn.style.pointerEvents = 'auto'
   }, 1000)
 
-  soundIcon.src = volume_up
+  overlay?.appendChild(duration)
+
   await startLayeredIntroAudio()
+  updateButtonIcon(soundBtn, volume_up)
 
   overlay?.classList.add('intro-gradient')
 }
@@ -301,6 +286,7 @@ export const hideOverlay = async () => {
   startBtn.style.display = 'none'
 
   webGLContainer!.appendChild(duration)
+  duration.style.opacity = '1'
 
   await pauseLayeredIntroAudio()
   overlay?.classList.remove('intro-gradient')

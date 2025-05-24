@@ -22,7 +22,7 @@ a {
   position: absolute;
   z-index: 30;
   left: 50%;
-  top: calc(45% - 42px);
+  top: calc(43% - 42px);
   transform: translate(-50%, 0);
   width: 100%;
   text-align: center;
@@ -98,9 +98,9 @@ a {
 
 .start-btn,
 .reset-btn, 
-.pub-link {
+.publication-link {
   left: 50%;
-  top: 45%;
+  top: 43%;
   transform: translate(-50%, 0);
   border: 2px solid var(--pinki);
   padding: 8px 18px 12px;
@@ -116,22 +116,28 @@ a {
   padding: 13px;
   width: 56px;
 }
-.pub-link {
-  top: calc(45% + 80px);
+.publication-link {
+  top: calc(43% + 80px);
   border: 1px solid #ccc;
   color: #ccc;
   font-weight: 300;
 }
 
-.pub-thumbnail {
-  display: none;
+.publication-thumb {
+  opacity: 0;
   width: 500px;
   position: absolute;
   bottom: 60px;
   left: 50%;
   transform: translate(-50%, 0);
-  opacity: 1;
   transition: opacity 0.3s ease-out;
+}
+
+.start-btn:hover ~ .guides,
+.start-btn:hover ~ .duration,
+.publication-link:hover ~ .publication-thumb {
+  opacity: 1;
+  transition: opacity 0.3s ease-in;
 }
 
 
@@ -153,7 +159,7 @@ a {
   margin-bottom: 0;
 }
 .about h3 {
-  font-size: var(--font-md);
+  font-size: var(--font-sm);
   margin: 40px 0 15px;
 }
 .about p {
@@ -205,17 +211,26 @@ a {
   font-family: var(--font-script);
 }
 .duration {
-  /* display: none; */
+  opacity: 0;
   right: var(--padding-xl);
 }
 .guides {
-  display: none;
+  opacity: 0;
   left: var(--padding-xl);
 }
 .guides span {
   border: 1px solid var(--pinki);
-  border-radius: 5px;
+  border-radius: 3px;
   padding: 0 5px;
+  display: inline-block;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+.guides img {
+  height: 36px;
+  top: 10px;
+  position: relative;
 }
 
 

@@ -1,28 +1,22 @@
-import {
-  PerspectiveCamera,
-  CatmullRomCurve3,
-  Vector3,
-  BufferGeometry,
-  LineBasicMaterial,
-  Line
-} from 'three'
-
-import { scene, sizes } from './renderer'
+import { PerspectiveCamera, CatmullRomCurve3, Vector3, BufferGeometry, LineBasicMaterial, Line } from 'three'
+import { scene, sizes } from './scene'
 import { DURATION_IN_SECONDS } from '../main'
 import { getLoading } from '../content/media'
+import { sections } from '../content/sections'
 
 const VERTICAL_FIELD_OF_VIEW = 45
 const NEAR_PLANE = 0.1
 const FAR_PLANE = 10000
 
+const initialRotation = sections[0].lookVector
+
 let fraction = 0
 export const setFraction = (value: number) => fraction = value
 export const getFraction = () => fraction
 
-export const cameraRotations = {
-  x: 0,
-  y: 0,
-}
+let inertia: number
+let movementX: number
+let movementY: number
 
 export const camera = new PerspectiveCamera(
   VERTICAL_FIELD_OF_VIEW,
@@ -31,46 +25,53 @@ export const camera = new PerspectiveCamera(
   FAR_PLANE
 )
 
-// --- INITIAL CAM PROPS ---
-
-// camera.position.set(200, 100, 20)
+// initial camera values
 camera.rotation.order = 'YXZ'
-camera.rotation.set(-0.6, -0.2, 0)
-
-
-window.addEventListener('resize', () => {
-  sizes.width = window.innerWidth
-  sizes.height = window.innerHeight
-  camera.aspect = sizes.width / sizes.height
-  camera.updateProjectionMatrix()
-})
-
+camera.rotation.set(...initialRotation.toArray())
 
 scene.add(camera)
 
 
 // --------- CAMERA UPDATE ---------
 
-export const updateCamera = (dt: number) => {
+export const updateCameraPosition = (dt: number) => {
   if (fraction < 1 && !getLoading()) {
     fraction += dt / DURATION_IN_SECONDS
   }
-
-  // for exiting pause with the latest rotation
-  cameraRotations.x = camera.rotation.x
-  cameraRotations.y = camera.rotation.y
 
   const newPosition = splineCurve.getPoint(fraction)
   // camera.setRotationFromEuler(new Euler(tangent.x, tangent.y, 0, 'YXZ'))
   camera.position.copy(newPosition)
 }
 
+const onMouseMove = (event: {movementY: number; movementX: number}) => {
+  // // 0.05 and (inertia / 50) also good
+  inertia = 0.1
+  movementX = event.movementX
+  movementY = event.movementY
+  // camera.rotation.y -= event.movementX * 0.0002
+  // camera.rotation.x -= event.movementY * 0.0002
+}
+
+
+export const updateCameraRotation = (dt: number) => {
+  inertia -= dt
+  if (inertia < 0) {
+    inertia = 0
+  }
+  camera.rotation.y -= movementX * (inertia / 1500)
+  camera.rotation.x -= movementY * (inertia / 1500)
+}
+
 
 export const resetCamera = () => {
   fraction = 0
-  camera.rotation.set(-0.6, -0.2, 0)
-  updateCamera(0)
+  camera.rotation.set(...initialRotation.toArray())
+  updateCameraPosition(0) // OR camera.position.set(initialPosition) but fraction sets it
 }
+
+document.addEventListener('mousemove', onMouseMove)
+
 
 // --------- CAMERA SPLINE PATH ---------
 
@@ -99,11 +100,12 @@ const splineCurve = new CatmullRomCurve3([
 	new Vector3( 993.8, 1310, 175.8 ),
 ])
 
+const points = splineCurve.getPoints(300)
+
 // const pointsPath = new CurvePath()
 // pointsPath.add(splineCurve)
 // const points = pointsPath.curves.reduce((p, d)=> [...p, ...d.getPoints(20)], [])
 
-const points = splineCurve.getPoints(300)
 
 const geometry = new BufferGeometry().setFromPoints(points)
 const material = new LineBasicMaterial({ color: 0x9132A8 })

@@ -3,8 +3,9 @@ import './style.css'
 
 import { Clock, DirectionalLight, AmbientLight } from 'three'
 import { loadModels } from './core/loader'
-import { renderer, scene } from './core/renderer'
-import { camera, updateCamera, cameraRotations, resetCamera } from './core/camera'
+import { renderer } from './core/renderer'
+import { scene } from './core/scene'
+import { camera, updateCameraPosition, updateCameraRotation, resetCamera } from './core/camera'
 import { initGUI, showOverlay, hideOverlay, updateGUI, progressDiv, spinnerDiv, checkLoading } from './core/gui'
 import { updateImages, updateAudio, updateVideos, audioElapsed, playAudio, pauseAudio, resetAudio, getEnded, setEnded } from './content/media'
 
@@ -62,7 +63,6 @@ export const startAnim = async ():Promise<void> => {
       // document.body.requestFullscreen()
       loop()
       running = true
-      camera.rotation.set(cameraRotations.x, cameraRotations.y, 0)
       hideOverlay()
       waiter()
       if (!getEnded()) await playAudio()
@@ -100,31 +100,31 @@ export const stopAnim = async (): Promise<void> => {
   }
 }
 
-let inertia: number
-let movementX: number
-let movementY: number
+// let inertia: number
+// let movementX: number
+// let movementY: number
 
-const onDocumentMouseMove = (event: {
-  movementY: number; movementX: number 
-}) => {
-  // // 0.05 and (inertia / 50) also good
-  inertia = 0.1
-  movementX = event.movementX
-  movementY = event.movementY
-  // camera.rotation.y -= event.movementX * 0.0002
-  // camera.rotation.x -= event.movementY * 0.0002
-}
+// const onDocumentMouseMove = (event: {
+//   movementY: number; movementX: number 
+// }) => {
+//   // // 0.05 and (inertia / 50) also good
+//   inertia = 0.1
+//   movementX = event.movementX
+//   movementY = event.movementY
+//   // camera.rotation.y -= event.movementX * 0.0002
+//   // camera.rotation.x -= event.movementY * 0.0002
+// }
 
-const updateControls = (dt: number) => {
-  inertia -= dt
-  if (inertia < 0) {
-    inertia = 0
-  }
-  camera.rotation.y -= movementX * (inertia / 1500)
-  camera.rotation.x -= movementY * (inertia / 1500)
-}
+// const updateCameraRotation = (dt: number) => {
+//   inertia -= dt
+//   if (inertia < 0) {
+//     inertia = 0
+//   }
+//   camera.rotation.y -= movementX * (inertia / 1500)
+//   camera.rotation.x -= movementY * (inertia / 1500)
+// }
 
-document.addEventListener('mousemove', onDocumentMouseMove)
+// document.addEventListener('mousemove', onDocumentMouseMove)
 
 // document.addEventListener("fullscreenchange", onFullscreenchange)
 
@@ -191,18 +191,16 @@ const loop = () => {
       trigger = false
     }
   }
-
   controlTime()
-  updateControls(deltaTime)
 
+  updateCameraRotation(deltaTime)
   for (let i = 0; i < STEPS_PER_FRAME; i++) {
-    updateCamera(deltaTime)
+    updateCameraPosition(deltaTime)
   }
 
   renderer.render(scene, camera)
   animID = requestAnimationFrame(loop)
 }
-
 
 const controlTime = throttle(100, () => {
   if (running) elapsed += 0.1
@@ -214,6 +212,5 @@ const controlTime = throttle(100, () => {
   updateGUI(time, running, started)
 
   checkLoading()
-
   // console.log(`elapsed: ${time} | audioElapsed: ${audioElapsed}`)
 })

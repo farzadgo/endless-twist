@@ -3,18 +3,18 @@ import { Vector3 } from 'three'
 
 // MIXED-MEDIA
 
-export interface DataObject {
+export type DataObject = {
   time: number
   body: string
 }
 
-export interface ImageDataObject {
+export type ImageDataObject = {
   image: string
   t1: number
   t2: number
 }
 
-export interface Section {
+export type Section = {
   eventCode: string
   timeStamp: number
   lookVector: Vector3  
@@ -42,18 +42,18 @@ export enum ParagraphType {
   HEADER = 'header',
 }
 
-export interface Note {
+export type Note = {
   id: string
   body: string
 }
 
-export interface Paragraph {
+export type Paragraph = {
   id: string
   body: string
   type: ParagraphType
 }
 
-export interface Chapter {
+export type Chapter = {
   id: string
   title: string
   paragraphs?: Paragraph[]

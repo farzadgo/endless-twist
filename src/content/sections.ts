@@ -8,7 +8,7 @@ export const sections: Section[] = [
   {
     eventCode: 'Digit0',
     timeStamp: 0,
-    lookVector: new Vector3(-0.6, -0.2, 0)
+    lookVector: new Vector3(-0.35, -0.05, 0)
   },
   {
     eventCode: 'Digit1',
