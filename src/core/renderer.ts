@@ -3,7 +3,7 @@ import { WebGLRenderer, sRGBEncoding, PCFShadowMap, ACESFilmicToneMapping } from
 import { scene, sizes } from './scene'
 import { camera } from './camera'
 
-const canvas: HTMLElement = document.querySelector('#webgl') as HTMLElement
+export const canvas: HTMLElement = document.querySelector('#webgl') as HTMLElement
 
 export const renderer = new WebGLRenderer({
   canvas,

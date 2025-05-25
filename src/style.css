@@ -4,15 +4,19 @@ html, body {
   width: 100%;
   height: 100%;
 }
-a {
+/* a {
   font-weight: 400;
-}
+} */
 
 #webgl-container {
   position: absolute;
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+#webgl {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
 }
 
 /* --------- loader --------- */
@@ -35,7 +39,7 @@ a {
 .spinner > div {
   width: 56px;
   height: 56px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--text-color);
   -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
   animation: sk-rotateplane 1.2s infinite ease-in-out;
 }
@@ -52,7 +56,7 @@ a {
   height: 100%;
   overflow: hidden;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 20;
   transition: all 2s;
 }
@@ -88,7 +92,7 @@ a {
 .about-btn {  
   top: var(--padding-xl);
   padding: 6px;
-  color: #ccc;
+  color: var(--text-color);
 }
 .sound-btn {
   top: calc(var(--padding-xl) + var(--btn-height) + 30px);
@@ -97,19 +101,17 @@ a {
 }
 
 .start-btn,
-.reset-btn, 
-.publication-link {
+.reset-btn {
   left: 50%;
   top: 43%;
   transform: translate(-50%, 0);
-  border: 2px solid var(--pinki);
+  border: 1px solid var(--text-color);
   padding: 8px 18px 12px;
   height: 56px;
 }
 .start-btn {
   font-family: var(--font-script);
-  color: var(--pinki);
-  
+  color: var(--text-color);
 }
 .reset-btn {
   left: calc(50% - 126px);
@@ -117,10 +119,9 @@ a {
   width: 56px;
 }
 .publication-link {
-  top: calc(43% + 80px);
-  border: 1px solid #ccc;
-  color: #ccc;
-  font-weight: 300;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 0);
 }
 
 .publication-thumb {
@@ -134,7 +135,9 @@ a {
 }
 
 .start-btn:hover ~ .guides,
-.publication-link:hover ~ .publication-thumb {
+.start-btn:focus ~ .guides,
+.publication-link:hover ~ .publication-thumb,
+.publication-link:focus ~ .publication-thumb {
   opacity: 1;
   transition: opacity 0.3s ease-in;
 }
@@ -156,6 +159,25 @@ a {
 }
 .about section:last-child {
   margin-bottom: 0;
+}
+.about a,
+.publication-link {
+  position: relative;
+  padding-right: 22px;
+  font-weight: 400;
+}
+.about a::after,
+.publication-link::after {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: url('./content/assets/new_tab.svg') no-repeat center center / contain;
+  position: absolute;
+  right: 0;
+  top: 55%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 .about h3 {
   font-size: var(--font-sm);
@@ -200,24 +222,26 @@ a {
 .guides {
   position: absolute;
   z-index: 21;
-  color: var(--pinki);
   line-height: 2em;
   user-select: none;
-  font-weight: bold;
+  font-weight: 400;
   bottom: var(--padding-xl);
-  opacity: 1;
   transition: opacity 0.3s ease-out;
   font-family: var(--font-script);
 }
 .duration {
   right: var(--padding-xl);
+  opacity: 0.6;
 }
 .guides {
   opacity: 0;
   left: var(--padding-xl);
 }
+.guides li {
+  white-space: pre;
+}
 .guides span {
-  border: 1px solid var(--pinki);
+  border: 1px solid var(--text-color);
   border-radius: 3px;
   padding: 0 5px;
   display: inline-block;
@@ -227,8 +251,9 @@ a {
 }
 .guides img {
   height: 36px;
-  top: 10px;
+  top: 12px;
   position: relative;
+  left: -4px;
 }
 
 
@@ -279,7 +304,7 @@ a {
   inset: 0;
   z-index: -1;
   opacity: 0;
-  transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 2s ease-in-out;
   background:
     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="200" height="200" filter="url(%23noise)" opacity="0.18"/></svg>'),
     linear-gradient(-45deg, #10101018, #1f1d2083);

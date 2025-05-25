@@ -97,6 +97,10 @@ document.addEventListener('pointerlockchange', async () => {
 
 document.addEventListener('keyup', async event => {
   if (event.code === 'Space') {
+    let active = document.activeElement;
+    if (active && (active.tagName === 'BUTTON' || active.tagName === 'A')) {
+      return
+    }
     if (!running) {
       await startAnim()
     } else {

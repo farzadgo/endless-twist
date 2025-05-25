@@ -13,7 +13,7 @@ const doublingUrl = 'https://res.cloudinary.com/dd3tumnu6/image/upload/v16764618
 
 import { LoadingManager } from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { renderer } from '../core/renderer'
+import { renderer, canvas } from '../core/renderer'
 import { scene } from './scene'
 import { camera, resetCamera } from '../core/camera'
 import { initGUIonLoad, progressDiv } from './gui'
@@ -31,6 +31,7 @@ export const loadModels = () => {
     initGUIonLoad()
     resetCamera()
     renderer.render(scene, camera)
+    canvas.style.opacity = '1'
   }
 
   manager.onProgress = (_url, itemsLoaded, _itemsTotal) => {

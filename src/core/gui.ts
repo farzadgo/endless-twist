@@ -87,8 +87,9 @@ const resetBtn = createButtonWithIcon('reset-btn', rotate)
 
 const pubLink = document.createElement('a')
 pubLink.href = '/publication/'
+pubLink.target = '_blank'
 pubLink.className = 'publication-link'
-pubLink.innerHTML = 'publication'
+pubLink.innerHTML = 'the publication'
 
 const pubThumb = createIcon('/et-pub.png', 'publication-thumb')
 
@@ -160,10 +161,10 @@ const guides = document.createElement('div')
 guides.className = 'guides'
 guides.innerHTML = `
   <ul>
-  <li><i>look around</i> ${touchpadIcon.outerHTML}</li>
-  <li><i>play_pause</i> <span style="white-space:pre;"> ▁▁▁ </span></li>
-    <li>different sections <span>0</span> <span>1</span> ... <span>9</span></li>
-    <li><i>fullscreen</i> <span>F11</span></li>
+    <li><i>       look around</i> ${touchpadIcon.outerHTML}</li>
+    <li><i>       play_ pause</i> <span>     </span></li>
+    <li><i>different sections</i> <span>0</span> <span>1</span> ... <span>9</span></li>
+    <li><i>        fullscreen</i> <span>F11</span></li>
   </ul>
 `
 
@@ -193,7 +194,15 @@ export const initGUI = () => {
 
   duration.innerHTML = `</span>duration ${formatDuration(DURATION_IN_SECONDS)}</span>`
   
-  aboutBtn.addEventListener('click', toggleAbout)
+  // aboutBtn.addEventListener('click', toggleAbout)
+  aboutBtn.addEventListener('click', () => {
+    if (aboutIsShown) {
+      hideAbout([startBtn, resetBtn, pubLink])
+    } else {
+      showAbout([startBtn, resetBtn, pubLink])
+    }
+  })
+
   startBtn.addEventListener('click', startAnim)
 
   soundBtn.addEventListener('click', async () => {
@@ -231,23 +240,22 @@ export const initGUIonLoad = async () => {
 }
 
 
-const toggleAbout = () => {
-  let elements = [loaderDiv!, startBtn, resetBtn, pubLink]
-  if (!aboutIsShown) {
-    about.style.display = 'block'
-    aboutBtn.textContent = '⨉'
-    for (let el of elements) {
-      el.style.display = 'none'
-    }
-    aboutIsShown = true
-  } else {
-    about.style.display = 'none'
-    aboutBtn.textContent = getAnIcon(trigrams)
-    for (let el of elements) {
-      el.style.display = 'flex'
-    }
-    aboutIsShown = false
+const showAbout = (elementsToHide: HTMLElement[]) => {
+  about.style.display = 'block'
+  aboutBtn.textContent = '⨉'
+  for (let el of elementsToHide) {
+    el.style.display = 'none'
   }
+  aboutIsShown = true
+}
+
+const hideAbout = (elementsToShow: HTMLElement[]) => {
+  about.style.display = 'none'
+  aboutBtn.textContent = getAnIcon(trigrams)
+  for (let el of elementsToShow) {
+    el.style.display = 'flex'
+  }
+  aboutIsShown = false
 }
 
 
@@ -287,6 +295,8 @@ export const hideOverlay = async () => {
   startBtn.style.display = 'none'
 
   webGLContainer!.appendChild(duration)
+
+  hideAbout([startBtn, resetBtn, pubLink])
 
   await pauseLayeredIntroAudio()
   overlay?.classList.remove('intro-gradient')
