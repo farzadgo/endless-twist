@@ -71,6 +71,9 @@ const updateButtonIcon = (button: HTMLButtonElement, iconSrc: string) => {
   if (icon) icon.src = iconSrc
 }
 
+
+// --------- elements ---------
+
 const overlay = document.createElement('div')
 overlay.id = 'overlay'
 document.body.insertBefore(overlay, webGLContainer)
@@ -80,24 +83,33 @@ pageTitle.className = 'page-title'
 pageTitle.textContent = 'ENDLESS TWIST'
 
 const aboutBtn = createButtonWithText('about-btn', getAnIcon(trigrams))
-
-const startBtn = createButtonWithText('start-btn', 'start')
-
-const resetBtn = createButtonWithIcon('reset-btn', rotate)
-
-const pubLink = document.createElement('a')
-pubLink.href = '/publication/'
-pubLink.target = '_blank'
-pubLink.className = 'publication-link'
-pubLink.innerHTML = 'the publication'
-
-const pubThumb = createIcon('/et-pub.png', 'publication-thumb')
-
 const soundBtn = createButtonWithIcon('sound-btn', volume_off)
 
-const touchpadIcon = createIcon(touchpad_mouse, 'trackpad-icon')
+const startBtn = createButtonWithText('start-btn', 'start')
+const resetBtn = createButtonWithIcon('reset-btn', rotate)
 
-const duration = document.createElement('div')
+const publicationLink = document.createElement('a')
+publicationLink.className = 'publication-link'
+publicationLink.href = '/publication/'
+publicationLink.target = '_blank'
+publicationLink.innerHTML = 'the publication'
+
+const publicationCover = createIcon('/et-pub.png', 'publication-cover')
+
+const touchpadIcon = createIcon(touchpad_mouse, 'touchpad-icon')
+
+const guides = document.createElement('div')
+guides.className = 'guides'
+guides.innerHTML = `
+  <ul>
+    <li><i>       look around</i> ${touchpadIcon.outerHTML}</li>
+    <li><i>       play_ pause</i> <span>     </span></li>
+    <li><i>different sections</i> <span>0</span> <span>1</span> ... <span>9</span></li>
+    <li><i>        fullscreen</i> <span>F11</span></li>
+  </ul>
+`
+
+const duration = document.createElement('p')
 duration.className = 'duration'
 
 const about = document.createElement('div')
@@ -157,17 +169,6 @@ about.innerHTML = `
   </section>
 `
 
-const guides = document.createElement('div')
-guides.className = 'guides'
-guides.innerHTML = `
-  <ul>
-    <li><i>       look around</i> ${touchpadIcon.outerHTML}</li>
-    <li><i>       play_ pause</i> <span>     </span></li>
-    <li><i>different sections</i> <span>0</span> <span>1</span> ... <span>9</span></li>
-    <li><i>        fullscreen</i> <span>F11</span></li>
-  </ul>
-`
-
 
 export const updateGUI = (elapsed: number, running: boolean, started: boolean) => {
   duration.innerHTML = running ?
@@ -186,23 +187,18 @@ export const initGUI = () => {
   overlay?.appendChild(pageTitle)
   overlay?.appendChild(aboutBtn)
   overlay?.appendChild(soundBtn)
-  overlay?.appendChild(pubLink)
-
+  overlay?.appendChild(publicationLink)
   overlay?.appendChild(about)
-  
-  about.style.display = 'none'
 
-  duration.innerHTML = `</span>duration ${formatDuration(DURATION_IN_SECONDS)}</span>`
+  duration.innerHTML = `duration ${formatDuration(DURATION_IN_SECONDS)}`
   
   aboutBtn.addEventListener('click', () => {
     if (aboutIsShown) {
-      hideAbout([startBtn, resetBtn, pubLink, progressDiv!])
+      hideAbout([startBtn, resetBtn, publicationLink, progressDiv!])
     } else {
-      showAbout([startBtn, resetBtn, pubLink, progressDiv!])
+      showAbout([startBtn, resetBtn, publicationLink, progressDiv!])
     }
   })
-
-  startBtn.addEventListener('click', startAnim)
 
   soundBtn.addEventListener('click', async () => {
     if (getIntroPlaying()) {
@@ -212,12 +208,13 @@ export const initGUI = () => {
     }
   })
 
+  startBtn.addEventListener('click', startAnim)
+
   resetBtn.addEventListener('click', () => {
     reset()
     startBtn.textContent = 'restart'
     resetBtn.remove()
   })
-
 }
 
 
@@ -231,10 +228,10 @@ export const initGUIonLoad = async () => {
     overlay?.classList.add('loaded')
   }, 100)
 
-  overlay?.insertBefore(startBtn, pubLink)
+  overlay?.insertBefore(startBtn, publicationLink)
 
   overlay?.appendChild(guides)
-  overlay?.appendChild(pubThumb)
+  overlay?.appendChild(publicationCover)
   overlay?.appendChild(duration)
 }
 
@@ -261,14 +258,10 @@ const hideAbout = (elementsToShow: HTMLElement[]) => {
 export const showOverlay = async () => {
   overlay!.style.display = 'block'
   overlay!.style.opacity = '0'
-  setTimeout(() => {
-    overlay!.style.opacity = '1'
-  }, 10)
+  setTimeout(() => overlay!.style.opacity = '1', 10)
 
   subtitleElement!.style.opacity = '0'
 
-  startBtn.style.display = 'block'
-  startBtn.style.pointerEvents = 'none'
   startBtn.style.opacity = '0.3'
   setTimeout(() => {
     startBtn.style.opacity = '1'
@@ -286,17 +279,15 @@ export const showOverlay = async () => {
 
 export const hideOverlay = async () => {
   overlay!.style.opacity = '0'
-  setTimeout(() => {
-    overlay!.style.display = 'none'
-  }, 1000)
+  setTimeout(() => overlay!.style.display = 'none', 2000)
 
   subtitleElement!.style.opacity = '1'
-  startBtn.style.display = 'none'
 
+  hideAbout([startBtn, resetBtn, publicationLink])
+  
   webGLContainer!.appendChild(duration)
 
-  hideAbout([startBtn, resetBtn, pubLink])
-
   await pauseLayeredIntroAudio()
+
   overlay?.classList.remove('intro-gradient')
 }

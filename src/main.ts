@@ -1,5 +1,7 @@
-import './costyles.css'
+import './common-styles.css'
 import './style.css'
+
+import { throttle } from 'throttle-debounce'
 
 import { Clock } from 'three'
 import { loadModels } from './core/loader'
@@ -9,7 +11,6 @@ import { camera, updateCameraPosition, updateCameraRotation, resetCamera } from 
 import { initGUI, showOverlay, hideOverlay, updateGUI, progressDiv, spinnerDiv, checkLoading } from './core/gui'
 import { updateImages, updateAudio, updateVideos, audioElapsed, playAudio, pauseAudio, resetAudio, getEnded, setEnded } from './content/media'
 
-import { throttle } from 'throttle-debounce'
 
 export const isMobile = () => {
   if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {

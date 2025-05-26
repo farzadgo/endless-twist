@@ -4,9 +4,6 @@ html, body {
   width: 100%;
   height: 100%;
 }
-/* a {
-  font-weight: 400;
-} */
 
 #webgl-container {
   position: absolute;
@@ -124,7 +121,7 @@ html, body {
   transform: translate(-50%, 0);
 }
 
-.publication-thumb {
+.publication-cover {
   opacity: 0;
   width: 500px;
   position: absolute;
@@ -132,12 +129,14 @@ html, body {
   left: 50%;
   transform: translate(-50%, 0);
   transition: opacity 0.3s ease-out;
+  pointer-events: none;
+  user-select: none;
 }
 
 .start-btn:hover ~ .guides,
 .start-btn:focus ~ .guides,
-.publication-link:hover ~ .publication-thumb,
-.publication-link:focus ~ .publication-thumb {
+.publication-link:hover ~ .publication-cover,
+.publication-link:focus ~ .publication-cover {
   opacity: 1;
   transition: opacity 0.3s ease-in;
 }
@@ -145,6 +144,7 @@ html, body {
 
 /* --- about section --- */
 .about {
+  display: none;
   position: absolute;
   width: 800px;
   padding: 0 var(--padding-xl);
@@ -224,6 +224,7 @@ html, body {
   z-index: 21;
   line-height: 2em;
   user-select: none;
+  pointer-events: none;
   font-weight: 400;
   bottom: var(--padding-xl);
   transition: opacity 0.3s ease-out;
@@ -298,7 +299,7 @@ html, body {
 	}
 }
 
-#overlay.intro-gradient::after {
+/* #overlay.intro-gradient::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -316,4 +317,4 @@ html, body {
 
 #overlay.intro-gradient.loaded::after {
   opacity: 1;
-}
+} */

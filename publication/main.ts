@@ -1,4 +1,4 @@
-import '../src/costyles.css';
+import '../src/common-styles.css';
 import './style.css';
 
 import { Marked } from '@ts-stack/markdown';
