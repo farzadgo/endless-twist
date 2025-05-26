@@ -120,7 +120,7 @@ html, body {
 }
 .publication-link {
   left: 50%;
-  top: 50%;
+  top: calc(43% + 90px);
   transform: translate(-50%, 0);
 }
 

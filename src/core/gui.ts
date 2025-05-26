@@ -194,12 +194,11 @@ export const initGUI = () => {
 
   duration.innerHTML = `</span>duration ${formatDuration(DURATION_IN_SECONDS)}</span>`
   
-  // aboutBtn.addEventListener('click', toggleAbout)
   aboutBtn.addEventListener('click', () => {
     if (aboutIsShown) {
-      hideAbout([startBtn, resetBtn, pubLink])
+      hideAbout([startBtn, resetBtn, pubLink, progressDiv!])
     } else {
-      showAbout([startBtn, resetBtn, pubLink])
+      showAbout([startBtn, resetBtn, pubLink, progressDiv!])
     }
   })
 
@@ -253,7 +252,7 @@ const hideAbout = (elementsToShow: HTMLElement[]) => {
   about.style.display = 'none'
   aboutBtn.textContent = getAnIcon(trigrams)
   for (let el of elementsToShow) {
-    el.style.display = 'flex'
+    el.style.display = 'block'
   }
   aboutIsShown = false
 }
