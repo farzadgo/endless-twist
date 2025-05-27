@@ -14,6 +14,8 @@ import touchpad_mouse from '../content/assets/touchpad_mouse.svg'
 
 let aboutIsShown = false
 
+let hideOverlayTimeout: ReturnType<typeof setTimeout> | null = null
+
 const webGLContainer = document.getElementById('webgl-container')
 
 export const loaderDiv = document.querySelector<HTMLDivElement>('.loader')
@@ -218,18 +220,14 @@ export const initGUI = () => {
 }
 
 
-export const initGUIonLoad = async () => {
+export const initGUIonLoad = () => {
   progressDiv!.remove()
   spinnerDiv!.style.display = 'none'
   spinnerDiv!.style.marginTop = '42px'
 
-  overlay?.classList.add('intro-gradient')
-  setTimeout(() => {
-    overlay?.classList.add('loaded')
-  }, 100)
+  overlay!.classList.add('loaded')
 
   overlay?.insertBefore(startBtn, publicationLink)
-
   overlay?.appendChild(guides)
   overlay?.appendChild(publicationCover)
   overlay?.appendChild(duration)
@@ -256,6 +254,10 @@ const hideAbout = (elementsToShow: HTMLElement[]) => {
 
 
 export const showOverlay = async () => {
+  if (hideOverlayTimeout) {
+    clearTimeout(hideOverlayTimeout)
+    hideOverlayTimeout = null
+  }
   overlay!.style.display = 'block'
   overlay!.style.opacity = '0'
   setTimeout(() => overlay!.style.opacity = '1', 10)
@@ -272,14 +274,14 @@ export const showOverlay = async () => {
 
   await startLayeredIntroAudio()
   updateButtonIcon(soundBtn, volume_up)
-
-  overlay?.classList.add('intro-gradient')
 }
 
 
 export const hideOverlay = async () => {
   overlay!.style.opacity = '0'
-  setTimeout(() => overlay!.style.display = 'none', 2000)
+  hideOverlayTimeout = setTimeout(() => {
+    overlay!.style.display = 'none'
+  }, 2000)
 
   subtitleElement!.style.opacity = '1'
 
@@ -288,6 +290,4 @@ export const hideOverlay = async () => {
   webGLContainer!.appendChild(duration)
 
   await pauseLayeredIntroAudio()
-
-  overlay?.classList.remove('intro-gradient')
 }
